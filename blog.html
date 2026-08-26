@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>المدونة — بوضوح | مقالات عن العلاقات وأنماط الشخصية</title>
+<meta name="description" content="مقالات عربية عن العلاقات السامة، أنماط الشخصية، التعافي بعد الانفصال، وبناء علاقات صحية — من فريق بوضوح.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@500;700;900&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#241D2E; --ink-soft:#372C46; --plum:#4A3B5C;
+    --fog:#F3EEEA; --fog-dim:#E6DFDA;
+    --clarity:#C9A15F; --clarity-soft:#E4C98A; --rose:#8B6F7E; --alert:#B5555B;
+    --text-on-dark:#EDE7E3; --text-muted-dark:#B7ACC4;
+    --text-on-light:#2A2130; --text-muted-light:#6B6072;
+    --radius:14px; --max:1080px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{ font-family:'IBM Plex Sans Arabic', sans-serif; background:var(--fog); color:var(--text-on-light); line-height:1.9; -webkit-font-smoothing:antialiased; }
+  h1,h2,h3,.kufi{ font-family:'Noto Kufi Arabic', sans-serif; }
+  a{ color:inherit; text-decoration:none; }
+  .wrap{ max-width:var(--max); margin:0 auto; padding:0 24px; }
+  .eyebrow{ display:inline-flex; align-items:center; gap:8px; font-size:13px; color:var(--clarity); font-weight:600; margin-bottom:14px; }
+  .eyebrow::before{ content:""; width:20px; height:1px; background:var(--clarity); display:inline-block; }
+
+  nav{ position:sticky; top:0; z-index:50; background:rgba(36,29,46,.92); backdrop-filter:blur(8px); border-bottom:1px solid rgba(255,255,255,.06); }
+  nav .wrap{ display:flex; align-items:center; justify-content:space-between; padding:16px 24px; }
+  .brand{ font-family:'Noto Kufi Arabic',sans-serif; font-weight:900; font-size:22px; color:var(--fog); }
+  .brand span{ color:var(--clarity); }
+  .nav-links{ display:flex; align-items:center; gap:28px; }
+  .nav-links a{ color:var(--text-muted-dark); font-size:14px; font-weight:500; transition:color .2s; }
+  .nav-links a:hover{ color:var(--fog); }
+  .nav-links a.active{ color:var(--clarity-soft); }
+  a.nav-cta{ background:var(--clarity); color:var(--ink); font-weight:700; font-size:14px; padding:9px 20px; border-radius:100px; transition:.2s; }
+  .nav-cta:hover{ background:var(--clarity-soft); }
+  @media (max-width:780px){ .nav-links{ display:none; } }
+
+  .page-head{
+    background:radial-gradient(120% 90% at 75% 0%, var(--ink-soft) 0%, var(--ink) 55%, #1A1522 100%);
+    padding:80px 0 56px; text-align:center;
+  }
+  .page-head h1{ color:var(--fog); font-size:clamp(30px,4.6vw,46px); font-weight:900; margin:0 auto; max-width:18ch; }
+  .page-head p{ color:var(--text-muted-dark); font-size:16px; max-width:52ch; margin:16px auto 0; }
+
+  /* ---------- FILTER ---------- */
+  .filter-bar{ padding:36px 0 8px; }
+  .filter-row{ display:flex; gap:10px; flex-wrap:wrap; justify-content:center; }
+  .filter-btn{
+    border:1px solid var(--fog-dim); background:#fff; color:var(--text-muted-light);
+    font-family:inherit; font-size:14px; font-weight:600; padding:10px 20px; border-radius:100px;
+    cursor:pointer; transition:.2s;
+  }
+  .filter-btn:hover{ border-color:var(--clarity); color:var(--text-on-light); }
+  .filter-btn.active{ background:var(--ink); border-color:var(--ink); color:var(--fog); }
+
+  /* ---------- GRID ---------- */
+  .blog-grid{ padding:44px 0 100px; display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
+  .article-card{
+    background:#fff; border:1px solid var(--fog-dim); border-radius:var(--radius); overflow:hidden;
+    display:flex; flex-direction:column; transition:transform .2s ease, box-shadow .2s ease;
+  }
+  .article-card:hover{ transform:translateY(-4px); box-shadow:0 20px 40px -20px rgba(36,29,46,.25); }
+  .card-visual{
+    height:140px; position:relative; overflow:hidden;
+    background:linear-gradient(135deg, var(--ink-soft), var(--ink));
+  }
+  .card-visual img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .card-body{ padding:22px 22px 24px; display:flex; flex-direction:column; gap:10px; flex:1; }
+  .card-tag{ display:inline-block; font-size:11.5px; font-weight:700; color:#8a6a2e; background:rgba(201,161,95,.15); padding:4px 12px; border-radius:100px; width:fit-content; }
+  .card-body h3{ font-size:17.5px; line-height:1.6; }
+  .card-body p{ font-size:14px; color:var(--text-muted-light); flex:1; }
+  .card-meta{ font-size:12.5px; color:var(--rose); margin-top:6px; }
+
+  .empty-state{ text-align:center; padding:60px 0; color:var(--text-muted-light); display:none; }
+
+  footer{ background:var(--ink); color:var(--text-muted-dark); padding:44px 0 28px; text-align:center; font-size:12.5px; }
+  footer .brand{ display:block; margin-bottom:10px; font-size:18px; }
+
+  @media (max-width:900px){ .blog-grid{ grid-template-columns:repeat(2,1fr); } }
+  @media (max-width:600px){ .blog-grid{ grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+
+<site-nav active="blog"></site-nav>
+
+<header class="page-head">
+  <div class="wrap">
+    <div class="eyebrow" style="justify-content:center; color:var(--clarity-soft);">المدونة</div>
+    <h1>مقالات تساعدك على رؤية علاقاتك بوضوح</h1>
+    <p>محتوى عربي حول العلاقات السامة، وأنماط الشخصية، والتعافي، وبناء علاقات صحية، والصحة النفسية بشكل عام.</p>
+  </div>
+</header>
+
+<section class="filter-bar">
+  <div class="wrap">
+    <div class="filter-row" id="filterRow">
+      <button class="filter-btn active" data-filter="all">الكل</button>
+      <button class="filter-btn" data-filter="early">التعرف المبكر</button>
+      <button class="filter-btn" data-filter="patterns">فهم الأنماط</button>
+      <button class="filter-btn" data-filter="healing">التعافي</button>
+      <button class="filter-btn" data-filter="healthy">علاقات صحية</button>
+      <button class="filter-btn" data-filter="mental-health">الصحة النفسية</button>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="blog-grid" id="blogGrid">
+
+      <a href="article-early-signs.html" class="article-card" data-cat="early">
+        <div class="card-visual"><img src="https://images.pexels.com/photos/7278919/pexels-photo-7278919.jpeg?auto=compress&cs=tinysrgb&w=600" alt="صورة تعبيرية عن التوتر المبكر بالعلاقة" loading="lazy"></div>
+        <div class="card-body">
+          <span class="card-tag">التعرف المبكر</span>
+          <h3>سبع علامات لا تلاحظها في العلاقة إلا متأخراً</h3>
+          <p>معظم العلاقات السامة لا تبدأ سامة. تبدأ بعلامات صغيرة نتجاهلها لأنها تأتي متخفية بحب واهتمام.</p>
+          <span class="card-meta">قراءة ٦ دقائق</span>
+        </div>
+      </a>
+
+      <a href="article-narcissist-vs-confident.html" class="article-card" data-cat="patterns">
+        <div class="card-visual"><img src="https://images.pexels.com/photos/29852896/pexels-photo-29852896.jpeg?auto=compress&cs=tinysrgb&w=600" alt="صورة تعبيرية عن التأمل بالذات والثقة" loading="lazy"></div>
+        <div class="card-body">
+          <span class="card-tag">فهم الأنماط</span>
+          <h3>الفرق بين الشخص الواثق والشخص النرجسي</h3>
+          <p>كثيراً ما نخلط بين الثقة الصحية والنرجسية، وهذا بالضبط ما يجعل النمط النرجسي صعب الاكتشاف في البداية.</p>
+          <span class="card-meta">قراءة ٧ دقائق</span>
+        </div>
+      </a>
+
+      <a href="article-gaslighting.html" class="article-card" data-cat="patterns">
+        <div class="card-visual"><img src="https://images.pexels.com/photos/3958400/pexels-photo-3958400.jpeg?auto=compress&cs=tinysrgb&w=600" alt="صورة تعبيرية عن الشك بالنفس والغازلايتنغ" loading="lazy"></div>
+        <div class="card-body">
+          <span class="card-tag">فهم الأنماط</span>
+          <h3>التلاعب النفسي (الغازلايتنغ): لماذا تشك بنفسك بعد كل نقاش؟</h3>
+          <p>إذا كان كل نقاش ينتهي وأنت مقتنع بأنك "تبالغ" أو "تختلق أشياء"، فقد تكون تحت تأثير نمط تلاعب نفسي معروف.</p>
+          <span class="card-meta">قراءة ٨ دقائق</span>
+        </div>
+      </a>
+
+      <a href="article-healing-after-breakup.html" class="article-card" data-cat="healing">
+        <div class="card-visual"><img src="https://images.pexels.com/photos/8835892/pexels-photo-8835892.jpeg?auto=compress&cs=tinysrgb&w=600" alt="صورة تعبيرية عن التعافي وبداية جديدة" loading="lazy"></div>
+        <div class="card-body">
+          <span class="card-tag">التعافي</span>
+          <h3>خمس خطوات واقعية للتعافي بعد الانفصال</h3>
+          <p>التعافي ليس خطاً مستقيماً، ولا يوجد جدول زمني "صحيح" له. هذه خمس خطوات تساعدك على بناء طريقك بنفسك.</p>
+          <span class="card-meta">قراءة ٧ دقائق</span>
+        </div>
+      </a>
+
+      <a href="article-healthy-first-date.html" class="article-card" data-cat="healthy">
+        <div class="card-visual"><img src="https://images.pexels.com/photos/6180716/pexels-photo-6180716.jpeg?auto=compress&cs=tinysrgb&w=600" alt="صورة تعبيرية عن موعد صحي بين شخصين" loading="lazy"></div>
+        <div class="card-body">
+          <span class="card-tag">علاقات صحية</span>
+          <h3>كيف تبني علاقة صحية من أول موعد</h3>
+          <p>العلاقة الصحية ليست صدفة أو حظاً، بل فيها عادات وقرارات صغيرة تبدأ من أول لقاء. هذه أهمها.</p>
+          <span class="card-meta">قراءة ٦ دقائق</span>
+        </div>
+      </a>
+
+      <a href="article-healthy-boundaries.html" class="article-card" data-cat="healthy">
+        <div class="card-visual"><img src="https://images.pexels.com/photos/5723263/pexels-photo-5723263.jpeg?auto=compress&cs=tinysrgb&w=600" alt="امرأة تمد يدها بإشارة توقف هادئة" loading="lazy"></div>
+        <div class="card-body">
+          <span class="card-tag">علاقات صحية</span>
+          <h3>كيف تضع حدوداً صحية في علاقتك دون أن تشعر بالذنب</h3>
+          <p>الحدود ليست قسوة ولا أنانية، بل هي ما يجعل العلاقة تستمر بارتياح لأنها تحمي وقتك وطاقتك.</p>
+          <span class="card-meta">قراءة ٦ دقائق</span>
+        </div>
+      </a>
+
+      <a href="article-jealousy-vs-control.html" class="article-card" data-cat="patterns">
+        <div class="card-visual"><img src="https://images.pexels.com/photos/6383268/pexels-photo-6383268.jpeg?auto=compress&cs=tinysrgb&w=600" alt="امرأة قلقة تتصفح هاتفها بانزعاج" loading="lazy"></div>
+        <div class="card-body">
+          <span class="card-tag">فهم الأنماط</span>
+          <h3>الفرق بين الغيرة الطبيعية والغيرة التي تتحول إلى تحكم</h3>
+          <p>الغيرة ليست دائماً علامة خطر، لكن هناك خطاً رفيعاً بين غيرة طبيعية وغيرة تتحول إلى مراقبة وتحكم.</p>
+          <span class="card-meta">قراءة ٥ دقائق</span>
+        </div>
+      </a>
+
+      <a href="article-returning-to-toxic.html" class="article-card" data-cat="healing">
+        <div class="card-visual"><img src="https://images.pexels.com/photos/3808801/pexels-photo-3808801.jpeg?auto=compress&cs=tinysrgb&w=600" alt="امرأة متأملة خلف سياج بتفكير عميق" loading="lazy"></div>
+        <div class="card-body">
+          <span class="card-tag">التعافي</span>
+          <h3>لماذا نعود إلى الشريك السام حتى بعد أن نقرر تركه؟</h3>
+          <p>العودة إلى علاقة سامة بعد الانفصال ليست ضعفاً ولا غباءً، بل نمط نفسي معروف له أسباب واضحة.</p>
+          <span class="card-meta">قراءة ٧ دقائق</span>
+        </div>
+      </a>
+
+      <a href="article-codependency.html" class="article-card" data-cat="patterns">
+        <div class="card-visual"><img src="https://images.pexels.com/photos/29258671/pexels-photo-29258671.jpeg?auto=compress&cs=tinysrgb&w=600" alt="يدين متشابكتين ترمز للدعم والتعلق" loading="lazy"></div>
+        <div class="card-body">
+          <span class="card-tag">فهم الأنماط</span>
+          <h3>الاعتمادية العاطفية: حين تتحول "أحبك" إلى "لا أستطيع العيش من دونك"</h3>
+          <p>هناك فرق كبير بين الحب والاعتمادية العاطفية. الأول يكمّل حياتك، والثاني يلتهمها شيئاً فشيئاً.</p>
+          <span class="card-meta">قراءة ٦ دقائق</span>
+        </div>
+      </a>
+
+      <a href="article-in-laws-boundaries.html" class="article-card" data-cat="healthy">
+        <div class="card-visual"><img src="https://images.pexels.com/photos/6957232/pexels-photo-6957232.jpeg?auto=compress&cs=tinysrgb&w=600" alt="امرأتان بجلسة عائلية فيها توتر خفيف" loading="lazy"></div>
+        <div class="card-body">
+          <span class="card-tag">علاقات صحية</span>
+          <h3>كيف تتعامل مع أهل شريكك دون أن تخسر نفسك</h3>
+          <p>علاقتك مع أهل شريكك قد تكون من أصعب أجزاء العلاقة. خطوات عملية تحافظ بها على سلامك النفسي.</p>
+          <span class="card-meta">قراءة ٦ دقائق</span>
+        </div>
+      </a>
+
+      <a href="article-love-bombing.html" class="article-card" data-cat="early">
+        <div class="card-visual"><img src="https://images.pexels.com/photos/6578938/pexels-photo-6578938.jpeg?auto=compress&cs=tinysrgb&w=600" alt="رجل يفاجئ امرأة بباقة ورد كبيرة" loading="lazy"></div>
+        <div class="card-body">
+          <span class="card-tag">التعرف المبكر</span>
+          <h3>الحب القصفي: لماذا البداية القوية جداً ليست دائماً مؤشراً جيداً</h3>
+          <p>رسائل كثيرة وكلام حب مبالغ فيه في الأسابيع الأولى؟ أحياناً تكون رومانسية حقيقية، وأحياناً أسلوباً لتسريع ثقتك.</p>
+          <span class="card-meta">قراءة ٦ دقائق</span>
+        </div>
+      </a>
+
+      <a href="article-self-support-while-in-it.html" class="article-card" data-cat="healing">
+        <div class="card-visual"><img src="https://images.pexels.com/photos/1650207/pexels-photo-1650207.jpeg?auto=compress&cs=tinysrgb&w=600" alt="امرأة تكتب بمذكرة قرب النافذة بتأمل" loading="lazy"></div>
+        <div class="card-body">
+          <span class="card-tag">التعافي</span>
+          <h3>كيف تعتني بنفسك وأنت لا تزال في علاقة صعبة</h3>
+          <p>ليس كل شخص جاهزاً للخروج من علاقة سامة فوراً. خطوات عملية تحمي بها صحتك النفسية إلى أن تصل إلى قرارك.</p>
+          <span class="card-meta">قراءة ٦ دقائق</span>
+        </div>
+      </a>
+
+      <a href="article-silent-treatment.html" class="article-card" data-cat="patterns">
+        <div class="card-visual"><img src="https://images.pexels.com/photos/8560762/pexels-photo-8560762.jpeg?auto=compress&cs=tinysrgb&w=600" alt="ثنائي جالسين على السرير بصمت وتوتر" loading="lazy"></div>
+        <div class="card-body">
+          <span class="card-tag">فهم الأنماط</span>
+          <h3>الصمت كعقاب: لماذا يكون أكثر أذى مما يبدو</h3>
+          <p>الصمت ليس دائماً "وقتاً لتهدئة الموقف". حين يتحول إلى عقاب متكرر، يصبح نمط تلاعب نفسي حقيقياً.</p>
+          <span class="card-meta">قراءة ٥ دقائق</span>
+        </div>
+      </a>
+
+      <a href="article-ready-for-new-relationship.html" class="article-card" data-cat="healing">
+        <div class="card-visual"><img src="https://images.pexels.com/photos/4781473/pexels-photo-4781473.jpeg?auto=compress&cs=tinysrgb&w=600" alt="امرأة تستمتع بلحظة هدوء وسلام وسط الطبيعة" loading="lazy"></div>
+        <div class="card-body">
+          <span class="card-tag">التعافي</span>
+          <h3>كيف تعرف أنك جاهز لأن تحب من جديد بعد علاقة سامة</h3>
+          <p>لا يوجد جدول زمني محدد للجاهزية، لكن هناك علامات حقيقية تساعدك على معرفة أين أنت الآن.</p>
+          <span class="card-meta">قراءة ٦ دقائق</span>
+        </div>
+      </a>
+
+      <a href="article-questions-before-committing.html" class="article-card" data-cat="healthy">
+        <div class="card-visual"><img src="https://images.pexels.com/photos/5711601/pexels-photo-5711601.jpeg?auto=compress&cs=tinysrgb&w=600" alt="ثنائي بحوار هادئ ومتأمل على أريكة" loading="lazy"></div>
+        <div class="card-body">
+          <span class="card-tag">علاقات صحية</span>
+          <h3>عشرة أسئلة تسألها لنفسك قبل أن تلتزم بعلاقة جديدة</h3>
+          <p>الالتزام قرار كبير، وأسئلة بسيطة تسألها لنفسك قبله قد توفر عليك ألماً كثيراً لاحقاً.</p>
+          <span class="card-meta">قراءة ٦ دقائق</span>
+        </div>
+      </a>
+
+      <a href="article-understanding-anxiety.html" class="article-card" data-cat="mental-health">
+        <div class="card-visual"><img src="https://images.pexels.com/photos/6382634/pexels-photo-6382634.jpeg?auto=compress&cs=tinysrgb&w=600" alt="امرأة قلقة تغطي وجهها بيدها" loading="lazy"></div>
+        <div class="card-body">
+          <span class="card-tag">الصحة النفسية</span>
+          <h3>فهم القلق: متى يكون طبيعياً ومتى يستحق الانتباه؟</h3>
+          <p>القلق شعور طبيعي يمر به الجميع، لكن السؤال الحقيقي هو متى يتحول من مؤشر مفيد إلى عبء يستحق انتباهاً حقيقياً.</p>
+          <span class="card-meta">قراءة ٦ دقائق</span>
+        </div>
+      </a>
+
+      <a href="article-depression-signs.html" class="article-card" data-cat="mental-health">
+        <div class="card-visual"><img src="https://images.pexels.com/photos/4349903/pexels-photo-4349903.jpeg?auto=compress&cs=tinysrgb&w=600" alt="شخص يعاني من الاكتئاب خلف نافذة غير واضحة المعالم" loading="lazy"></div>
+        <div class="card-body">
+          <span class="card-tag">الصحة النفسية</span>
+          <h3>علامات الاكتئاب التي يسهل تجاهلها</h3>
+          <p>الاكتئاب لا يبدو دائماً كما نتخيله. تعرّف على العلامات الأقل وضوحاً التي يسهل تفسيرها كـ"تعب مؤقت" فقط.</p>
+          <span class="card-meta">قراءة ٦ دقائق</span>
+        </div>
+      </a>
+
+      <a href="article-self-care.html" class="article-card" data-cat="mental-health">
+        <div class="card-visual"><img src="https://images.pexels.com/photos/4346281/pexels-photo-4346281.jpeg?auto=compress&cs=tinysrgb&w=600" alt="كتاب وكوب شاي في غرفة دافئة هادئة" loading="lazy"></div>
+        <div class="card-body">
+          <span class="card-tag">الصحة النفسية</span>
+          <h3>الرعاية الذاتية: أبعد من حمام دافئ وكوب شاي</h3>
+          <p>الرعاية الذاتية الحقيقية أعمق بكثير من الصورة النمطية المريحة، وأحياناً تعني قرارات صعبة قبل أي استرخاء.</p>
+          <span class="card-meta">قراءة ٥ دقائق</span>
+        </div>
+      </a>
+
+      <a href="article-power-of-breathing.html" class="article-card" data-cat="mental-health">
+        <div class="card-visual"><img src="https://images.pexels.com/photos/4498220/pexels-photo-4498220.jpeg?auto=compress&cs=tinysrgb&w=600" alt="امرأة هادئة تجلس بوضعية تأمل وتمارس التنفس" loading="lazy"></div>
+        <div class="card-body">
+          <span class="card-tag">الصحة النفسية</span>
+          <h3>قوة التنفس: كيف تهدّئ أنفاسك عقلك في لحظات الضغط</h3>
+          <p>التنفس جسر مباشر بين جسدك وعقلك. تعرّف على السبب العلمي وراء تهدئة التنفس العميق لك، وتمرين بسيط تجربه الآن.</p>
+          <span class="card-meta">قراءة ٥ دقائق</span>
+        </div>
+      </a>
+
+      <a href="article-mindfulness-present-moment.html" class="article-card" data-cat="mental-health">
+        <div class="card-visual"><img src="https://images.pexels.com/photos/6453915/pexels-photo-6453915.jpeg?auto=compress&cs=tinysrgb&w=600" alt="امرأة هادئة عينيها مغمضتان في ضوء الصباح" loading="lazy"></div>
+        <div class="card-body">
+          <span class="card-tag">الصحة النفسية</span>
+          <h3>اليقظة الذهنية: كيف تعيش اللحظة الحالية بدل القلق على الغد</h3>
+          <p>كثير من توترنا اليومي لا يأتي من الحاضر، بل من عقل يعيش في الماضي أو المستقبل. تعرّف على اليقظة الذهنية.</p>
+          <span class="card-meta">قراءة ٦ دقائق</span>
+        </div>
+      </a>
+    </div>
+    <p class="empty-state" id="emptyState">لا توجد مقالات في هذا التصنيف حالياً — جرّب تصنيفاً آخر.</p>
+  </div>
+</section>
+
+<site-footer></site-footer>
+
+<script>
+  const buttons = document.querySelectorAll('.filter-btn');
+  const cards = document.querySelectorAll('.article-card');
+  const emptyState = document.getElementById('emptyState');
+
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      buttons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+      let visibleCount = 0;
+      cards.forEach(card => {
+        const show = filter === 'all' || card.dataset.cat === filter;
+        card.style.display = show ? 'flex' : 'none';
+        if (show) visibleCount++;
+      });
+      emptyState.style.display = visibleCount === 0 ? 'block' : 'none';
+    });
+  });
+</script>
+
+<script src="components.js"></script>
+</body>
+</html>
