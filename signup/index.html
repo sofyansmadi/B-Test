@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>إنشاء حساب أو تسجيل الدخول — بوضوح</title>
+<meta name="description" content="أنشئ حساباً جديداً في بوضوح أو سجّل الدخول إلى حسابك الحالي.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@500;700;900&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#241D2E; --ink-soft:#372C46; --plum:#4A3B5C;
+    --fog:#F3EEEA; --fog-dim:#E6DFDA;
+    --clarity:#C9A15F; --clarity-soft:#E4C98A; --rose:#8B6F7E; --alert:#B5555B;
+    --text-on-dark:#EDE7E3; --text-muted-dark:#B7ACC4;
+    --text-on-light:#2A2130; --text-muted-light:#6B6072;
+    --radius:14px; --max:520px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{ font-family:'IBM Plex Sans Arabic', sans-serif; background:var(--fog); color:var(--text-on-light); line-height:1.9; -webkit-font-smoothing:antialiased; }
+  h1,h2,.kufi{ font-family:'Noto Kufi Arabic', sans-serif; }
+  a{ color:inherit; text-decoration:none; }
+  .wrap{ max-width:var(--max); margin:0 auto; padding:0 24px; }
+
+  nav{ position:sticky; top:0; z-index:50; background:rgba(36,29,46,.92); backdrop-filter:blur(8px); border-bottom:1px solid rgba(255,255,255,.06); }
+  nav .wrap{ display:flex; align-items:center; justify-content:space-between; padding:16px 24px; max-width:1080px; }
+  .brand{ font-family:'Noto Kufi Arabic',sans-serif; font-weight:900; font-size:22px; color:var(--fog); text-decoration:none; }
+  .brand span{ color:var(--clarity); }
+  .nav-links{ display:flex; align-items:center; gap:28px; }
+  .nav-links a{ color:var(--text-muted-dark); font-size:14px; font-weight:500; text-decoration:none; transition:color .2s; }
+  .nav-links a:hover{ color:var(--fog); }
+  a.nav-cta{ background:var(--clarity); color:var(--ink); font-weight:700; font-size:14px; padding:9px 20px; border-radius:100px; transition:.2s; }
+  a.nav-cta:hover{ background:var(--clarity-soft); }
+  @media (max-width:780px){ .nav-links{ display:none; } }
+
+  .page-head{ background:radial-gradient(120% 90% at 75% 0%, var(--ink-soft) 0%, var(--ink) 55%, #1A1522 100%); padding:64px 0 48px; text-align:center; }
+  .eyebrow{ display:inline-flex; align-items:center; gap:8px; font-size:13px; color:var(--clarity-soft); font-weight:600; margin-bottom:14px; justify-content:center; }
+  .eyebrow::before{ content:""; width:20px; height:1px; background:var(--clarity-soft); display:inline-block; }
+  .page-head h1{ color:var(--fog); font-size:clamp(26px,4vw,36px); font-weight:900; }
+  .page-head p{ color:var(--text-muted-dark); font-size:15px; max-width:40ch; margin:12px auto 0; }
+
+  main{ padding:48px 0 90px; }
+  .form-card{ background:#fff; border:1px solid var(--fog-dim); border-radius:20px; padding:36px 32px; box-shadow:0 24px 50px -30px rgba(36,29,46,.25); }
+  @media (max-width:600px){ .form-card{ padding:26px 22px; } }
+
+  /* ---------- TABS ---------- */
+  .tabs{ display:flex; background:var(--fog); border-radius:100px; padding:5px; margin-bottom:28px; }
+  .tab-btn{
+    flex:1; background:none; border:none; padding:11px 16px; border-radius:100px; cursor:pointer;
+    font-family:'Noto Kufi Arabic',sans-serif; font-weight:700; font-size:14px; color:var(--text-muted-light); transition:.2s;
+  }
+  .tab-btn.active{ background:var(--ink); color:var(--fog); }
+
+  .field{ margin-bottom:20px; }
+  .field label{ display:block; font-family:'Noto Kufi Arabic',sans-serif; font-weight:700; font-size:14px; color:var(--ink); margin-bottom:8px; }
+  .field input{
+    width:100%; border:1.5px solid var(--fog-dim); border-radius:12px; padding:13px 15px;
+    font-family:'IBM Plex Sans Arabic', sans-serif; font-size:15px; color:var(--text-on-light);
+    background:var(--fog); transition:.15s;
+  }
+  .field input:focus{ outline:none; border-color:var(--clarity); background:#fff; }
+  .field .hint{ font-size:12px; color:var(--text-muted-light); margin-top:6px; }
+  .error-msg{ color:var(--alert); font-size:12.5px; margin-top:6px; display:none; }
+  .error-msg.active{ display:block; }
+
+  .form-error-box{
+    display:none; background:rgba(181,85,91,.1); color:var(--alert); font-size:13px; font-weight:600;
+    padding:12px 14px; border-radius:10px; margin-bottom:18px; text-align:center;
+  }
+  .form-error-box.active{ display:block; }
+
+  .btn-primary{
+    background:var(--ink); color:var(--fog); font-weight:700; font-size:15px; padding:14px 30px;
+    border-radius:100px; border:none; cursor:pointer; font-family:inherit; transition:.2s; width:100%; margin-top:8px;
+  }
+  .btn-primary:hover{ background:var(--ink-soft); }
+
+  .switch-link{ text-align:center; margin-top:22px; font-size:13.5px; color:var(--text-muted-light); }
+  .switch-link a, .switch-link button{ color:var(--clarity); font-weight:700; background:none; border:none; font-family:inherit; font-size:inherit; cursor:pointer; padding:0; }
+
+  .success-box{ display:none; text-align:center; padding:20px 0; }
+  .success-box.active{ display:block; }
+  .success-box .check{ width:56px; height:56px; border-radius:50%; background:var(--clarity); display:flex; align-items:center; justify-content:center; margin:0 auto 18px; }
+  .success-box h2{ font-size:20px; color:var(--ink); margin-bottom:8px; }
+  .success-box p{ font-size:14px; color:var(--text-muted-light); }
+
+  .disclaimer{ background:var(--fog); border:1px solid var(--fog-dim); border-radius:var(--radius); padding:14px 16px; font-size:12px; color:var(--text-muted-light); margin-top:24px; text-align:center; }
+
+  footer{ background:var(--ink); color:var(--text-muted-dark); padding:44px 0 28px; text-align:center; font-size:12.5px; }
+  footer .brand{ display:block; margin-bottom:10px; font-size:18px; }
+</style>
+</head>
+<body>
+
+<site-nav></site-nav>
+
+<header class="page-head">
+  <div class="wrap">
+    <div class="eyebrow">حسابك في بوضوح</div>
+    <h1 id="pageTitle">إنشاء حساب جديد</h1>
+    <p id="pageSubtitle">احفظ نتائج اختباراتك وتابع تقدمك في أي وقت تعود فيه للموقع.</p>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <div class="form-card">
+
+      <div class="tabs">
+        <button type="button" class="tab-btn active" id="tabSignup">إنشاء حساب</button>
+        <button type="button" class="tab-btn" id="tabLogin">تسجيل الدخول</button>
+      </div>
+
+      <!-- ---- SIGNUP FORM ---- -->
+      <form id="signupForm">
+        <div class="field">
+          <label for="fullName">الاسم الكامل</label>
+          <input type="text" id="fullName" required>
+        </div>
+        <div class="field">
+          <label for="signupEmail">البريد الإلكتروني</label>
+          <input type="email" id="signupEmail" required>
+        </div>
+        <div class="field">
+          <label for="password">كلمة السر</label>
+          <input type="password" id="password" required minlength="6">
+          <div class="hint">ست أحرف على الأقل.</div>
+        </div>
+        <div class="field">
+          <label for="confirmPassword">تأكيد كلمة السر</label>
+          <input type="password" id="confirmPassword" required minlength="6">
+          <div class="error-msg" id="mismatchError">كلمتا السر غير متطابقتين.</div>
+        </div>
+
+        <button type="submit" class="btn-primary">إنشاء الحساب</button>
+      </form>
+
+      <!-- ---- LOGIN FORM ---- -->
+      <form id="loginForm" style="display:none;">
+        <div class="form-error-box" id="loginErrorBox">البريد الإلكتروني أو كلمة السر غير صحيحة.</div>
+        <div class="field">
+          <label for="loginEmail">البريد الإلكتروني</label>
+          <input type="email" id="loginEmail" required>
+        </div>
+        <div class="field">
+          <label for="loginPassword">كلمة السر</label>
+          <input type="password" id="loginPassword" required>
+        </div>
+
+        <button type="submit" class="btn-primary">تسجيل الدخول</button>
+      </form>
+
+      <div class="success-box" id="successBox">
+        <div class="check">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--ink)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <h2 id="successTitle">تم إنشاء حسابك بنجاح</h2>
+        <p>جارٍ تحويلك إلى صفحة حسابك...</p>
+      </div>
+
+      <p class="switch-link" id="switchLink">لديك حساب بالفعل؟ <button type="button" id="switchToLogin">سجّل الدخول</button></p>
+
+      <div class="disclaimer">هذه نسخة تجريبية أولية لنظام الحسابات، وتُخزَّن بياناتك في متصفحك فقط، وليست مشفّرة أو محفوظة على خادم بعد.</div>
+    </div>
+  </div>
+</main>
+
+<site-footer></site-footer>
+
+<script>
+/* ============================================================
+   بوضوح — إنشاء حساب / تسجيل الدخول (نسخة تجريبية أولية).
+   ------------------------------------------------------------
+   يُخزَّن حساب واحد فقط لكل متصفح داخل localStorage تحت المفتاح
+   'bewodoh_user'. تسجيل الدخول هنا هو مجرد مطابقة بين ما تكتبه
+   وبين هذا الحساب المخزَّن محلياً — وليس نظام مصادقة حقيقي
+   يدعم عدة مستخدمين مختلفين على نفس الجهاز.
+
+   لربط نظام حسابات حقيقي لاحقاً (يدعم عدداً غير محدود من
+   المستخدمين، ومزامنة عبر الأجهزة، وكلمات سر مشفّرة فعلياً):
+   - استخدم Firebase Authentication أو Supabase Auth، أو خادماً
+     خاصاً يتحقق من بيانات الدخول عبر قاعدة بيانات حقيقية.
+   - استبدل التحقق أدناه بطلب fetch() لنقطة نهاية تسجيل الدخول،
+     واحفظ رمز الجلسة (session token) الذي يُعيده الخادم.
+   ============================================================ */
+
+const tabSignup = document.getElementById('tabSignup');
+const tabLogin = document.getElementById('tabLogin');
+const signupForm = document.getElementById('signupForm');
+const loginForm = document.getElementById('loginForm');
+const switchLink = document.getElementById('switchLink');
+const switchToLogin = document.getElementById('switchToLogin');
+const pageTitle = document.getElementById('pageTitle');
+const pageSubtitle = document.getElementById('pageSubtitle');
+const loginErrorBox = document.getElementById('loginErrorBox');
+
+function showSignupTab(){
+  tabSignup.classList.add('active');
+  tabLogin.classList.remove('active');
+  signupForm.style.display = 'block';
+  loginForm.style.display = 'none';
+  switchLink.innerHTML = 'لديك حساب بالفعل؟ <button type="button" id="switchToLogin">سجّل الدخول</button>';
+  document.getElementById('switchToLogin').addEventListener('click', showLoginTab);
+  pageTitle.textContent = 'إنشاء حساب جديد';
+  pageSubtitle.textContent = 'احفظ نتائج اختباراتك وتابع تقدمك في أي وقت تعود فيه للموقع.';
+  loginErrorBox.classList.remove('active');
+}
+
+function showLoginTab(){
+  tabLogin.classList.add('active');
+  tabSignup.classList.remove('active');
+  loginForm.style.display = 'block';
+  signupForm.style.display = 'none';
+  switchLink.innerHTML = 'ما عندك حساب؟ <button type="button" id="switchToSignup">أنشئ حساباً جديداً</button>';
+  document.getElementById('switchToSignup').addEventListener('click', showSignupTab);
+  pageTitle.textContent = 'تسجيل الدخول';
+  pageSubtitle.textContent = 'سجّل الدخول إلى حسابك لمتابعة نتائج اختباراتك.';
+}
+
+tabSignup.addEventListener('click', showSignupTab);
+tabLogin.addEventListener('click', showLoginTab);
+switchToLogin.addEventListener('click', showLoginTab);
+
+// ---- Signup submit ----
+signupForm.addEventListener('submit', function(e){
+  e.preventDefault();
+
+  const fullName = document.getElementById('fullName').value.trim();
+  const email = document.getElementById('signupEmail').value.trim();
+  const password = document.getElementById('password').value;
+  const confirmPassword = document.getElementById('confirmPassword').value;
+  const mismatchError = document.getElementById('mismatchError');
+
+  if (password !== confirmPassword) {
+    mismatchError.classList.add('active');
+    return;
+  }
+  mismatchError.classList.remove('active');
+
+  const userData = { fullName, email, password, createdAt: new Date().toISOString() };
+  localStorage.setItem('bewodoh_user', JSON.stringify(userData));
+
+  document.querySelector('.tabs').style.display = 'none';
+  signupForm.style.display = 'none';
+  switchLink.style.display = 'none';
+  document.getElementById('successTitle').textContent = 'تم إنشاء حسابك بنجاح';
+  document.getElementById('successBox').classList.add('active');
+
+  setTimeout(() => { window.location.href = '/account/'; }, 1200);
+});
+
+// ---- Login submit ----
+loginForm.addEventListener('submit', function(e){
+  e.preventDefault();
+
+  const email = document.getElementById('loginEmail').value.trim();
+  const password = document.getElementById('loginPassword').value;
+  const stored = JSON.parse(localStorage.getItem('bewodoh_user') || 'null');
+
+  if (!stored || stored.email !== email || stored.password !== password) {
+    loginErrorBox.classList.add('active');
+    return;
+  }
+  loginErrorBox.classList.remove('active');
+
+  document.querySelector('.tabs').style.display = 'none';
+  loginForm.style.display = 'none';
+  switchLink.style.display = 'none';
+  document.getElementById('successTitle').textContent = 'تم تسجيل الدخول بنجاح';
+  document.getElementById('successBox').classList.add('active');
+
+  setTimeout(() => { window.location.href = '/account/'; }, 1000);
+});
+
+// If already signed in on this browser, hint at it.
+(function(){
+  const existing = localStorage.getItem('bewodoh_user');
+  if (existing) {
+    showLoginTab();
+  }
+})();
+</script>
+
+<script src="/components.js"></script>
+</body>
+</html>

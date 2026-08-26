@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>احجز استشارتك — بوضوح</title>
+<meta name="description" content="احجز استشارتك مع مختص نفسي مرخّص من فريق بوضوح — دعم مباشر يناسب وضعك أنت تحديداً.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@500;700;900&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#241D2E; --ink-soft:#372C46; --plum:#4A3B5C;
+    --fog:#F3EEEA; --fog-dim:#E6DFDA;
+    --clarity:#C9A15F; --clarity-soft:#E4C98A; --rose:#8B6F7E; --alert:#B5555B;
+    --text-on-dark:#EDE7E3; --text-muted-dark:#B7ACC4;
+    --text-on-light:#2A2130; --text-muted-light:#6B6072;
+    --radius:14px; --max:1080px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{ font-family:'IBM Plex Sans Arabic', sans-serif; background:var(--fog); color:var(--text-on-light); line-height:1.9; -webkit-font-smoothing:antialiased; }
+  h1,h2,h3,.kufi{ font-family:'Noto Kufi Arabic', sans-serif; }
+  a{ color:inherit; text-decoration:none; }
+  .wrap{ max-width:var(--max); margin:0 auto; padding:0 24px; }
+  .wrap-narrow{ max-width:720px; margin:0 auto; padding:0 24px; }
+  .eyebrow{ display:inline-flex; align-items:center; gap:8px; font-size:13px; color:var(--clarity); font-weight:600; margin-bottom:14px; }
+  .eyebrow::before{ content:""; width:20px; height:1px; background:var(--clarity); display:inline-block; }
+
+  nav{ position:sticky; top:0; z-index:50; background:rgba(36,29,46,.92); backdrop-filter:blur(8px); border-bottom:1px solid rgba(255,255,255,.06); }
+  nav .wrap{ display:flex; align-items:center; justify-content:space-between; padding:16px 24px; }
+  .brand{ font-family:'Noto Kufi Arabic',sans-serif; font-weight:900; font-size:22px; color:var(--fog); }
+  .brand span{ color:var(--clarity); }
+  .nav-links{ display:flex; align-items:center; gap:28px; }
+  .nav-links a{ color:var(--text-muted-dark); font-size:14px; font-weight:500; transition:color .2s; }
+  .nav-links a:hover{ color:var(--fog); }
+  a.nav-cta{ background:var(--clarity); color:var(--ink); font-weight:700; font-size:14px; padding:9px 20px; border-radius:100px; transition:.2s; }
+  a.nav-cta:hover{ background:var(--clarity-soft); }
+  @media (max-width:780px){ .nav-links{ display:none; } }
+
+  .hero{ background:radial-gradient(120% 90% at 75% 0%, var(--ink-soft) 0%, var(--ink) 55%, #1A1522 100%); padding:76px 0 60px; text-align:center; }
+  .hero .eyebrow{ justify-content:center; color:var(--clarity-soft); }
+  .hero h1{ color:var(--fog); font-size:clamp(30px,4.8vw,46px); font-weight:900; max-width:20ch; margin:0 auto; line-height:1.4; }
+  .hero p{ color:var(--text-muted-dark); font-size:16px; max-width:52ch; margin:16px auto 0; }
+  .trust-row{ display:flex; gap:28px; justify-content:center; flex-wrap:wrap; margin-top:32px; }
+  .trust-item{ display:flex; align-items:center; gap:8px; color:var(--text-muted-dark); font-size:13.5px; }
+  .trust-item svg{ width:16px; height:16px; color:var(--clarity-soft); }
+
+  section{ padding:64px 0; }
+  .section-title{ font-size:clamp(24px,3.4vw,32px); font-weight:900; margin-bottom:10px; }
+  .section-lede{ font-size:15.5px; color:var(--text-muted-light); max-width:60ch; margin-bottom:36px; }
+
+  /* ---------- TYPE CARDS ---------- */
+  .type-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:18px; }
+  @media (max-width:900px){ .type-grid{ grid-template-columns:repeat(2,1fr); } }
+  @media (max-width:560px){ .type-grid{ grid-template-columns:1fr; } }
+  .type-card{
+    background:#fff; border:1.5px solid var(--fog-dim); border-radius:18px; padding:26px 22px; cursor:pointer;
+    transition:.2s; text-align:center;
+  }
+  .type-card:hover{ border-color:var(--clarity); transform:translateY(-3px); }
+  .type-card.selected{ border-color:var(--clarity); background:rgba(201,161,95,.08); }
+  .type-icon{ width:48px; height:48px; border-radius:50%; background:var(--ink); display:flex; align-items:center; justify-content:center; margin:0 auto 16px; }
+  .type-icon svg{ width:22px; height:22px; color:var(--clarity-soft); }
+  .type-card h3{ font-size:15.5px; margin-bottom:8px; }
+  .type-card p{ font-size:12.5px; color:var(--text-muted-light); }
+
+  /* ---------- TRIAGE QUESTIONS ---------- */
+  .triage-block{ display:none; margin-top:40px; }
+  .triage-block.active{ display:block; animation:fadeIn .35s ease; }
+  @keyframes fadeIn{ from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);} }
+  .triage-card{ background:#fff; border:1px solid var(--fog-dim); border-radius:20px; padding:36px 32px; max-width:640px; margin:0 auto; box-shadow:0 24px 50px -30px rgba(36,29,46,.2); }
+  @media (max-width:600px){ .triage-card{ padding:26px 20px; } }
+  .progress-row{ display:flex; align-items:center; gap:14px; margin-bottom:26px; }
+  .progress-track{ flex:1; height:6px; background:var(--fog-dim); border-radius:100px; overflow:hidden; }
+  .progress-fill{ height:100%; background:var(--clarity); border-radius:100px; transition:width .4s ease; }
+  .progress-label{ font-size:12px; color:var(--text-muted-light); font-weight:600; white-space:nowrap; }
+  .q-text{ font-family:'Noto Kufi Arabic',sans-serif; font-size:18px; font-weight:700; margin-bottom:20px; }
+  .q-options{ display:flex; flex-direction:column; gap:10px; }
+  .q-opt{ border:1.5px solid var(--fog-dim); border-radius:12px; padding:13px 16px; background:var(--fog); cursor:pointer; font-size:14.5px; text-align:right; transition:.15s; font-family:inherit; }
+  .q-opt:hover{ border-color:var(--clarity); background:#fff; }
+
+  .urgent-note{ background:var(--alert); color:#fff; border-radius:16px; padding:22px 24px; max-width:640px; margin:0 auto; }
+  .urgent-note h3{ font-size:16px; margin-bottom:8px; }
+  .urgent-note p{ font-size:13.5px; opacity:.95; margin-bottom:10px; }
+  .urgent-note a{ display:inline-block; background:rgba(255,255,255,.18); padding:8px 14px; border-radius:8px; font-size:13px; font-weight:700; margin-top:4px; }
+
+  /* ---------- PACKAGES ---------- */
+  .reco-banner{ display:none; background:var(--ink); border-radius:16px; padding:20px 24px; text-align:center; max-width:640px; margin:32px auto 0; }
+  .reco-banner.active{ display:block; }
+  .reco-banner span{ color:var(--clarity-soft); font-weight:700; font-size:13px; }
+  .reco-banner p{ color:var(--fog); font-size:15px; margin-top:6px; }
+
+  .pkg-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:18px; margin-top:20px; }
+  @media (max-width:900px){ .pkg-grid{ grid-template-columns:repeat(2,1fr); } }
+  @media (max-width:560px){ .pkg-grid{ grid-template-columns:1fr; } }
+  .pkg-card{ background:#fff; border:1.5px solid var(--fog-dim); border-radius:18px; padding:26px 22px; position:relative; transition:.2s; }
+  .pkg-card.recommended{ border-color:var(--clarity); box-shadow:0 20px 40px -24px rgba(201,161,95,.4); }
+  .pkg-badge{ position:absolute; top:-11px; right:20px; background:var(--clarity); color:var(--ink); font-size:11px; font-weight:700; padding:4px 12px; border-radius:100px; }
+  .pkg-card h3{ font-size:16px; margin-bottom:6px; }
+  .pkg-card .pkg-desc{ font-size:12.5px; color:var(--text-muted-light); margin-bottom:16px; min-height:32px; }
+  .pkg-price{ font-family:'Noto Kufi Arabic',sans-serif; font-weight:900; font-size:24px; color:var(--ink); margin-bottom:2px; }
+  .pkg-price span{ font-size:12px; font-weight:500; color:var(--text-muted-light); display:block; margin-top:2px; }
+  .pkg-select-btn{ width:100%; margin-top:18px; background:var(--fog); border:1.5px solid var(--fog-dim); color:var(--ink); font-weight:700; font-size:13.5px; padding:11px; border-radius:100px; cursor:pointer; font-family:inherit; transition:.2s; }
+  .pkg-select-btn:hover, .pkg-select-btn.chosen{ background:var(--ink); color:var(--fog); border-color:var(--ink); }
+
+  /* ---------- BOOKING FORM ---------- */
+  .booking-card{ background:#fff; border:1px solid var(--fog-dim); border-radius:20px; padding:38px 34px; box-shadow:0 24px 50px -30px rgba(36,29,46,.2); }
+  @media (max-width:600px){ .booking-card{ padding:26px 20px; } }
+  .field{ margin-bottom:20px; }
+  .field label{ display:block; font-family:'Noto Kufi Arabic',sans-serif; font-weight:700; font-size:14px; color:var(--ink); margin-bottom:8px; }
+  .field input, .field select, .field textarea{
+    width:100%; border:1.5px solid var(--fog-dim); border-radius:12px; padding:13px 15px;
+    font-family:'IBM Plex Sans Arabic', sans-serif; font-size:15px; color:var(--text-on-light); background:var(--fog); transition:.15s;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus{ outline:none; border-color:var(--clarity); background:#fff; }
+  .field textarea{ min-height:110px; resize:vertical; }
+  .btn-primary{ background:var(--ink); color:var(--fog); font-weight:700; font-size:15px; padding:14px 30px; border-radius:100px; border:none; cursor:pointer; font-family:inherit; transition:.2s; width:100%; }
+  .btn-primary:hover{ background:var(--ink-soft); }
+  .success-box{ display:none; text-align:center; padding:20px 0; }
+  .success-box.active{ display:block; }
+  .success-box .check{ width:56px; height:56px; border-radius:50%; background:var(--clarity); display:flex; align-items:center; justify-content:center; margin:0 auto 18px; }
+  .success-box h2{ font-size:20px; margin-bottom:8px; }
+  .success-box p{ font-size:14px; color:var(--text-muted-light); }
+
+  /* ---------- FAQ ---------- */
+  .faq-item{ border-bottom:1px solid var(--fog-dim); padding:22px 0; }
+  .faq-q{ font-family:'Noto Kufi Arabic',sans-serif; font-weight:700; font-size:16px; cursor:pointer; display:flex; justify-content:space-between; align-items:center; }
+  .faq-q svg{ width:16px; height:16px; color:var(--clarity); flex-shrink:0; transition:.2s; }
+  .faq-item.open .faq-q svg{ transform:rotate(180deg); }
+  .faq-a{ max-height:0; overflow:hidden; transition:max-height .3s ease; }
+  .faq-item.open .faq-a{ max-height:200px; }
+  .faq-a-inner{ padding-top:12px; font-size:14.5px; color:var(--text-muted-light); }
+
+  .disclaimer-note{ background:#fff; border:1px solid var(--fog-dim); border-radius:var(--radius); padding:22px 24px; }
+  .disclaimer-note p{ font-size:13.5px; color:var(--text-muted-light); }
+
+  footer{ background:var(--ink); color:var(--text-muted-dark); padding:44px 0 28px; text-align:center; font-size:12.5px; }
+  footer .brand{ display:block; margin-bottom:10px; font-size:18px; }
+</style>
+</head>
+<body>
+
+<site-nav></site-nav>
+
+<header class="hero">
+  <div class="wrap-narrow">
+    <div class="eyebrow">استشارات فردية</div>
+    <h1>قبل ما تقرر لحالك، احكِ مع حدا يفهم</h1>
+    <p>دعم مباشر من مختصين نفسيين مرخّصين، يناسب وضعك أنت تحديداً — مش وصفة عامة تُطبَّق على الكل.</p>
+    <div class="trust-row">
+      <div class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6z"/></svg> مختصون مرخّصون</div>
+      <div class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg> جلسات مرنة عن بُعد</div>
+      <div class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2z"/><path d="M9 12l2 2 4-4"/></svg> خصوصية تامة</div>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <div class="eyebrow" style="justify-content:center;">الخطوة الأولى</div>
+    <h2 class="section-title" style="text-align:center;">شو نوع الاستشارة يلي بتحتاجها؟</h2>
+    <p class="section-lede" style="text-align:center; margin-left:auto; margin-right:auto;">اختر الأقرب لوضعك، وبنسألك كم سؤال بسيط عشان نقترح عليك الخيار الأنسب.</p>
+
+    <div class="type-grid" id="typeGrid">
+      <div class="type-card" data-type="relationship">
+        <div class="type-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8Z"/></svg></div>
+        <h3>علاقتي الحالية</h3>
+        <p>بدي أفهم إذا في نمط بعلاقتي يستاهل انتباه.</p>
+      </div>
+      <div class="type-card" data-type="breakup">
+        <div class="type-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12h8"/></svg></div>
+        <h3>التعافي بعد انفصال</h3>
+        <p>بدي دعم أتجاوز فيه مرحلة صعبة بعد علاقة انتهت.</p>
+      </div>
+      <div class="type-card" data-type="mental-health">
+        <div class="type-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M2 12h4M18 12h4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8"/><circle cx="12" cy="12" r="4"/></svg></div>
+        <h3>صحتي النفسية عموماً</h3>
+        <p>قلق، توتر، أو حاسس إني محتاج أحكي مع حدا بس.</p>
+      </div>
+      <div class="type-card" data-type="urgent">
+        <div class="type-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L14.7 3.86a2 2 0 0 0-3.4 0z"/></svg></div>
+        <h3>دعم عاجل الآن</h3>
+        <p>بدي أحكي مع حدا خلال الساعات الجاية.</p>
+      </div>
+    </div>
+
+    <!-- Urgent path: skip straight to crisis note + recommendation -->
+    <div class="triage-block" id="urgentBlock">
+      <div class="urgent-note">
+        <h3>نحن هنا من أجلك</h3>
+        <p>إذا كنت تحتاج التحدث مع أحد الآن، تواصل فوراً مع أحد جهات الدعم التالية في الأردن، وسنرتّب لك أيضاً استشارة عاجلة بأقرب وقت ممكن.</p>
+        <a href="tel:00962795440416">الخط الساخن لأخصائيي علم النفس العيادي (JCPA) — 00962795440416</a>
+        <a href="tel:911" style="margin-right:8px;">حالات الطوارئ — 911</a>
+      </div>
+    </div>
+
+    <!-- Regular triage flow for the other 3 types -->
+    <div class="triage-block" id="triageBlock">
+      <div class="triage-card">
+        <div class="progress-row">
+          <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:33%;"></div></div>
+          <span class="progress-label" id="progressLabel">١ / ٣</span>
+        </div>
+        <div id="questionsHost"></div>
+      </div>
+    </div>
+
+    <div class="reco-banner" id="recoBanner">
+      <span id="recoLabel">التوصية بناءً على إجاباتك</span>
+      <p id="recoText"></p>
+    </div>
+  </div>
+</section>
+
+<section id="packages" style="background:#fff;">
+  <div class="wrap">
+    <div class="eyebrow" style="justify-content:center;">الباقات والأسعار</div>
+    <h2 class="section-title" style="text-align:center;">اختر ما يناسبك</h2>
+    <p class="section-lede" style="text-align:center; margin-left:auto; margin-right:auto;">كل الباقات تقدر تلغي الاشتراك فيها بأي وقت. الأسعار بالدينار الأردني.</p>
+
+    <pricing-cards class="pkg-grid"></pricing-cards>
+  </div>
+</section>
+
+<section id="booking-form">
+  <div class="wrap-narrow">
+    <div class="eyebrow" style="justify-content:center;">آخر خطوة</div>
+    <h2 class="section-title" style="text-align:center;">أكمل بيانات الحجز</h2>
+    <p class="section-lede" style="text-align:center; margin-left:auto; margin-right:auto;">راح يتواصل معك فريقنا خلال ٢٤ ساعة لتأكيد الموعد وطريقة الدفع.</p>
+
+    <div class="booking-card">
+      <form id="bookingForm">
+        <div class="field">
+          <label for="bkName">الاسم الكامل</label>
+          <input type="text" id="bkName" required>
+        </div>
+        <div class="field">
+          <label for="bkEmail">البريد الإلكتروني</label>
+          <input type="email" id="bkEmail" required>
+        </div>
+        <div class="field">
+          <label for="bkPhone">رقم الهاتف / واتساب</label>
+          <input type="tel" id="bkPhone" required>
+        </div>
+        <div class="field">
+          <label for="bkPackage">الباقة المطلوبة</label>
+          <select id="bkPackage" required>
+            <option value="">اختر باقة...</option>
+            <option value="استشارة سريعة">استشارة سريعة — ٢٠ د.أ</option>
+            <option value="باقة الانطلاقة">باقة الانطلاقة — ٧٥ د.أ / شهرياً</option>
+            <option value="باقة المرافقة">باقة المرافقة — ١٣٥ د.أ / كل ٣ أشهر</option>
+            <option value="دعم فوري">دعم فوري — ٣٠ د.أ</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="bkMessage">أي شيء تحب تخبرنا فيه قبل الجلسة؟ (اختياري)</label>
+          <textarea id="bkMessage" placeholder="مش لازم تكتب تفاصيل كثيرة — بس أي شيء يساعد المختص يفهم وضعك أكتر."></textarea>
+        </div>
+        <button type="submit" class="btn-primary">إرسال طلب الحجز</button>
+      </form>
+
+      <div class="success-box" id="successBox">
+        <div class="check">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--ink)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <h2>تم استلام طلب حجزك</h2>
+        <p>سيتواصل معك فريقنا خلال ٢٤ ساعة لتأكيد الموعد وطريقة الدفع.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="background:#fff;">
+  <div class="wrap-narrow">
+    <div class="eyebrow" style="justify-content:center;">قبل أن تحجز</div>
+    <h2 class="section-title" style="text-align:center;">أسئلة شائعة</h2>
+
+    <div class="faq-item">
+      <div class="faq-q">هل الاستشارات تُعقد عن بُعد أم حضورياً؟<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></div>
+      <div class="faq-a"><div class="faq-a-inner">جميع الاستشارات تُعقد عن بُعد (مكالمة صوتية أو فيديو) عبر رابط آمن يصلك بعد تأكيد الحجز، بما يناسب وقتك ويحافظ على خصوصيتك.</div></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">مين المختصون اللي رح أتحدث معهم؟<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></div>
+      <div class="faq-a"><div class="faq-a-inner">مختصون نفسيون مرخّصون نتحقق من مؤهلاتهم قبل انضمامهم لفريق بوضوح. بعد الحجز، بنحدد لك المختص الأنسب حسب نوع الاستشارة يلي اخترتها.</div></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">شو لو ما ناسبني المختص الأول؟<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></div>
+      <div class="faq-a"><div class="faq-a-inner">تقدر تطلب تغيير المختص بأي وقت من غير أي تعقيد — هدفنا إنك تحس بالراحة الكافية عشان الاستشارة تكون مفيدة فعلاً.</div></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">هل بياناتي وحديثي مع المختص سري؟<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></div>
+      <div class="faq-a"><div class="faq-a-inner">نعم. كل جلساتك سرية بينك وبين المختص، وبياناتك الشخصية محمية ولا تُشارك مع أي طرف ثالث. راجع سياسة الخصوصية لمزيد من التفاصيل.</div></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">هل أقدر ألغي أو أعيد جدولة موعدي؟<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></div>
+      <div class="faq-a"><div class="faq-a-inner">نعم، تقدر تعيد جدولة موعدك حتى ٢٤ ساعة قبل الجلسة من غير أي رسوم إضافية.</div></div>
+    </div>
+
+    <div class="disclaimer-note" style="margin-top:32px;">
+      <p><b>تنويه مهم:</b> الاستشارات المقدمة من فريق بوضوح مكملة للرعاية الطبية وليست بديلاً عنها في الحالات التي تتطلب تشخيصاً أو علاجاً طبياً متخصصاً. إذا كانت سلامتك الجسدية أو النفسية مهددة بشكل مباشر، توجّه فوراً لجهة دعم مختصة أو أقرب طوارئ.</p>
+    </div>
+  </div>
+</section>
+
+<site-footer></site-footer>
+
+<script>
+/* ============================================================
+   بوضوح — صفحة حجز الاستشارات (نسخة تجريبية أولية).
+   ------------------------------------------------------------
+   هذه الصفحة الآن واجهة كاملة لتدفق الحجز (اختيار النوع، أسئلة
+   فرز بسيطة، توصية بباقة، ونموذج حجز)، لكن لا يوجد خلفها بعد:
+   - نظام دفع حقيقي (Stripe / PayTabs / HyperPay وغيرها).
+   - نظام حجز مواعيد فعلي يربط بتقويم المختصين.
+   - قاعدة بيانات تُخزَّن فيها طلبات الحجز.
+   حالياً، الإرسال يعرض رسالة تأكيد فقط دون أي معالجة حقيقية.
+   لتفعيلها فعلياً، تحتاج ربط نموذج الحجز بخادم خاص يتعامل مع
+   الدفع والجدولة الحقيقية.
+   ============================================================ */
+
+// ---------- Type selection + triage questions ----------
+const TRIAGE_QUESTIONS = {
+  relationship: [
+    { text: "هل تشعر أن أنماطاً معينة في علاقتك تتكرر وتقلقك؟", options: [
+      { label: "نادراً", pts: 0 }, { label: "أحياناً", pts: 1 }, { label: "بشكل متكرر ومستمر", pts: 2 } ]},
+    { text: "هل حاولت التحدث عن هذا القلق مع شريكك من قبل؟", options: [
+      { label: "نعم وتحسن الوضع", pts: 0 }, { label: "حاولت لكن لم يتغير شيء", pts: 1 }, { label: "لم أستطع المحاولة بعد", pts: 2 } ]},
+    { text: "كم من الوقت وأنت تشعر بهذا القلق؟", options: [
+      { label: "أقل من شهر", pts: 0 }, { label: "بضعة أشهر", pts: 1 }, { label: "أكثر من سنة", pts: 2 } ]},
+  ],
+  breakup: [
+    { text: "متى انتهت العلاقة؟", options: [
+      { label: "منذ أكثر من سنة", pts: 0 }, { label: "خلال الأشهر الماضية", pts: 1 }, { label: "خلال الأسابيع الماضية", pts: 2 } ]},
+    { text: "هل ما زلت على تواصل متكرر مع الشخص السابق؟", options: [
+      { label: "لا إطلاقاً", pts: 0 }, { label: "أحياناً", pts: 1 }, { label: "نعم بشكل متكرر", pts: 2 } ]},
+    { text: "كيف تصف تأثير هذا الانفصال على حياتك اليومية؟", options: [
+      { label: "محدود", pts: 0 }, { label: "ملحوظ أحياناً", pts: 1 }, { label: "يؤثر بشكل كبير", pts: 2 } ]},
+  ],
+  "mental-health": [
+    { text: "هل يؤثر القلق أو التوتر على حياتك اليومية؟", options: [
+      { label: "نادراً", pts: 0 }, { label: "أحياناً", pts: 1 }, { label: "بشكل متكرر", pts: 2 } ]},
+    { text: "كيف كان نومك خلال الأسبوعين الماضيين؟", options: [
+      { label: "طبيعي", pts: 0 }, { label: "متقطع أحياناً", pts: 1 }, { label: "مضطرب بشكل واضح", pts: 2 } ]},
+    { text: "هل جربت من قبل التحدث مع مختص نفسي؟", options: [
+      { label: "نعم وأفادني", pts: 0 }, { label: "لا، هذه أول مرة", pts: 1 }, { label: "جربت لكن لم أكمل", pts: 2 } ]},
+  ],
+};
+
+const PACKAGE_RECOMMENDATIONS = [
+  { min: 0, max: 2, name: "استشارة سريعة", text: "بناءً على إجاباتك، جلسة واحدة ممكن تكون كافية حالياً للبدء والتعرف على المختص." },
+  { min: 3, max: 4, name: "باقة الانطلاقة", text: "بناءً على إجاباتك، باقة الانطلاقة (٤ جلسات شهرياً) بتعطيك متابعة حقيقية بداية جيدة." },
+  { min: 5, max: 6, name: "باقة المرافقة", text: "بناءً على إجاباتك، باقة المرافقة (٨ جلسات) بتناسب وضعك أكتر لأنها بتسمح بمتابعة أعمق." },
+];
+
+let currentType = null;
+let currentQ = 0;
+let answers = [];
+
+const typeCards = document.querySelectorAll('.type-card');
+const urgentBlock = document.getElementById('urgentBlock');
+const triageBlock = document.getElementById('triageBlock');
+const questionsHost = document.getElementById('questionsHost');
+const progressFill = document.getElementById('progressFill');
+const progressLabel = document.getElementById('progressLabel');
+const recoBanner = document.getElementById('recoBanner');
+const recoText = document.getElementById('recoText');
+const arabicNums = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
+function toArabicNum(n){ return String(n).split('').map(d => arabicNums[+d]).join(''); }
+
+typeCards.forEach(card => {
+  card.addEventListener('click', () => {
+    typeCards.forEach(c => c.classList.remove('selected'));
+    card.classList.add('selected');
+    const type = card.dataset.type;
+    currentType = type;
+    recoBanner.classList.remove('active');
+
+    if (type === 'urgent') {
+      triageBlock.classList.remove('active');
+      urgentBlock.classList.add('active');
+      window.dispatchEvent(new CustomEvent('recommend-package', { detail: { name: 'دعم فوري' } }));
+      document.getElementById('bkPackage').value = 'دعم فوري';
+      urgentBlock.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+
+    urgentBlock.classList.remove('active');
+    currentQ = 0;
+    answers = new Array(TRIAGE_QUESTIONS[type].length).fill(null);
+    triageBlock.classList.add('active');
+    renderQuestion();
+    triageBlock.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  });
+});
+
+function renderQuestion(){
+  const questions = TRIAGE_QUESTIONS[currentType];
+  const q = questions[currentQ];
+  progressFill.style.width = ((currentQ + 1) / questions.length * 100) + '%';
+  progressLabel.textContent = toArabicNum(currentQ + 1) + ' / ' + toArabicNum(questions.length);
+
+  questionsHost.innerHTML = '';
+  const qt = document.createElement('div');
+  qt.className = 'q-text';
+  qt.textContent = q.text;
+  questionsHost.appendChild(qt);
+
+  const opts = document.createElement('div');
+  opts.className = 'q-options';
+  q.options.forEach((opt, oi) => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'q-opt';
+    btn.textContent = opt.label;
+    btn.addEventListener('click', () => {
+      answers[currentQ] = opt.pts;
+      if (currentQ < questions.length - 1) {
+        currentQ++;
+        renderQuestion();
+      } else {
+        showRecommendation();
+      }
+    });
+    opts.appendChild(btn);
+  });
+  questionsHost.appendChild(opts);
+}
+
+function showRecommendation(){
+  const score = answers.reduce((a, b) => a + b, 0);
+  const reco = PACKAGE_RECOMMENDATIONS.find(r => score >= r.min && score <= r.max) || PACKAGE_RECOMMENDATIONS[PACKAGE_RECOMMENDATIONS.length - 1];
+  recoText.textContent = reco.text;
+  recoBanner.classList.add('active');
+  window.dispatchEvent(new CustomEvent('recommend-package', { detail: { name: reco.name } }));
+  document.getElementById('bkPackage').value = reco.name;
+  recoBanner.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+// ---------- Package selection (handled by <pricing-cards>; we just listen) ----------
+window.addEventListener('package-selected', (e) => {
+  document.getElementById('bkPackage').value = e.detail.name;
+  document.getElementById('booking-form').scrollIntoView({ behavior: 'smooth', block: 'start' });
+});
+
+// ---------- Booking form ----------
+document.getElementById('bookingForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  document.getElementById('bookingForm').style.display = 'none';
+  document.getElementById('successBox').classList.add('active');
+});
+
+// ---------- FAQ accordion ----------
+document.querySelectorAll('.faq-q').forEach(q => {
+  q.addEventListener('click', () => {
+    const item = q.parentElement;
+    const wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!wasOpen) item.classList.add('open');
+  });
+});
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/supabase-config.js"></script>
+<script src="/components.js"></script>
+</body>
+</html>

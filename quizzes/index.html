@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الاختبارات — بوضوح</title>
+<meta name="description" content="مجموعة اختبارات تفاعلية من بوضوح تساعدك تفهم علاقتك، احتياجاتك، ونمط تعلقك بشكل أوضح.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@500;700;900&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#241D2E; --ink-soft:#372C46; --plum:#4A3B5C;
+    --fog:#F3EEEA; --fog-dim:#E6DFDA;
+    --clarity:#C9A15F; --clarity-soft:#E4C98A; --rose:#8B6F7E; --alert:#B5555B;
+    --text-on-dark:#EDE7E3; --text-muted-dark:#B7ACC4;
+    --text-on-light:#2A2130; --text-muted-light:#6B6072;
+    --radius:14px; --max:1080px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{ font-family:'IBM Plex Sans Arabic', sans-serif; background:var(--fog); color:var(--text-on-light); line-height:1.9; -webkit-font-smoothing:antialiased; }
+  h1,h2,h3,.kufi{ font-family:'Noto Kufi Arabic', sans-serif; }
+  a{ color:inherit; text-decoration:none; }
+  .wrap{ max-width:var(--max); margin:0 auto; padding:0 24px; }
+  .eyebrow{ display:inline-flex; align-items:center; gap:8px; font-size:13px; color:var(--clarity); font-weight:600; margin-bottom:14px; }
+  .eyebrow::before{ content:""; width:20px; height:1px; background:var(--clarity); display:inline-block; }
+
+  nav{ position:sticky; top:0; z-index:50; background:rgba(36,29,46,.92); backdrop-filter:blur(8px); border-bottom:1px solid rgba(255,255,255,.06); }
+  nav .wrap{ display:flex; align-items:center; justify-content:space-between; padding:16px 24px; }
+  .brand{ font-family:'Noto Kufi Arabic',sans-serif; font-weight:900; font-size:22px; color:var(--fog); }
+  .brand span{ color:var(--clarity); }
+  .nav-links{ display:flex; align-items:center; gap:28px; }
+  .nav-links a{ color:var(--text-muted-dark); font-size:14px; font-weight:500; transition:color .2s; text-decoration:none; }
+  .nav-links a:hover{ color:var(--fog); }
+  .nav-links a.active{ color:var(--clarity-soft); }
+  a.nav-cta{ background:var(--clarity); color:var(--ink); font-weight:700; font-size:14px; padding:9px 20px; border-radius:100px; transition:.2s; text-decoration:none; }
+  a.nav-cta:hover{ background:var(--clarity-soft); }
+  @media (max-width:780px){ .nav-links{ display:none; } }
+
+  .page-head{
+    background:radial-gradient(120% 90% at 75% 0%, var(--ink-soft) 0%, var(--ink) 55%, #1A1522 100%);
+    padding:80px 0 56px; text-align:center;
+  }
+  .page-head .eyebrow{ justify-content:center; color:var(--clarity-soft); }
+  .page-head h1{ color:var(--fog); font-size:clamp(30px,4.6vw,46px); font-weight:900; margin:0 auto; max-width:20ch; }
+  .page-head p{ color:var(--text-muted-dark); font-size:16px; max-width:56ch; margin:16px auto 0; }
+
+  .quiz-grid{ padding:56px 0 100px; display:grid; grid-template-columns:repeat(2,1fr); gap:26px; }
+  .quiz-card{
+    background:#fff; border:1px solid var(--fog-dim); border-radius:20px; overflow:hidden;
+    display:flex; flex-direction:column; transition:transform .2s ease, box-shadow .2s ease; text-decoration:none; color:inherit;
+  }
+  .quiz-card:hover{ transform:translateY(-4px); box-shadow:0 24px 46px -24px rgba(36,29,46,.28); }
+  .card-visual{
+    height:150px; display:flex; align-items:center; justify-content:center;
+    background:linear-gradient(135deg, var(--ink-soft), var(--ink)); position:relative;
+  }
+  .card-visual svg{ width:52px; height:52px; position:relative; z-index:1; }
+  .card-body{ padding:26px 26px 28px; display:flex; flex-direction:column; gap:12px; flex:1; }
+  .card-format{ display:inline-flex; align-items:center; gap:6px; font-size:11.5px; font-weight:700; color:#8a6a2e; background:rgba(201,161,95,.15); padding:4px 12px; border-radius:100px; width:fit-content; }
+  .card-body h3{ font-size:19px; line-height:1.5; }
+  .card-body p{ font-size:14.5px; color:var(--text-muted-light); flex:1; }
+  .card-cta{ display:flex; align-items:center; gap:6px; font-size:14px; font-weight:700; color:var(--clarity); margin-top:4px; }
+  .card-cta svg{ width:15px; height:15px; transition:transform .2s; }
+  .quiz-card:hover .card-cta svg{ transform:translateX(-4px); }
+
+  @media (max-width:820px){ .quiz-grid{ grid-template-columns:1fr; } }
+
+  footer{ background:var(--ink); color:var(--text-muted-dark); padding:44px 0 28px; text-align:center; font-size:12.5px; }
+  footer .brand{ display:block; margin-bottom:10px; font-size:18px; }
+</style>
+</head>
+<body>
+
+<site-nav active="quizzes"></site-nav>
+
+
+<header class="page-head">
+  <div class="wrap">
+    <div class="eyebrow">الاختبارات</div>
+    <h1>اختبارات تفاعلية تساعدك تشوف علاقتك بوضوح</h1>
+    <p>ثماني أدوات قصيرة، كل واحدة تعمل على زاوية مختلفة — علاقتك، تصرفاتك، احتياجاتك، نمط تعلقك، وصحتك النفسية.</p>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <div class="quiz-grid">
+
+      <a href="/quiz/" class="quiz-card">
+        <div class="card-visual">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--clarity-soft)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8Z"/></svg>
+        </div>
+        <div class="card-body">
+          <span class="card-format">٨ أسئلة · دقيقتين</span>
+          <h3>ما نمط علاقتك؟</h3>
+          <p>اختبار تشخيصي يساعدك على ملاحظة أنماط علاقتك الحالية — صحية، تستحق انتباهاً، أو تستحق وقفة جدية.</p>
+          <span class="card-cta">ابدأ الاختبار <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></span>
+        </div>
+      </a>
+
+      <a href="/quiz-self-check/" class="quiz-card">
+        <div class="card-visual">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--clarity-soft)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/><path d="M15 3l1.5 1.5L20 1"/></svg>
+        </div>
+        <div class="card-body">
+          <span class="card-format">٩ أسئلة · دقيقتين</span>
+          <h3>هل تصرفاتك ممكن تأذي علاقتك؟</h3>
+          <p>ليس السؤال دائماً عن الطرف الآخر — هذا اختبار يساعدك على مراجعة تصرفاتك أنت بصدق ودون حكم.</p>
+          <span class="card-cta">ابدأ الاختبار <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></span>
+        </div>
+      </a>
+
+      <a href="/quiz-life-wheel/" class="quiz-card">
+        <div class="card-visual">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--clarity-soft)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18M6 6l12 12M18 6L6 18"/></svg>
+        </div>
+        <div class="card-body">
+          <span class="card-format">تفاعلي · ٣ دقائق</span>
+          <h3>عجلة العلاقة</h3>
+          <p>حرّك المؤشرات وشاهد عجلتك تُرسم مباشرة أمامك على ثمانية محاور مختلفة في علاقتك.</p>
+          <span class="card-cta">جرّب العجلة <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></span>
+        </div>
+      </a>
+
+      <a href="/quiz-needs/" class="quiz-card">
+        <div class="card-visual">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--clarity-soft)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8Z"/><circle cx="12" cy="10" r="2"/></svg>
+        </div>
+        <div class="card-body">
+          <span class="card-format">١٠ أسئلة · ٣ دقائق</span>
+          <h3>ما احتياجاتك العلاقاتية الأساسية؟</h3>
+          <p>كل شخص يحتاج شيئاً مختلفاً حتى يشعر بالحب والأمان. اكتشف احتياجك الأساسي وكيف تعبّر عنه.</p>
+          <span class="card-cta">ابدأ الاختبار <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></span>
+        </div>
+      </a>
+
+      <a href="/quiz-attachment/" class="quiz-card">
+        <div class="card-visual">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--clarity-soft)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="12" r="4"/><circle cx="17" cy="12" r="4"/><path d="M11 12h2"/></svg>
+        </div>
+        <div class="card-body">
+          <span class="card-format">شرح + ١٢ سؤال · ٤ دقائق</span>
+          <h3>ما نمط التعلق لديك؟</h3>
+          <p>يبدأ بشرح مبسّط لنظرية التعلق (آمن، قلق، متجنب، مضطرب)، وبعدها اختبار يساعدك على التعرّف على نمطك أنت.</p>
+          <span class="card-cta">ابدأ الاختبار <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></span>
+        </div>
+      </a>
+
+      <a href="/quiz-narcissism/" class="quiz-card">
+        <div class="card-visual">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--clarity-soft)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8"/></svg>
+        </div>
+        <div class="card-body">
+          <span class="card-format">٩ أسئلة · قياس شدة الأعراض</span>
+          <h3>اختبار الشخصية النرجسية</h3>
+          <p>أداة تقييم ذاتي تقيس سمات الحاجة إلى الإعجاب، والعظمة، ونقص التعاطف، والشعور بالأحقية.</p>
+          <span class="card-cta">ابدأ الاختبار <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></span>
+        </div>
+      </a>
+
+      <a href="/quiz-depression/" class="quiz-card">
+        <div class="card-visual">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--clarity-soft)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 12h8M8 16h5M12 3a4 4 0 0 0-4 4c0 2 1 3 1 5H8a5 5 0 0 0 8 0h-1c0-2 1-3 1-5a4 4 0 0 0-4-4Z"/></svg>
+        </div>
+        <div class="card-body">
+          <span class="card-format">٩ أسئلة · مبني على مقياس PHQ-9 المعتمد عالمياً</span>
+          <h3>اختبار الاكتئاب</h3>
+          <p>فحص ذاتي أولي لأعراض الاكتئاب خلال الأسبوعين الماضيين، مبني على أحد أكثر المقاييس اعتماداً في العالم لهذا الغرض.</p>
+          <span class="card-cta">ابدأ الاختبار <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></span>
+        </div>
+      </a>
+
+      <a href="/quiz-phq2/" class="quiz-card">
+        <div class="card-visual">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--clarity-soft)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+        </div>
+        <div class="card-body">
+          <span class="card-format">سؤالان فقط · أقل من دقيقة · مقياس PHQ-2 المعتمد عالمياً</span>
+          <h3>اختبار الفحص السريع (PHQ-2)</h3>
+          <p>نسخة مختصرة جداً من مقياس PHQ، بسؤالين فقط، تعطيك مؤشراً سريعاً عن احتمال وجود أعراض اكتئاب تستحق متابعة.</p>
+          <span class="card-cta">ابدأ الاختبار <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></span>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<site-footer></site-footer>
+
+<script src="/components.js"></script>
+</body>
+</html>

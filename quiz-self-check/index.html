@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>اختبار: هل تصرفاتك قد تؤذي علاقتك؟ — بوضوح</title>
+<meta name="description" content="اختبار قصير يساعدك على مراجعة تصرفاتك أنت بصراحة، لا تصرفات الطرف الآخر فقط.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@500;700;900&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#241D2E; --ink-soft:#372C46; --plum:#4A3B5C;
+    --fog:#F3EEEA; --fog-dim:#E6DFDA;
+    --clarity:#C9A15F; --clarity-soft:#E4C98A; --rose:#8B6F7E; --alert:#B5555B;
+    --text-on-dark:#EDE7E3; --text-muted-dark:#B7ACC4;
+    --text-on-light:#2A2130; --text-muted-light:#6B6072;
+    --radius:14px; --max:760px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{ font-family:'IBM Plex Sans Arabic', sans-serif; background:var(--fog); color:var(--text-on-light); line-height:1.9; -webkit-font-smoothing:antialiased; }
+  h1,h2,h3,.kufi{ font-family:'Noto Kufi Arabic', sans-serif; }
+  a{ color:inherit; text-decoration:none; }
+  .wrap{ max-width:var(--max); margin:0 auto; padding:0 24px; }
+
+  nav{ position:sticky; top:0; z-index:50; background:rgba(36,29,46,.92); backdrop-filter:blur(8px); border-bottom:1px solid rgba(255,255,255,.06); }
+  nav .wrap{ display:flex; align-items:center; justify-content:space-between; padding:16px 24px; max-width:1080px; }
+  .brand{ font-family:'Noto Kufi Arabic',sans-serif; font-weight:900; font-size:22px; color:var(--fog); text-decoration:none; }
+  .brand span{ color:var(--clarity); }
+  .nav-links{ display:flex; align-items:center; gap:28px; }
+  .nav-links a{ color:var(--text-muted-dark); font-size:14px; font-weight:500; text-decoration:none; transition:color .2s; }
+  .nav-links a:hover{ color:var(--fog); }
+  a.nav-cta{ background:var(--clarity); color:var(--ink); font-weight:700; font-size:14px; padding:9px 20px; border-radius:100px; transition:.2s; }
+  a.nav-cta:hover{ background:var(--clarity-soft); }
+  @media (max-width:780px){ .nav-links{ display:none; } }
+
+  .page-head{ background:radial-gradient(120% 90% at 75% 0%, var(--ink-soft) 0%, var(--ink) 55%, #1A1522 100%); padding:64px 0 48px; text-align:center; }
+  .eyebrow{ display:inline-flex; align-items:center; gap:8px; font-size:13px; color:var(--clarity-soft); font-weight:600; margin-bottom:14px; justify-content:center; }
+  .eyebrow::before{ content:""; width:20px; height:1px; background:var(--clarity-soft); display:inline-block; }
+  .page-head h1{ color:var(--fog); font-size:clamp(28px,4.4vw,42px); font-weight:900; max-width:20ch; margin:0 auto; line-height:1.4; }
+  .page-head p{ color:var(--text-muted-dark); font-size:15.5px; max-width:48ch; margin:14px auto 0; }
+  .back-link{ display:inline-flex; align-items:center; gap:6px; font-size:13px; color:var(--clarity-soft); margin-bottom:22px; text-decoration:none; }
+
+  main{ padding:48px 0 90px; }
+  .quiz-card{ background:#fff; border:1px solid var(--fog-dim); border-radius:20px; padding:38px 34px; box-shadow:0 24px 50px -30px rgba(36,29,46,.25); }
+  @media (max-width:600px){ .quiz-card{ padding:28px 20px; } }
+
+  .progress-row{ display:flex; align-items:center; gap:14px; margin-bottom:30px; }
+  .progress-track{ flex:1; height:6px; background:var(--fog-dim); border-radius:100px; overflow:hidden; }
+  .progress-fill{ height:100%; background:var(--clarity); border-radius:100px; width:11%; transition:width .4s ease; }
+  .progress-label{ font-size:12.5px; color:var(--text-muted-light); font-weight:600; white-space:nowrap; }
+
+  .q-block{ display:none; }
+  .q-block.active{ display:block; animation:fadeIn .35s ease; }
+  @keyframes fadeIn{ from{ opacity:0; transform:translateY(6px);} to{ opacity:1; transform:translateY(0);} }
+
+  .q-text{ font-family:'Noto Kufi Arabic',sans-serif; font-size:19px; font-weight:700; line-height:1.7; margin-bottom:22px; max-width:38ch; }
+  .options{ display:flex; flex-direction:column; gap:10px; }
+  .opt{ display:flex; align-items:center; gap:12px; text-align:right; border:1.5px solid var(--fog-dim); border-radius:12px; padding:14px 16px; background:var(--fog); cursor:pointer; font-size:15px; color:var(--text-on-light); transition:.15s; width:100%; font-family:inherit; }
+  .opt:hover{ border-color:var(--clarity); background:#fff; }
+  .opt.selected{ border-color:var(--clarity); background:rgba(201,161,95,.1); }
+  .opt-dot{ width:18px; height:18px; border-radius:50%; border:1.5px solid var(--rose); flex-shrink:0; position:relative; }
+  .opt.selected .opt-dot{ border-color:var(--clarity); }
+  .opt.selected .opt-dot::after{ content:""; position:absolute; inset:3px; border-radius:50%; background:var(--clarity); }
+
+  .nav-row{ display:flex; justify-content:space-between; align-items:center; margin-top:30px; }
+  .btn-ghost{ background:none; border:none; color:var(--text-muted-light); font-size:14px; font-weight:600; cursor:pointer; font-family:inherit; padding:10px 6px; }
+  .btn-ghost:disabled{ opacity:0; pointer-events:none; }
+  .btn-next{ background:var(--ink); color:var(--fog); font-weight:700; font-size:14.5px; padding:13px 28px; border-radius:100px; border:none; cursor:pointer; font-family:inherit; transition:.2s; }
+  .btn-next:hover{ background:var(--ink-soft); }
+  .btn-next:disabled{ opacity:.4; cursor:not-allowed; }
+
+  .result-block{ display:none; }
+  .result-block.active{ display:block; animation:fadeIn .4s ease; }
+  .result-tag{ display:inline-block; font-size:12px; font-weight:700; padding:5px 14px; border-radius:100px; margin-bottom:16px; }
+  .result-title{ font-family:'Noto Kufi Arabic',sans-serif; font-size:24px; font-weight:900; margin-bottom:14px; line-height:1.5; }
+  .result-desc{ font-size:15.5px; color:var(--text-muted-light); margin-bottom:26px; max-width:56ch; }
+  .meter{ margin:26px 0 30px; }
+  .meter-track{ height:10px; border-radius:100px; background:var(--fog-dim); overflow:hidden; }
+  .meter-fill{ height:100%; border-radius:100px; transition:width 1s ease; }
+  .meter-labels{ display:flex; justify-content:space-between; font-size:11.5px; color:var(--text-muted-light); margin-top:8px; }
+  .result-points{ display:flex; flex-direction:column; gap:12px; margin:24px 0; }
+  .result-points li{ list-style:none; display:flex; gap:10px; font-size:14.5px; color:var(--text-on-light); align-items:flex-start; }
+  .result-points b{ flex-shrink:0; color:var(--clarity); font-family:'Noto Kufi Arabic',sans-serif; }
+  .related-articles{ margin-top:28px; padding-top:24px; border-top:1px solid var(--fog-dim); }
+  .related-articles h4{ font-size:14px; color:var(--text-muted-light); margin-bottom:14px; font-weight:600; }
+  .related-articles a{ display:block; text-decoration:none; color:var(--text-on-light); font-weight:600; font-size:14.5px; padding:12px 0; border-bottom:1px solid var(--fog-dim); }
+  .related-articles a:last-child{ border-bottom:none; }
+  .cta-box{ margin-top:30px; background:var(--ink); border-radius:18px; padding:30px 28px; text-align:center; background:radial-gradient(140% 140% at 50% 0%, var(--ink-soft), var(--ink)); }
+  .cta-box h3{ color:var(--fog); font-size:19px; margin-bottom:8px; }
+  .cta-box p{ color:var(--text-muted-dark); font-size:14px; max-width:44ch; margin:0 auto 20px; }
+  .btn-primary{ background:var(--clarity); color:var(--ink); font-weight:700; font-size:14.5px; padding:13px 26px; border-radius:100px; display:inline-block; text-decoration:none; }
+  .retake{ display:block; text-align:center; margin-top:22px; font-size:13.5px; color:var(--text-muted-light); text-decoration:none; }
+  .retake:hover{ color:var(--text-on-light); }
+  .disclaimer{ background:var(--fog); border:1px solid var(--fog-dim); border-radius:var(--radius); padding:18px 20px; font-size:13px; color:var(--text-muted-light); margin-top:30px; }
+
+  footer{ background:var(--ink); color:var(--text-muted-dark); padding:44px 0 28px; text-align:center; font-size:12.5px; }
+  footer .brand{ display:block; margin-bottom:10px; font-size:18px; }
+</style>
+</head>
+<body>
+
+<site-nav active="quizzes"></site-nav>
+
+<header class="page-head">
+  <div class="wrap">
+    <a href="/quizzes/" class="back-link">← كل الاختبارات</a><br>
+    <div class="eyebrow">اختبار تفاعلي · مراجعة ذاتية</div>
+    <h1>هل تصرفاتك قد تؤذي علاقتك؟</h1>
+    <p>ليس السؤال دائماً عن الطرف الآخر. تسعة أسئلة تساعدك على مراجعة تصرفاتك أنت بصراحة، ودون حكم على نفسك.</p>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <div class="quiz-card">
+
+      <div id="quizSection">
+        <div class="progress-row">
+          <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+          <span class="progress-label" id="progressLabel">١ / ٩</span>
+        </div>
+        <div id="questionsHost"></div>
+        <div class="nav-row">
+          <button class="btn-ghost" id="btnBack">السابق</button>
+          <button class="btn-next" id="btnNext" disabled>التالي</button>
+        </div>
+      </div>
+
+      <div id="resultsSection" style="display:none;">
+        <span class="result-tag" id="resultTag"></span>
+        <h2 class="result-title" id="resultTitle"></h2>
+        <p class="result-desc" id="resultDesc"></p>
+        <div class="meter">
+          <div class="meter-track"><div class="meter-fill" id="meterFill"></div></div>
+          <div class="meter-labels"><span>تصرفات صحية</span><span>تستحق عملاً جدياً</span></div>
+        </div>
+        <ul class="result-points" id="resultPoints"></ul>
+        <div class="related-articles">
+          <h4>مقالات قد تفيدك</h4>
+          <div id="relatedLinks"></div>
+        </div>
+        <div class="cta-box">
+          <h3 id="ctaTitle"></h3>
+          <p id="ctaDesc"></p>
+          <a href="/sales-page/" class="btn-primary">احجز استشارتك الأولى</a>
+        </div>
+        <a href="#" class="retake" id="retakeBtn">أعد الاختبار من جديد</a>
+        <div class="disclaimer">هذا الاختبار محتوى توعوي عام لغايات التأمل الذاتي، وليس أداة تشخيص أو بديلاً عن استشارة مختص نفسي مرخّص.</div>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<site-footer></site-footer>
+
+<script>
+const questions = [
+  { text: "حين أختلف مع شريكي في الرأي، أنا أميل...", options: [
+    { label: "إلى الاستماع إليه ومحاولة التفاهم معاً", pts: 0 },
+    { label: "إلى القبول لكن أشعر بشيء من الإحباط بداخلي", pts: 1 },
+    { label: "إلى الإصرار على رأيي حتى يوافقني", pts: 2 },
+    { label: "إلى رفع صوتي أو مغادرة الغرفة", pts: 3 },
+  ]},
+  { text: "حين يرفض شريكي طلباً مني...", options: [
+    { label: "أتقبل قراره بسهولة", pts: 0 },
+    { label: "أتقبل لكن أبقى أشعر بشيء من الزعل", pts: 1 },
+    { label: "أحاول إقناعه أكثر من مرة", pts: 2 },
+    { label: "أزعل بشكل واضح وأجعله يشعر بالذنب", pts: 3 },
+  ]},
+  { text: "حين أخطئ في موقف معين، أنا...", options: [
+    { label: "أعترف وأعتذر بسهولة", pts: 0 },
+    { label: "يصعب علي الاعتراف لكنني أعترف في النهاية", pts: 1 },
+    { label: "أجد مبررات لتصرفي", pts: 2 },
+    { label: "أحمّل الطرف الآخر سبب غلطتي", pts: 3 },
+  ]},
+  { text: "أفحص هاتف شريكي أو أطلب رؤية رسائله...", options: [
+    { label: "أبداً، أثق به", pts: 0 },
+    { label: "نادراً، لكن أحياناً أشعر بفضول", pts: 1 },
+    { label: "بشكل متكرر إذا شعرت بقلق", pts: 2 },
+    { label: "بشكل شبه يومي", pts: 3 },
+  ]},
+  { text: "حين أزعل من شريكي، طريقتي في التعبير...", options: [
+    { label: "أخبره بهدوء ما الذي أزعجني بالضبط", pts: 0 },
+    { label: "أصبح بارداً وأصمت لفترة", pts: 2 },
+    { label: "أستخدم سخرية أو تلميحات جارحة", pts: 2 },
+    { label: "أصرخ أو أستخدم كلاماً جارحاً مباشراً", pts: 3 },
+  ]},
+  { text: "علاقتي بأصدقاء وعائلة شريكي...", options: [
+    { label: "أشجعه على قضاء وقت معهم", pts: 0 },
+    { label: "لا أتدخل، لكنني لست مهتماً كثيراً", pts: 1 },
+    { label: "أعلّق سلبياً عليهم أحياناً", pts: 2 },
+    { label: "أحاول تقليل وقته معهم", pts: 3 },
+  ]},
+  { text: "إذا أخبرني شريكي أن تصرفاً معيناً مني أزعجه...", options: [
+    { label: "آخذ كلامه بجدية وأحاول التغيير", pts: 0 },
+    { label: "أستغرب في البداية لكنني أفكر فيه", pts: 1 },
+    { label: "أشعر أنه حساس زيادة عن اللزوم", pts: 2 },
+    { label: "أرد بأنه هو من فيه المشكلة لا أنا", pts: 3 },
+  ]},
+  { text: "بعد خلاف بيننا، أنا...", options: [
+    { label: "أحاول أن نتحدث ونصل إلى حل معاً", pts: 0 },
+    { label: "أنتظر أن يبادر هو بالمصالحة", pts: 1 },
+    { label: "أستخدم الصمت لفترة كوسيلة ضغط", pts: 2 },
+    { label: "أفضّل تذكيره بأخطاء قديمة", pts: 3 },
+  ]},
+  { text: "إذا شعرت بغيرة من موقف معين، أتصرف...", options: [
+    { label: "أعبّر عن شعوري بهدوء", pts: 0 },
+    { label: "أصبح أراقب أكثر بصمت", pts: 2 },
+    { label: "أسأل أسئلة كثيرة ومتكررة", pts: 2 },
+    { label: "أحاول الحد من علاقاته الاجتماعية", pts: 3 },
+  ]},
+];
+
+const results = [
+  { min: 0, max: 6, tag: "تصرفاتك غالباً صحية", tagColor: "var(--clarity)",
+    title: "إجاباتك تشير إلى أنك تتعامل باحترام وانفتاح غالباً",
+    desc: "معظم إجاباتك تدل على تصرفات صحية: تستمع، وتعترف بخطئك، وتحترم مساحة شريكك. هذا أساس قوي — استمر في مراقبة نفسك بالصدق نفسه من وقت لآخر.",
+    points: ["استمر بالنمط نفسه، فمتابعة نفسك من فترة لأخرى عادة صحية حتى لو كانت الأمور جيدة.", "إذا شعرت بموقف مختلف مستقبلاً، ارجع للسؤال نفسه: هل ردة فعلي تحترم الطرف الآخر؟"],
+    meterColor: "var(--clarity)", meterPct: 15,
+    articles: ["/article-healthy-boundaries/"],
+    ctaTitle: "هل تريد تعزيز هذا الأساس أكثر؟", ctaDesc: "استشارة قصيرة مع مختص ممكن تساعدك تحافظ على هذه العادات الصحية وتبنيها أكثر." },
+  { min: 7, max: 13, tag: "في بعض التصرفات تستحق انتباهاً", tagColor: "var(--rose)",
+    title: "هناك مزيج من تصرفات صحية وأخرى تستحق الملاحظة",
+    desc: "ليست كل إجاباتك حمراء، لكن هناك نقاطاً تكررت تستحق وقفة صادقة مع النفس. الوعي بهذه النقاط أول خطوة حقيقية للتغيير.",
+    points: ["حدد أكثر سؤالين أجبت عنهما بأعلى نقطة — هذه أقرب منطقة تستحق العمل عليها.", "جرّب في المرة القادمة التي تشعر فيها بردة الفعل نفسها أن تتوقف قبل أن ترد وتفكر بما تريد قوله بدلاً من أن تتصرف بشكل تلقائي.", "اسأل شريكك بصراحة كيف يشعر من بعض تصرفاتك — قد يوضح لك منظوره أشياء يصعب رؤيتها بمفردك."],
+    meterColor: "var(--clarity-soft)", meterPct: 45,
+    articles: ["/article-healthy-boundaries/", "/article-jealousy-vs-control/"],
+    ctaTitle: "هل تريد فهم هذه الأنماط أكثر؟", ctaDesc: "استشارة مع مختص ممكن تساعدك تفرّق بين الموقف العابر والنمط المتكرر بوضوح أكبر." },
+  { min: 14, max: 20, tag: "في أنماط تستحق العمل عليها بجدية", tagColor: "var(--alert)",
+    title: "إجاباتك تشير إلى أنماط متكررة تستحق عملاً حقيقياً",
+    desc: "يشير عدد من إجاباتك إلى تصرفات مثل صعوبة تقبّل الرفض، واستخدام الصمت أو السخرية كعقاب، أو الشك المستمر. هذه ليست مجرد لحظات عابرة.",
+    points: ["ابدأ بتوثيق المواقف التي تشعر فيها أنك رددت بشكل حاد أو مؤذٍ، بصدق ودون تبرير لنفسك.", "فكّر جدياً بالتحدث مع معالج نفسي — ليس لأنك \"شخص سيء\"، لكن لأن هذه الأنماط غالباً لها جذور تستحق فهماً أعمق.", "شارك شريكك أنك واعٍ لهذه النقاط ومتحمّس للعمل عليها — الشفافية تبني الثقة."],
+    meterColor: "var(--alert)", meterPct: 75,
+    articles: ["/article-healthy-boundaries/", "/article-silent-treatment/"],
+    ctaTitle: "هل تريد خطوات عملية تبدأ بها؟", ctaDesc: "استشارة مع مختص نفسي ممكن تساعدك تبني خطة عملية بخطوات صغيرة وواقعية." },
+  { min: 21, max: 27, tag: "يُستحسن كثيراً التحدث مع مختص", tagColor: "var(--alert)",
+    title: "معظم إجاباتك تشير إلى أنماط تستحق دعماً مهنياً",
+    desc: "معظم إجاباتك تدل على تصرفات قد تكون مؤذية لعلاقتك ولشريكك. الاعتراف بهذا صعب، لكنه أقوى خطوة يمكنك اتخاذها الآن.",
+    points: ["التحدث مع معالج نفسي مختص خطوة مهمة جداً هنا — ليست عقاباً، بل دعماً حقيقياً يساعدك على الفهم والتغيير.", "إذا شعرت أنك تفقد السيطرة على ردود أفعالك في مواقف معينة، فهذا بالذات يستحق أولوية بالتحدث مع مختص.", "كن صادقاً مع نفسك: التغيير الحقيقي يأخذ وقتاً والتزاماً، لا قراراً لحظياً."],
+    meterColor: "var(--alert)", meterPct: 95,
+    articles: ["/article-healthy-boundaries/", "/article-silent-treatment/"],
+    ctaTitle: "خطوة أولى قد تساعدك", ctaDesc: "استشارة مع مختص نفسي مرخّص خطوة مهمة جداً هنا — لا تتردد في طلب دعم مهني حقيقي." },
+];
+
+const articleTitles = {
+  "/article-healthy-boundaries/": "كيف تضع حدوداً صحية في علاقتك دون أن تشعر بالذنب",
+  "/article-jealousy-vs-control/": "الفرق بين الغيرة الطبيعية والغيرة التي تتحول إلى تحكم",
+  "/article-silent-treatment/": "الصمت كعقاب: لماذا يكون أكثر أذى مما يبدو",
+};
+
+let current = 0;
+const answers = new Array(questions.length).fill(null);
+const host = document.getElementById('questionsHost');
+const progressFill = document.getElementById('progressFill');
+const progressLabel = document.getElementById('progressLabel');
+const btnNext = document.getElementById('btnNext');
+const btnBack = document.getElementById('btnBack');
+const arabicNums = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
+function toArabicNum(n){ return String(n).split('').map(d => arabicNums[+d]).join(''); }
+
+function renderQuestions(){
+  host.innerHTML = '';
+  questions.forEach((q, qi) => {
+    const block = document.createElement('div');
+    block.className = 'q-block' + (qi === current ? ' active' : '');
+    const qt = document.createElement('div');
+    qt.className = 'q-text';
+    qt.textContent = q.text;
+    block.appendChild(qt);
+    const opts = document.createElement('div');
+    opts.className = 'options';
+    q.options.forEach((opt, oi) => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'opt' + (answers[qi] === oi ? ' selected' : '');
+      btn.innerHTML = '<span class="opt-dot"></span><span>' + opt.label + '</span>';
+      btn.addEventListener('click', () => { answers[qi] = oi; renderQuestions(); updateNav(); });
+      opts.appendChild(btn);
+    });
+    block.appendChild(opts);
+    host.appendChild(block);
+  });
+}
+function updateNav(){
+  progressFill.style.width = ((current + 1) / questions.length * 100) + '%';
+  progressLabel.textContent = toArabicNum(current + 1) + ' / ' + toArabicNum(questions.length);
+  btnBack.disabled = current === 0;
+  btnNext.disabled = answers[current] === null;
+  btnNext.textContent = current === questions.length - 1 ? 'عرض النتيجة' : 'التالي';
+}
+btnNext.addEventListener('click', () => {
+  if (answers[current] === null) return;
+  if (current < questions.length - 1) { current++; renderQuestions(); updateNav(); }
+  else { showResults(); }
+});
+btnBack.addEventListener('click', () => { if (current > 0) { current--; renderQuestions(); updateNav(); } });
+
+function showResults(){
+  const score = answers.reduce((sum, ai, qi) => sum + questions[qi].options[ai].pts, 0);
+  const result = results.find(r => score >= r.min && score <= r.max) || results[results.length - 1];
+  document.getElementById('quizSection').style.display = 'none';
+  const rs = document.getElementById('resultsSection');
+  rs.style.display = 'block'; rs.classList.add('active');
+  const tagEl = document.getElementById('resultTag');
+  tagEl.textContent = result.tag; tagEl.style.background = result.tagColor;
+  tagEl.style.color = (result.tagColor === 'var(--alert)') ? '#fff' : 'var(--ink)';
+  document.getElementById('resultTitle').textContent = result.title;
+  document.getElementById('resultDesc').textContent = result.desc;
+  const meterFill = document.getElementById('meterFill');
+  meterFill.style.background = result.meterColor;
+  setTimeout(() => { meterFill.style.width = result.meterPct + '%'; }, 50);
+  const pointsList = document.getElementById('resultPoints');
+  pointsList.innerHTML = '';
+  result.points.forEach((p, i) => {
+    const li = document.createElement('li');
+    li.innerHTML = '<b>' + toArabicNum(i + 1) + '.</b><span>' + p + '</span>';
+    pointsList.appendChild(li);
+  });
+  const relatedHost = document.getElementById('relatedLinks');
+  relatedHost.innerHTML = '';
+  result.articles.forEach(href => {
+    const a = document.createElement('a');
+    a.href = href; a.textContent = articleTitles[href] || href;
+    relatedHost.appendChild(a);
+  });
+  document.getElementById('ctaTitle').textContent = result.ctaTitle;
+  document.getElementById('ctaDesc').textContent = result.ctaDesc;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+document.getElementById('retakeBtn').addEventListener('click', (e) => {
+  e.preventDefault(); current = 0; answers.fill(null);
+  document.getElementById('resultsSection').style.display = 'none';
+  document.getElementById('quizSection').style.display = 'block';
+  renderQuestions(); updateNav();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+renderQuestions(); updateNav();
+</script>
+<script src="/components.js"></script>
+</body>
+</html>

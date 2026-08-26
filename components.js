@@ -39,11 +39,11 @@ class SiteNav extends HTMLElement {
   connectedCallback() {
     const active = this.getAttribute('active') || '';
     const links = [
-      { href: 'index.html#pillars', label: 'المواضيع', key: '' },
-      { href: 'blog.html', label: 'المدونة', key: 'blog' },
-      { href: 'quizzes.html', label: 'الاختبارات', key: 'quizzes' },
-      { href: 'ai.html', label: 'بوضوح AI', key: 'ai' },
-      { href: 'about.html', label: 'من نحن', key: 'about' },
+      { href: '/#pillars', label: 'المواضيع', key: '' },
+      { href: '/blog/', label: 'المدونة', key: 'blog' },
+      { href: '/quizzes/', label: 'الاختبارات', key: 'quizzes' },
+      { href: '/ai/', label: 'بوضوح AI', key: 'ai' },
+      { href: '/about/', label: 'من نحن', key: 'about' },
     ];
 
     const linksHtml = links.map(l => {
@@ -53,10 +53,10 @@ class SiteNav extends HTMLElement {
 
     this.innerHTML = `
     <div class="wrap">
-      <a href="index.html" class="brand">بوضوح<span>.</span></a>
+      <a href="/" class="brand">بوضوح<span>.</span></a>
       <div class="nav-links">
         ${linksHtml}
-        <a href="sales-page.html" class="nav-cta">احجز استشارة</a>
+        <a href="/sales-page/" class="nav-cta">احجز استشارة</a>
       </div>
     </div>`;
   }
@@ -76,23 +76,23 @@ class SiteFooter extends HTMLElement {
         </div>
         <div class="footer-col">
           <h4>الموقع</h4>
-          <a href="index.html#pillars">المواضيع</a>
-          <a href="blog.html">المدونة</a>
-          <a href="ai.html">بوضوح AI</a>
-          <a href="quizzes.html">الاختبارات</a>
-          <a href="about.html">من نحن</a>
-          <a href="sales-page.html">احجز استشارة</a>
+          <a href="/#pillars">المواضيع</a>
+          <a href="/blog/">المدونة</a>
+          <a href="/ai/">بوضوح AI</a>
+          <a href="/quizzes/">الاختبارات</a>
+          <a href="/about/">من نحن</a>
+          <a href="/sales-page/">احجز استشارة</a>
         </div>
         <div class="footer-col">
           <h4>تواصل</h4>
           <a href="https://instagram.com" target="_blank" rel="noopener">إنستغرام</a>
           <a href="https://tiktok.com" target="_blank" rel="noopener">تيك توك</a>
-          <a href="contact.html">راسلنا</a>
+          <a href="/contact/">راسلنا</a>
         </div>
         <div class="footer-col">
           <h4>قانوني</h4>
-          <a href="terms.html">شروط الاستخدام</a>
-          <a href="privacy.html">سياسة الخصوصية</a>
+          <a href="/terms/">شروط الاستخدام</a>
+          <a href="/privacy/">سياسة الخصوصية</a>
         </div>
       </div>
       <p class="footer-bottom">©Bewodouh 2026 بوضوح — كل المحتوى توعوي وليس بديلاً عن استشارة أو علاج نفسي مختص.</p>
@@ -105,14 +105,14 @@ class SiteFooter extends HTMLElement {
       <span class="brand kufi">بوضوح<span style="color:var(--clarity);">.</span></span>
       محتوى توعوي حول العلاقات وأنماط الشخصية، باللغة العربية، لكل من يريد أن يرى علاقته بوضوح أكبر.
       <div style="margin-top:18px; display:flex; gap:20px; justify-content:center; flex-wrap:wrap; font-size:12.5px;">
-        <a href="index.html" style="color:var(--text-muted-dark);">الرئيسية</a>
-        <a href="blog.html" style="color:var(--text-muted-dark);">المدونة</a>
-        <a href="quizzes.html" style="color:var(--text-muted-dark);">الاختبارات</a>
-        <a href="ai.html" style="color:var(--text-muted-dark);">بوضوح AI</a>
-        <a href="about.html" style="color:var(--text-muted-dark);">من نحن</a>
-        <a href="sales-page.html" style="color:var(--text-muted-dark);">احجز استشارة</a>
-        <a href="terms.html" style="color:var(--text-muted-dark);">شروط الاستخدام</a>
-        <a href="privacy.html" style="color:var(--text-muted-dark);">سياسة الخصوصية</a>
+        <a href="/" style="color:var(--text-muted-dark);">الرئيسية</a>
+        <a href="/blog/" style="color:var(--text-muted-dark);">المدونة</a>
+        <a href="/quizzes/" style="color:var(--text-muted-dark);">الاختبارات</a>
+        <a href="/ai/" style="color:var(--text-muted-dark);">بوضوح AI</a>
+        <a href="/about/" style="color:var(--text-muted-dark);">من نحن</a>
+        <a href="/sales-page/" style="color:var(--text-muted-dark);">احجز استشارة</a>
+        <a href="/terms/" style="color:var(--text-muted-dark);">شروط الاستخدام</a>
+        <a href="/privacy/" style="color:var(--text-muted-dark);">سياسة الخصوصية</a>
       </div>
     </div>`;
   }
@@ -120,3 +120,63 @@ class SiteFooter extends HTMLElement {
 
 customElements.define('site-nav', SiteNav);
 customElements.define('site-footer', SiteFooter);
+
+/* ============================================================
+   <pricing-cards> — يجلب الباقات مباشرة من جدول packages على
+   Supabase ويعرضها. يتطلب أن يكون supabase-config.js قد حمّل
+   قبل هذا الملف (يوفّر متغيّر supabaseClient).
+
+   يُطلق حدث 'package-selected' على window عند الضغط على "اختر
+   هذه الباقة"، وتفاصيله { name } — أي كود بالصفحة يقدر يستمع له
+   بدل ما يحتاج يعرف تفاصيل هذا المكوّن الداخلية.
+
+   ويستمع لحدث 'recommend-package' على window (تفاصيله { name })
+   عشان يعلّم بصرياً الباقة الموصى فيها من تدفّق الأسئلة.
+   ============================================================ */
+class PricingCards extends HTMLElement {
+  async connectedCallback() {
+    this.innerHTML = '<p style="text-align:center; color:var(--text-muted-light); grid-column:1/-1;">جارٍ تحميل الباقات...</p>';
+
+    if (typeof supabaseClient === 'undefined' || !supabaseClient) {
+      this.innerHTML = '<p style="text-align:center; color:var(--alert); grid-column:1/-1;">تعذّر تحميل الباقات — لم يتم إعداد الاتصال بقاعدة البيانات بعد.</p>';
+      return;
+    }
+
+    const { data, error } = await supabaseClient
+      .from('packages')
+      .select('*')
+      .order('sort_order', { ascending: true });
+
+    if (error || !data || !data.length) {
+      this.innerHTML = '<p style="text-align:center; color:var(--alert); grid-column:1/-1;">تعذّر تحميل الباقات حالياً. حاول تحديث الصفحة.</p>';
+      console.error('pricing-cards:', error);
+      return;
+    }
+
+    this.innerHTML = data.map(pkg => `
+      <div class="pkg-card${pkg.is_recommended ? ' recommended' : ''}" data-pkg-id="${pkg.id}">
+        ${pkg.is_recommended ? '<span class="pkg-badge">الأكثر طلباً</span>' : ''}
+        <h3>${pkg.name}</h3>
+        <p class="pkg-desc">${pkg.description || ''}</p>
+        <div class="pkg-price">${pkg.price} د.أ <span>${pkg.price_unit}</span></div>
+        <button class="pkg-select-btn" data-pkg-name="${pkg.name}">اختر هذه الباقة</button>
+      </div>
+    `).join('');
+
+    this.querySelectorAll('.pkg-select-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        this.markChosen(btn.dataset.pkgName);
+        window.dispatchEvent(new CustomEvent('package-selected', { detail: { name: btn.dataset.pkgName } }));
+      });
+    });
+
+    window.addEventListener('recommend-package', (e) => this.markChosen(e.detail.name));
+  }
+
+  markChosen(name) {
+    this.querySelectorAll('.pkg-select-btn').forEach(b => {
+      b.classList.toggle('chosen', b.dataset.pkgName === name);
+    });
+  }
+}
+customElements.define('pricing-cards', PricingCards);

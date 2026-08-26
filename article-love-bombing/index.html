@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الحب القصفي: لماذا البداية القوية جداً ليست دائماً مؤشراً جيداً — بوضوح</title>
+<meta name="description" content="رسائل كثيرة، وهدايا، وكلام حب مبالغ فيه في الأسابيع الأولى — أحياناً تكون رومانسية حقيقية، وأحياناً أسلوباً لتسريع ثقتك. تعرّف على الفرق.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@500;700;900&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#241D2E; --ink-soft:#372C46; --plum:#4A3B5C;
+    --fog:#F3EEEA; --fog-dim:#E6DFDA;
+    --clarity:#C9A15F; --clarity-soft:#E4C98A; --rose:#8B6F7E; --alert:#B5555B;
+    --text-on-dark:#EDE7E3; --text-muted-dark:#B7ACC4;
+    --text-on-light:#2A2130; --text-muted-light:#6B6072;
+    --radius:14px; --max:760px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{ font-family:'IBM Plex Sans Arabic', sans-serif; background:var(--fog); color:var(--text-on-light); line-height:2; -webkit-font-smoothing:antialiased; }
+  h1,h2,.kufi{ font-family:'Noto Kufi Arabic', sans-serif; }
+  a{ color:inherit; }
+  .wrap{ max-width:var(--max); margin:0 auto; padding:0 24px; }
+
+  nav{ position:sticky; top:0; z-index:50; background:rgba(36,29,46,.92); backdrop-filter:blur(8px); border-bottom:1px solid rgba(255,255,255,.06); }
+  nav .wrap{ display:flex; align-items:center; justify-content:space-between; padding:16px 24px; max-width:1080px; }
+  .brand{ font-family:'Noto Kufi Arabic',sans-serif; font-weight:900; font-size:22px; color:var(--fog); text-decoration:none; }
+  .brand span{ color:var(--clarity); }
+  .nav-links{ display:flex; align-items:center; gap:28px; }
+  .nav-links a{ color:var(--text-muted-dark); font-size:14px; font-weight:500; text-decoration:none; transition:color .2s; }
+  .nav-links a:hover{ color:var(--fog); }
+  a.nav-cta{ background:var(--clarity); color:var(--ink); font-weight:700; font-size:14px; padding:9px 20px; border-radius:100px; transition:transform .15s ease, background .2s ease; }
+  a.nav-cta:hover{ background:var(--clarity-soft); transform:translateY(-1px); }
+  @media (max-width:780px){ .nav-links{ display:none; } }
+
+  .article-hero{ position:relative; width:100%; height:500px; overflow:hidden; }
+  .article-hero img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .hero-overlay{ position:absolute; inset:0; background:linear-gradient(180deg, rgba(36,29,46,.05) 0%, rgba(36,29,46,.35) 55%, rgba(36,29,46,.92) 100%); display:flex; align-items:flex-end; }
+  .hero-overlay .wrap{ width:100%; padding-bottom:44px; text-align:center; }
+  .tag{ display:inline-block; font-size:12px; font-weight:700; color:#8a6a2e; background:var(--clarity-soft); padding:5px 14px; border-radius:100px; margin-bottom:18px; }
+  .article-hero h1{ color:var(--fog); font-size:clamp(28px,4.4vw,42px); font-weight:900; max-width:22ch; margin:0 auto; line-height:1.4; }
+  .article-meta{ color:var(--text-muted-dark); font-size:13.5px; margin-top:18px; }
+  @media (max-width:700px){ .article-hero{ height:400px; } }
+
+  main{ padding:52px 0 40px; }
+  article p{ font-size:17px; color:var(--text-on-light); max-width:70ch; }
+  article p + p{ margin-top:18px; }
+  article h2{ font-size:22px; margin:40px 0 14px; }
+  .lede{ font-size:19px; color:var(--text-muted-light); }
+  .pull{ border-right:3px solid var(--clarity); padding-right:20px; margin:32px 0; font-family:'Noto Kufi Arabic',sans-serif; font-weight:700; font-size:20px; line-height:1.7; max-width:34ch; }
+  ul.plain{ margin-top:10px; display:flex; flex-direction:column; gap:14px; padding-right:20px; }
+  ul.plain li{ font-size:16.5px; color:var(--text-on-light); }
+
+  .cta-box{
+    margin:52px 0; background:var(--ink); border-radius:20px; padding:38px 34px; text-align:center;
+    background:radial-gradient(140% 140% at 50% 0%, var(--ink-soft), var(--ink));
+  }
+  .cta-box h3{ color:var(--fog); font-size:21px; margin-bottom:10px; }
+  .cta-box p{ color:var(--text-muted-dark); font-size:14.5px; max-width:44ch; margin:0 auto 22px; }
+  .btn-primary{ background:var(--clarity); color:var(--ink); font-weight:700; font-size:15px; padding:14px 28px; border-radius:100px; display:inline-block; text-decoration:none; }
+
+  .disclaimer{ background:#fff; border:1px solid var(--fog-dim); border-radius:var(--radius); padding:20px 24px; font-size:13.5px; color:var(--text-muted-light); margin-top:44px; }
+
+  .related{ margin-top:56px; }
+  .related h3{ font-size:15px; color:var(--text-muted-light); margin-bottom:16px; }
+  .related a{ display:block; text-decoration:none; color:var(--text-on-light); font-weight:600; font-size:15px; padding:14px 0; border-bottom:1px solid var(--fog-dim); }
+
+  footer{ background:var(--ink); color:var(--text-muted-dark); padding:44px 0 28px; text-align:center; font-size:12.5px; margin-top:60px; }
+  footer .brand{ display:block; margin-bottom:10px; font-size:18px; }
+  footer a{ text-decoration:none; }
+</style>
+</head>
+<body>
+
+<site-nav active="blog"></site-nav>
+
+<header class="article-hero">
+  <img src="https://images.pexels.com/photos/6578938/pexels-photo-6578938.jpeg?auto=compress&cs=tinysrgb&w=1400" alt="رجل يفاجئ امرأة بباقة ورد كبيرة" loading="lazy">
+  <div class="hero-overlay">
+    <div class="wrap">
+      <span class="tag">التعرف المبكر</span>
+      <h1>الحب القصفي: لماذا البداية القوية جداً ليست دائماً مؤشراً جيداً</h1>
+      <p class="article-meta">قراءة ٦ دقائق · فريق بوضوح</p>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <article>
+      <p class="lede">"شعرت أنه الشخص المثالي من أول أسبوعين" — جملة تبدو جميلة جداً في البداية، لكنها أحياناً تكون أول علامة على نمط يُسمى "الحب القصفي" (Love Bombing). ليست كل بداية قوية خطراً، لكن فهم الفرق بين الرومانسية الحقيقية والحب القصفي يوفر عليك ألماً كثيراً لاحقاً.</p>
+
+      <h2>ما هو الحب القصفي؟</h2>
+      <p>هو إغراق الطرف الآخر باهتمام وحب مكثف جداً في وقت قصير جداً — رسائل مستمرة، وكلام حب "أنتِ حياتي" منذ الأسابيع الأولى، وهدايا كبيرة، ووعود مستقبلية مبكرة جداً. الهدف (حتى لو غير واعٍ) هو تسريع ثقتك قبل أن تأخذ وقتك للتعرف على الشخص فعلياً.</p>
+      <h2>كيف تفرّق بينه وبين رومانسية حقيقية؟</h2>
+      <ul class="plain">
+        <li>الرومانسية الحقيقية تتصاعد بشكل طبيعي مع الوقت. الحب القصفي يبدأ بأقصى شدة منذ اليوم الأول.</li>
+        <li>في الرومانسية الحقيقية، يكون الطرف الآخر فضولياً ليتعرف عليك كشخص. أما في الحب القصفي، فيكون التركيز على "مدى إعجابه بك" أكثر من فهمك الحقيقي.</li>
+        <li>الرومانسية الحقيقية تحترم وتيرتك. الحب القصفي يستعجل قرارات كبيرة (الالتزام، السكن معاً، الزواج) بسرعة غير طبيعية.</li>
+        <li>إذا حاولت أخذ مسافة بسيطة أو إبطاء الوتيرة، يكون رد الفعل في الرومانسية الحقيقية تفهماً، وفي الحب القصفي غالباً ما يكون ضغطاً أو عتاباً.</li>
+      </ul>
+      <h2>لماذا هذا النمط خطير بالذات؟</h2>
+      <p>لأنه يبني ثقة عميقة وسريعة قبل أن يكون لديك وقت كافٍ لملاحظة علامات تحذيرية أخرى. حين تكون "واقعاً في الحب" بهذه الشدة منذ الأسبوع الأول، يصعب عليك رؤية أي تصرف مقلق بموضوعية، لأنك منحت ثقة كبيرة جداً في وقت قصير جداً.</p>
+      <h2>ماذا تفعل إذا لاحظت هذا النمط؟</h2>
+      <p>لست مضطراً لافتراض الأسوأ فوراً، لكن خذ وقتك عمداً. أبطئ الوتيرة بنفسك، وراقب طبيعة رد الفعل، ودع قراراتك الكبيرة (الالتزام، السكن معاً) تأخذ وقتها الطبيعي مهما كانت المشاعر قوية.</p>
+
+      <div class="pull">إذا شعرت أنه "مثالي جداً" بسرعة غير طبيعية، فهذا بالضبط الوقت الذي يجب أن تتأنى فيه.</div>
+
+      <div class="cta-box">
+        <h3>هل تحتاج دعماً حقيقياً بما تمر فيه؟</h3>
+        <p>استشارة مع مختص نفسي مرخّص من فريق بوضوح ممكن تساعدك تفهم وضعك بعمق أكبر، وتاخذ خطوات عملية بدعم مباشر.</p>
+        <a href="/sales-page/" class="btn-primary">احجز استشارتك الأولى</a>
+      </div>
+
+      <div class="disclaimer">هذا المقال محتوى توعوي عام، وليس بديلاً عن استشارة أو تشخيص مع مختص نفسي مرخّص.</div>
+
+      <div class="related">
+        <h3>مقالات ذات صلة</h3>
+        <a href="/article-early-signs/">سبع علامات لا تلاحظها في العلاقة السامة إلا متأخراً</a>
+        <a href="/article-narcissist-vs-confident/">الفرق بين الشخص الواثق والشخص النرجسي</a>
+      </div>
+    </article>
+  </div>
+</main>
+
+<site-footer></site-footer>
+
+<script src="/components.js"></script>
+</body>
+</html>

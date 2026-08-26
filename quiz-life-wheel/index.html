@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>عجلة العلاقة — بوضوح</title>
+<meta name="description" content="أداة تفاعلية — حرّك المؤشرات وشاهد عجلة علاقتك تُرسم مباشرة على ثمانية محاور مختلفة.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@500;700;900&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#241D2E; --ink-soft:#372C46; --plum:#4A3B5C;
+    --fog:#F3EEEA; --fog-dim:#E6DFDA;
+    --clarity:#C9A15F; --clarity-soft:#E4C98A; --rose:#8B6F7E; --alert:#B5555B;
+    --text-on-dark:#EDE7E3; --text-muted-dark:#B7ACC4;
+    --text-on-light:#2A2130; --text-muted-light:#6B6072;
+    --radius:14px; --max:900px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{ font-family:'IBM Plex Sans Arabic', sans-serif; background:var(--fog); color:var(--text-on-light); line-height:1.9; -webkit-font-smoothing:antialiased; }
+  h1,h2,h3,.kufi{ font-family:'Noto Kufi Arabic', sans-serif; }
+  a{ color:inherit; text-decoration:none; }
+  .wrap{ max-width:var(--max); margin:0 auto; padding:0 24px; }
+
+  nav{ position:sticky; top:0; z-index:50; background:rgba(36,29,46,.92); backdrop-filter:blur(8px); border-bottom:1px solid rgba(255,255,255,.06); }
+  nav .wrap{ display:flex; align-items:center; justify-content:space-between; padding:16px 24px; max-width:1080px; }
+  .brand{ font-family:'Noto Kufi Arabic',sans-serif; font-weight:900; font-size:22px; color:var(--fog); text-decoration:none; }
+  .brand span{ color:var(--clarity); }
+  .nav-links{ display:flex; align-items:center; gap:28px; }
+  .nav-links a{ color:var(--text-muted-dark); font-size:14px; font-weight:500; text-decoration:none; transition:color .2s; }
+  .nav-links a:hover{ color:var(--fog); }
+  a.nav-cta{ background:var(--clarity); color:var(--ink); font-weight:700; font-size:14px; padding:9px 20px; border-radius:100px; transition:.2s; }
+  a.nav-cta:hover{ background:var(--clarity-soft); }
+  @media (max-width:780px){ .nav-links{ display:none; } }
+
+  .page-head{ background:radial-gradient(120% 90% at 75% 0%, var(--ink-soft) 0%, var(--ink) 55%, #1A1522 100%); padding:64px 0 48px; text-align:center; }
+  .eyebrow{ display:inline-flex; align-items:center; gap:8px; font-size:13px; color:var(--clarity-soft); font-weight:600; margin-bottom:14px; justify-content:center; }
+  .eyebrow::before{ content:""; width:20px; height:1px; background:var(--clarity-soft); display:inline-block; }
+  .page-head h1{ color:var(--fog); font-size:clamp(28px,4.4vw,42px); font-weight:900; max-width:22ch; margin:0 auto; line-height:1.4; }
+  .page-head p{ color:var(--text-muted-dark); font-size:15.5px; max-width:52ch; margin:14px auto 0; }
+  .back-link{ display:inline-flex; align-items:center; gap:6px; font-size:13px; color:var(--clarity-soft); margin-bottom:22px; text-decoration:none; }
+
+  main{ padding:48px 0 90px; }
+  .tool-grid{ display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:start; }
+  @media (max-width:860px){ .tool-grid{ grid-template-columns:1fr; } }
+
+  .chart-card{ background:#fff; border:1px solid var(--fog-dim); border-radius:20px; padding:30px; box-shadow:0 24px 50px -30px rgba(36,29,46,.2); position:sticky; top:90px; }
+  .chart-card svg{ width:100%; height:auto; display:block; }
+  .avg-line{ text-align:center; margin-top:10px; font-size:14px; color:var(--text-muted-light); }
+  .avg-line b{ color:var(--ink); font-family:'Noto Kufi Arabic',sans-serif; font-size:18px; }
+
+  .sliders-card{ background:#fff; border:1px solid var(--fog-dim); border-radius:20px; padding:30px 28px; }
+  .slider-item{ margin-bottom:26px; }
+  .slider-item:last-child{ margin-bottom:0; }
+  .slider-head{ display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; }
+  .slider-head label{ font-family:'Noto Kufi Arabic',sans-serif; font-weight:700; font-size:15px; color:var(--ink); }
+  .slider-value{ font-family:'Noto Kufi Arabic',sans-serif; font-weight:900; font-size:16px; color:var(--clarity); min-width:24px; text-align:center; }
+  input[type="range"]{
+    width:100%; -webkit-appearance:none; height:6px; border-radius:100px; background:var(--fog-dim); outline:none;
+  }
+  input[type="range"]::-webkit-slider-thumb{
+    -webkit-appearance:none; width:20px; height:20px; border-radius:50%; background:var(--clarity); cursor:pointer; border:3px solid #fff; box-shadow:0 2px 6px rgba(36,29,46,.3);
+  }
+  input[type="range"]::-moz-range-thumb{ width:20px; height:20px; border-radius:50%; background:var(--clarity); cursor:pointer; border:3px solid #fff; box-shadow:0 2px 6px rgba(36,29,46,.3); }
+
+  .analysis-btn{ background:var(--ink); color:var(--fog); font-weight:700; font-size:14.5px; padding:14px 30px; border-radius:100px; border:none; cursor:pointer; font-family:inherit; width:100%; margin-top:10px; transition:.2s; }
+  .analysis-btn:hover{ background:var(--ink-soft); }
+
+  .analysis-block{ display:none; margin-top:36px; background:#fff; border:1px solid var(--fog-dim); border-radius:20px; padding:30px 28px; }
+  .analysis-block.active{ display:block; animation:fadeIn .4s ease; }
+  @keyframes fadeIn{ from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);} }
+  .analysis-block h3{ font-size:20px; color:var(--ink); margin-bottom:14px; }
+  .analysis-block p{ font-size:15px; color:var(--text-muted-light); margin-bottom:10px; }
+  .weak-tag{ display:inline-block; background:rgba(181,85,91,.12); color:var(--alert); font-weight:700; font-size:13px; padding:5px 14px; border-radius:100px; margin:4px 4px 4px 0; }
+  .strong-tag{ display:inline-block; background:rgba(201,161,95,.15); color:#8a6a2e; font-weight:700; font-size:13px; padding:5px 14px; border-radius:100px; margin:4px 4px 4px 0; }
+
+  .cta-box{ margin-top:26px; background:var(--ink); border-radius:18px; padding:28px 26px; text-align:center; background:radial-gradient(140% 140% at 50% 0%, var(--ink-soft), var(--ink)); }
+  .cta-box h3{ color:var(--fog); font-size:18px; margin-bottom:8px; }
+  .cta-box p{ color:var(--text-muted-dark); font-size:13.5px; max-width:44ch; margin:0 auto 18px; }
+  .btn-primary{ background:var(--clarity); color:var(--ink); font-weight:700; font-size:14px; padding:12px 24px; border-radius:100px; display:inline-block; text-decoration:none; }
+  .disclaimer{ background:var(--fog); border:1px solid var(--fog-dim); border-radius:var(--radius); padding:16px 18px; font-size:12.5px; color:var(--text-muted-light); margin-top:40px; text-align:center; }
+
+  footer{ background:var(--ink); color:var(--text-muted-dark); padding:44px 0 28px; text-align:center; font-size:12.5px; }
+  footer .brand{ display:block; margin-bottom:10px; font-size:18px; }
+</style>
+</head>
+<body>
+
+<site-nav active="quizzes"></site-nav>
+
+<header class="page-head">
+  <div class="wrap">
+    <a href="/quizzes/" class="back-link">← كل الاختبارات</a><br>
+    <div class="eyebrow">أداة تفاعلية</div>
+    <h1>عجلة العلاقة</h1>
+    <p>حرّك كل مؤشر حسب إحساسك الحقيقي بعلاقتك الآن (١ = ضعيف جداً، ١٠ = ممتاز)، وشاهد عجلتك تُرسم أمامك مباشرة.</p>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <div class="tool-grid">
+
+      <div class="chart-card">
+        <svg id="wheelSVG" viewBox="0 0 400 400"></svg>
+        <p class="avg-line">المعدل العام: <b id="avgValue">٥.٠</b> / ١٠</p>
+      </div>
+
+      <div class="sliders-card">
+        <div id="slidersHost"></div>
+        <button class="analysis-btn" id="analyzeBtn">عرض التحليل</button>
+      </div>
+
+    </div>
+
+    <div class="analysis-block" id="analysisBlock">
+      <h3 id="analysisTitle"></h3>
+      <p id="analysisDesc"></p>
+      <p><strong>أقوى محاورك:</strong></p>
+      <div id="strongTags"></div>
+      <p style="margin-top:16px;"><strong>محاور تستحق اهتماماً أكثر:</strong></p>
+      <div id="weakTags"></div>
+      <div class="cta-box">
+        <h3>هل تريد العمل على المحاور الضعيفة؟</h3>
+        <p id="ctaDynamic">استشارة مع مختص نفسي ممكن تساعدك تبني أساساً أقوى لعلاقتك بخطوات عملية.</p>
+        <a href="/sales-page/" class="btn-primary">احجز استشارتك الأولى</a>
+      </div>
+    </div>
+
+    <div class="disclaimer">هذه الأداة للتأمل الذاتي فقط، ولا تُعتبر تشخيصاً أو بديلاً عن استشارة مختص عند الحاجة.</div>
+  </div>
+</main>
+
+<site-footer></site-footer>
+
+<script>
+const dims = [
+  { key: 'communication', label: 'التواصل', value: 5 },
+  { key: 'trust', label: 'الثقة', value: 5 },
+  { key: 'respect', label: 'الاحترام المتبادل', value: 5 },
+  { key: 'support', label: 'الدعم العاطفي', value: 5 },
+  { key: 'independence', label: 'الاستقلالية والمساحة', value: 5 },
+  { key: 'conflict', label: 'حل الخلافات', value: 5 },
+  { key: 'intimacy', label: 'القرب العاطفي', value: 5 },
+  { key: 'fun', label: 'المتعة المشتركة', value: 5 },
+];
+
+const svgNS = 'http://www.w3.org/2000/svg';
+const svg = document.getElementById('wheelSVG');
+const cx = 200, cy = 200, maxR = 150, minR = 16;
+const n = dims.length;
+
+function polar(r, angleDeg){
+  const rad = (angleDeg - 90) * Math.PI / 180;
+  return [cx + r * Math.cos(rad), cy + r * Math.sin(rad)];
+}
+
+function buildStaticGrid(){
+  const gridLevels = [0.25, 0.5, 0.75, 1];
+  gridLevels.forEach(level => {
+    const pts = dims.map((d, i) => polar(minR + level * (maxR - minR), i * (360 / n)).join(',')).join(' ');
+    const poly = document.createElementNS(svgNS, 'polygon');
+    poly.setAttribute('points', pts);
+    poly.setAttribute('fill', 'none');
+    poly.setAttribute('stroke', '#E6DFDA');
+    poly.setAttribute('stroke-width', '1');
+    svg.appendChild(poly);
+  });
+  dims.forEach((d, i) => {
+    const [x1, y1] = polar(minR, i * (360 / n));
+    const [x2, y2] = polar(maxR, i * (360 / n));
+    const line = document.createElementNS(svgNS, 'line');
+    line.setAttribute('x1', x1); line.setAttribute('y1', y1);
+    line.setAttribute('x2', x2); line.setAttribute('y2', y2);
+    line.setAttribute('stroke', '#E6DFDA'); line.setAttribute('stroke-width', '1');
+    svg.appendChild(line);
+
+    const [lx, ly] = polar(maxR + 34, i * (360 / n));
+    const text = document.createElementNS(svgNS, 'text');
+    text.setAttribute('x', lx); text.setAttribute('y', ly);
+    text.setAttribute('text-anchor', 'middle');
+    text.setAttribute('dominant-baseline', 'middle');
+    text.setAttribute('font-size', '12.5');
+    text.setAttribute('font-family', "'IBM Plex Sans Arabic', sans-serif");
+    text.setAttribute('fill', '#2A2130');
+    text.setAttribute('font-weight', '600');
+    text.textContent = d.label;
+    svg.appendChild(text);
+  });
+}
+
+let dataPolygon, dataDots;
+function buildDataLayer(){
+  dataPolygon = document.createElementNS(svgNS, 'polygon');
+  dataPolygon.setAttribute('fill', 'rgba(201,161,95,.28)');
+  dataPolygon.setAttribute('stroke', '#C9A15F');
+  dataPolygon.setAttribute('stroke-width', '2.5');
+  dataPolygon.setAttribute('stroke-linejoin', 'round');
+  svg.appendChild(dataPolygon);
+
+  dataDots = dims.map(() => {
+    const c = document.createElementNS(svgNS, 'circle');
+    c.setAttribute('r', '4.5');
+    c.setAttribute('fill', '#241D2E');
+    c.setAttribute('stroke', '#fff');
+    c.setAttribute('stroke-width', '1.5');
+    svg.appendChild(c);
+    return c;
+  });
+}
+
+function updateChart(){
+  const pts = dims.map((d, i) => {
+    const r = minR + (d.value / 10) * (maxR - minR);
+    return polar(r, i * (360 / n));
+  });
+  dataPolygon.setAttribute('points', pts.map(p => p.join(',')).join(' '));
+  pts.forEach((p, i) => {
+    dataDots[i].setAttribute('cx', p[0]);
+    dataDots[i].setAttribute('cy', p[1]);
+  });
+  const avg = dims.reduce((s, d) => s + d.value, 0) / dims.length;
+  document.getElementById('avgValue').textContent = avg.toFixed(1).replace('.', '.').replace(/[0-9]/g, d => '٠١٢٣٤٥٦٧٨٩'[d]);
+}
+
+function buildSliders(){
+  const host = document.getElementById('slidersHost');
+  dims.forEach((d, i) => {
+    const item = document.createElement('div');
+    item.className = 'slider-item';
+    item.innerHTML = `
+      <div class="slider-head">
+        <label>${d.label}</label>
+        <span class="slider-value" id="val-${d.key}">${d.value}</span>
+      </div>
+      <input type="range" min="1" max="10" value="${d.value}" id="range-${d.key}">
+    `;
+    host.appendChild(item);
+  });
+  dims.forEach(d => {
+    const input = document.getElementById('range-' + d.key);
+    const valEl = document.getElementById('val-' + d.key);
+    input.addEventListener('input', () => {
+      d.value = +input.value;
+      valEl.textContent = d.value;
+      updateChart();
+    });
+  });
+}
+
+buildStaticGrid();
+buildDataLayer();
+buildSliders();
+updateChart();
+
+const articleMap = {
+  communication: '/article-early-signs/',
+  trust: '/article-jealousy-vs-control/',
+  respect: '/article-healthy-boundaries/',
+  support: '/article-codependency/',
+  independence: '/article-healthy-boundaries/',
+  conflict: '/article-silent-treatment/',
+  intimacy: '/article-love-bombing/',
+  fun: '/article-healthy-first-date/',
+};
+
+document.getElementById('analyzeBtn').addEventListener('click', () => {
+  const sorted = [...dims].sort((a, b) => a.value - b.value);
+  const weak = sorted.slice(0, 3).filter(d => d.value <= 6);
+  const strong = [...dims].sort((a, b) => b.value - a.value).slice(0, 3).filter(d => d.value >= 7);
+  const avg = dims.reduce((s, d) => s + d.value, 0) / dims.length;
+
+  let title, desc;
+  if (avg >= 8) {
+    title = "عجلتك متوازنة وقوية في معظم المحاور";
+    desc = "الصورة العامة إيجابية جداً. حتى لو كان هناك محور أو محوران أقل من الباقي، فهذا طبيعي — لا توجد علاقة كاملة مئة بالمئة في كل المحاور طوال الوقت.";
+  } else if (avg >= 6) {
+    title = "عجلتك متوازنة بشكل عام مع بعض المحاور التي تستحق اهتماماً";
+    desc = "معظم المحاور بحالة جيدة، لكن هناك محوراً أو محورين قد يستفيدان من اهتمام أكبر. لا داعي لإصلاح كل شيء فوراً — ابدأ بمحور واحد.";
+  } else if (avg >= 4) {
+    title = "هناك عدة محاور تستحق عملاً حقيقياً";
+    desc = "تُظهر عجلتك أن هناك أكثر من محور يحتاج انتباهاً. هذا ليس حكماً على العلاقة كلها، بل إشارة واضحة إلى أين تضع طاقتك أولاً.";
+  } else {
+    title = "معظم المحاور بحاجة إلى اهتمام جدي";
+    desc = "النتيجة العامة منخفضة على معظم المحاور. قد يفيدك كثيراً أن تتحدث مع شريكك بصراحة عن هذه النتيجة، أو تفكر بدعم مهني يساعدكما على فهم أين المشكلة الأساسية.";
+  }
+
+  document.getElementById('analysisTitle').textContent = title;
+  document.getElementById('analysisDesc').textContent = desc;
+
+  const strongHost = document.getElementById('strongTags');
+  strongHost.innerHTML = strong.length
+    ? strong.map(d => `<span class="strong-tag">${d.label}</span>`).join('')
+    : '<span style="font-size:14px;color:var(--text-muted-light);">لا يوجد محور يبرز بوضوح فوق الباقي بعد</span>';
+
+  const weakHost = document.getElementById('weakTags');
+  weakHost.innerHTML = weak.length
+    ? weak.map(d => `<span class="weak-tag">${d.label}</span>`).join('')
+    : '<span style="font-size:14px;color:var(--text-muted-light);">لا يوجد محور ضعيف بشكل واضح — عجلتك متوازنة!</span>';
+
+  if (weak.length) {
+    const topWeak = weak[0];
+    const link = articleMap[topWeak.key];
+    document.getElementById('ctaDynamic').textContent =
+      `محور "${topWeak.label}" هو أضعف محاورك — استشارة مع مختص نفسي ممكن تساعدك تعمل عليه بخطوات عملية.`;
+  }
+
+  const block = document.getElementById('analysisBlock');
+  block.classList.add('active');
+  block.style.display = 'block';
+  block.scrollIntoView({ behavior: 'smooth', block: 'start' });
+});
+</script>
+<script src="/components.js"></script>
+</body>
+</html>

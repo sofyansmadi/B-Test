@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>لوحة التحكم — بوضوح</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@500;700;900&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#241D2E; --ink-soft:#372C46;
+    --fog:#F3EEEA; --fog-dim:#E6DFDA;
+    --clarity:#C9A15F; --clarity-soft:#E4C98A; --rose:#8B6F7E; --alert:#B5555B;
+    --text-on-dark:#EDE7E3; --text-muted-dark:#B7ACC4;
+    --text-on-light:#2A2130; --text-muted-light:#6B6072;
+    --radius:14px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{ font-family:'IBM Plex Sans Arabic', sans-serif; background:var(--fog); color:var(--text-on-light); line-height:1.8; -webkit-font-smoothing:antialiased; }
+  h1,h2,.kufi{ font-family:'Noto Kufi Arabic', sans-serif; }
+  a{ color:inherit; text-decoration:none; }
+  .wrap{ max-width:960px; margin:0 auto; padding:0 24px; }
+
+  header{ background:var(--ink); padding:18px 0; }
+  header .wrap{ display:flex; align-items:center; justify-content:space-between; }
+  .brand{ font-family:'Noto Kufi Arabic',sans-serif; font-weight:900; font-size:20px; color:var(--fog); }
+  .brand span{ color:var(--clarity); }
+  .logout-btn{ background:none; border:1px solid rgba(255,255,255,.2); color:var(--text-muted-dark); font-size:13px; padding:8px 16px; border-radius:100px; cursor:pointer; font-family:inherit; }
+  .logout-btn:hover{ color:var(--fog); border-color:var(--clarity); }
+
+  main{ padding:44px 0 90px; }
+
+  /* ---------- LOGIN ---------- */
+  .login-wrap{ max-width:420px; margin:60px auto; }
+  .login-card{ background:#fff; border:1px solid var(--fog-dim); border-radius:20px; padding:36px 32px; box-shadow:0 24px 50px -30px rgba(36,29,46,.25); text-align:center; }
+  .login-card h1{ font-size:20px; margin-bottom:8px; }
+  .login-card p{ font-size:13.5px; color:var(--text-muted-light); margin-bottom:24px; }
+  .field{ margin-bottom:16px; text-align:right; }
+  .field label{ display:block; font-family:'Noto Kufi Arabic',sans-serif; font-weight:700; font-size:13.5px; color:var(--ink); margin-bottom:7px; }
+  .field input{ width:100%; border:1.5px solid var(--fog-dim); border-radius:12px; padding:12px 14px; font-family:inherit; font-size:14.5px; background:var(--fog); }
+  .field input:focus{ outline:none; border-color:var(--clarity); background:#fff; }
+  .btn-primary{ background:var(--ink); color:var(--fog); font-weight:700; font-size:14.5px; padding:13px 24px; border-radius:100px; border:none; cursor:pointer; font-family:inherit; width:100%; margin-top:6px; }
+  .btn-primary:hover{ background:var(--ink-soft); }
+  .login-error{ display:none; background:rgba(181,85,91,.1); color:var(--alert); font-size:13px; padding:10px; border-radius:10px; margin-bottom:16px; }
+  .login-error.active{ display:block; }
+
+  /* ---------- ADMIN DASHBOARD ---------- */
+  #dashboard{ display:none; }
+  .section-title{ font-size:20px; margin-bottom:6px; }
+  .section-sub{ font-size:13.5px; color:var(--text-muted-light); margin-bottom:26px; }
+
+  table{ width:100%; border-collapse:collapse; background:#fff; border-radius:16px; overflow:hidden; box-shadow:0 12px 30px -20px rgba(36,29,46,.2); margin-bottom:36px; }
+  th, td{ padding:14px 16px; text-align:right; font-size:14px; border-bottom:1px solid var(--fog-dim); }
+  th{ background:var(--ink); color:var(--fog); font-family:'Noto Kufi Arabic',sans-serif; font-size:13px; }
+  tr:last-child td{ border-bottom:none; }
+  .badge-yes{ background:rgba(201,161,95,.15); color:#8a6a2e; font-size:11.5px; font-weight:700; padding:3px 10px; border-radius:100px; }
+  .row-actions{ display:flex; gap:8px; }
+  .icon-btn{ background:var(--fog); border:1px solid var(--fog-dim); border-radius:8px; width:32px; height:32px; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:.15s; }
+  .icon-btn:hover{ border-color:var(--clarity); }
+  .icon-btn.danger:hover{ border-color:var(--alert); background:rgba(181,85,91,.08); }
+  .icon-btn svg{ width:14px; height:14px; }
+
+  .form-card{ background:#fff; border:1px solid var(--fog-dim); border-radius:16px; padding:28px 26px; }
+  .form-card h3{ font-size:16px; margin-bottom:18px; }
+  .form-grid{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  @media (max-width:600px){ .form-grid{ grid-template-columns:1fr; } }
+  .form-grid .full{ grid-column:1 / -1; }
+  .checkbox-row{ display:flex; align-items:center; gap:8px; }
+  .checkbox-row input{ width:auto; }
+  .checkbox-row label{ margin-bottom:0; }
+  .form-actions{ display:flex; gap:10px; margin-top:20px; }
+  .btn-secondary{ background:var(--fog); color:var(--ink); font-weight:700; font-size:14px; padding:11px 20px; border-radius:100px; border:1px solid var(--fog-dim); cursor:pointer; font-family:inherit; }
+  .status-msg{ font-size:13px; margin-top:12px; display:none; }
+  .status-msg.active{ display:block; }
+  .status-msg.success{ color:#5a7a4f; }
+  .status-msg.error{ color:var(--alert); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <span class="brand">بوضوح<span>.</span> — لوحة التحكم</span>
+    <button class="logout-btn" id="logoutBtn" style="display:none;">تسجيل الخروج</button>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+
+    <div class="login-wrap" id="loginSection">
+      <div class="login-card">
+        <h1>دخول لوحة التحكم</h1>
+        <p>هذه الصفحة مخصّصة لفريق بوضوح فقط.</p>
+        <div class="login-error" id="loginError">البريد الإلكتروني أو كلمة السر غير صحيحة.</div>
+        <form id="loginForm">
+          <div class="field">
+            <label for="loginEmail">البريد الإلكتروني</label>
+            <input type="email" id="loginEmail" required>
+          </div>
+          <div class="field">
+            <label for="loginPassword">كلمة السر</label>
+            <input type="password" id="loginPassword" required>
+          </div>
+          <button type="submit" class="btn-primary">تسجيل الدخول</button>
+        </form>
+      </div>
+    </div>
+
+    <div id="dashboard">
+      <h2 class="section-title">إدارة الباقات والأسعار</h2>
+      <p class="section-sub">أي تعديل هنا يظهر مباشرة لكل زوار الموقع على صفحة الحجز.</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>الاسم</th>
+            <th>السعر</th>
+            <th>الوصف</th>
+            <th>موصى بها؟</th>
+            <th>الترتيب</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="packagesTableBody">
+          <tr><td colspan="6">جارٍ التحميل...</td></tr>
+        </tbody>
+      </table>
+
+      <div class="form-card">
+        <h3 id="formTitle">إضافة باقة جديدة</h3>
+        <form id="packageForm">
+          <input type="hidden" id="pkgId">
+          <div class="form-grid">
+            <div class="field">
+              <label for="pkgName">اسم الباقة</label>
+              <input type="text" id="pkgName" required>
+            </div>
+            <div class="field">
+              <label for="pkgPrice">السعر (د.أ)</label>
+              <input type="number" id="pkgPrice" step="0.01" required>
+            </div>
+            <div class="field full">
+              <label for="pkgDesc">الوصف</label>
+              <input type="text" id="pkgDesc">
+            </div>
+            <div class="field">
+              <label for="pkgUnit">تفاصيل السعر (مثال: شهرياً — ٤ جلسات)</label>
+              <input type="text" id="pkgUnit" required>
+            </div>
+            <div class="field">
+              <label for="pkgOrder">ترتيب الظهور</label>
+              <input type="number" id="pkgOrder" value="0">
+            </div>
+            <div class="field full checkbox-row">
+              <input type="checkbox" id="pkgRecommended">
+              <label for="pkgRecommended">علّمها "الأكثر طلباً"</label>
+            </div>
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="btn-primary" style="width:auto;" id="submitBtnLabel">حفظ الباقة</button>
+            <button type="button" class="btn-secondary" id="cancelEditBtn" style="display:none;">إلغاء التعديل</button>
+          </div>
+          <div class="status-msg" id="formStatus"></div>
+        </form>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/supabase-config.js"></script>
+<script>
+/* ============================================================
+   بوضوح — لوحة التحكم (Admin Panel).
+   ------------------------------------------------------------
+   تتطلب هذه الصفحة إعداد supabase-config.js ببيانات حقيقية أولاً.
+   الوصول محمي بتسجيل دخول حقيقي عبر Supabase Auth — فقط حسابك
+   الإداري (الذي أنشأتيه من لوحة Supabase) يقدر يدخل.
+
+   ملاحظة أمان: هذه الصفحة نفسها غير مخفية عن أحد (أي شخص يقدر
+   يفتح الرابط)، لكن بدون تسجيل دخول صحيح، سياسات RLS على قاعدة
+   البيانات تمنع أي تعديل فعلي. أضفنا meta robots="noindex" حتى
+   لا تظهر بنتائج البحث، لكن هذا لا يخفيها تماماً — الحماية
+   الحقيقية من تسجيل الدخول والـ RLS، لا من إخفاء الرابط.
+   ============================================================ */
+
+const loginSection = document.getElementById('loginSection');
+const dashboard = document.getElementById('dashboard');
+const logoutBtn = document.getElementById('logoutBtn');
+const loginError = document.getElementById('loginError');
+
+function showDashboard(){
+  loginSection.style.display = 'none';
+  dashboard.style.display = 'block';
+  logoutBtn.style.display = 'inline-block';
+  loadPackages();
+}
+function showLogin(){
+  loginSection.style.display = 'block';
+  dashboard.style.display = 'none';
+  logoutBtn.style.display = 'none';
+}
+
+async function checkSession(){
+  if (!supabaseClient) return;
+  const { data } = await supabaseClient.auth.getSession();
+  if (data.session) showDashboard(); else showLogin();
+}
+checkSession();
+
+document.getElementById('loginForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  loginError.classList.remove('active');
+  const email = document.getElementById('loginEmail').value.trim();
+  const password = document.getElementById('loginPassword').value;
+
+  if (!supabaseClient) {
+    loginError.textContent = 'لم يتم إعداد الاتصال بقاعدة البيانات بعد (supabase-config.js).';
+    loginError.classList.add('active');
+    return;
+  }
+
+  const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
+  if (error) {
+    loginError.textContent = 'البريد الإلكتروني أو كلمة السر غير صحيحة.';
+    loginError.classList.add('active');
+    return;
+  }
+  showDashboard();
+});
+
+logoutBtn.addEventListener('click', async () => {
+  await supabaseClient.auth.signOut();
+  showLogin();
+});
+
+// ---------- Packages table ----------
+async function loadPackages(){
+  const tbody = document.getElementById('packagesTableBody');
+  tbody.innerHTML = '<tr><td colspan="6">جارٍ التحميل...</td></tr>';
+
+  const { data, error } = await supabaseClient.from('packages').select('*').order('sort_order', { ascending: true });
+  if (error) {
+    tbody.innerHTML = '<tr><td colspan="6">تعذّر تحميل البيانات.</td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = data.map(pkg => `
+    <tr>
+      <td>${pkg.name}</td>
+      <td>${pkg.price} د.أ</td>
+      <td>${pkg.description || ''}</td>
+      <td>${pkg.is_recommended ? '<span class="badge-yes">نعم</span>' : '—'}</td>
+      <td>${pkg.sort_order}</td>
+      <td>
+        <div class="row-actions">
+          <button class="icon-btn" title="تعديل" data-edit-id="${pkg.id}">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.83 2.83 0 0 1 4 4L7 21l-4 1 1-4Z"/></svg>
+          </button>
+          <button class="icon-btn danger" title="حذف" data-delete-id="${pkg.id}">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0-1 14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2L4 6"/></svg>
+          </button>
+        </div>
+      </td>
+    </tr>
+  `).join('');
+
+  tbody.querySelectorAll('[data-edit-id]').forEach(btn => {
+    btn.addEventListener('click', () => startEdit(data.find(p => p.id === btn.dataset.editId)));
+  });
+  tbody.querySelectorAll('[data-delete-id]').forEach(btn => {
+    btn.addEventListener('click', () => deletePackage(btn.dataset.deleteId));
+  });
+}
+
+// ---------- Add / Edit form ----------
+const packageForm = document.getElementById('packageForm');
+const formTitle = document.getElementById('formTitle');
+const cancelEditBtn = document.getElementById('cancelEditBtn');
+const formStatus = document.getElementById('formStatus');
+
+function startEdit(pkg){
+  document.getElementById('pkgId').value = pkg.id;
+  document.getElementById('pkgName').value = pkg.name;
+  document.getElementById('pkgPrice').value = pkg.price;
+  document.getElementById('pkgDesc').value = pkg.description || '';
+  document.getElementById('pkgUnit').value = pkg.price_unit;
+  document.getElementById('pkgOrder').value = pkg.sort_order;
+  document.getElementById('pkgRecommended').checked = pkg.is_recommended;
+  formTitle.textContent = 'تعديل: ' + pkg.name;
+  cancelEditBtn.style.display = 'inline-block';
+  window.scrollTo({ top: document.querySelector('.form-card').offsetTop - 20, behavior: 'smooth' });
+}
+
+function resetForm(){
+  packageForm.reset();
+  document.getElementById('pkgId').value = '';
+  formTitle.textContent = 'إضافة باقة جديدة';
+  cancelEditBtn.style.display = 'none';
+}
+cancelEditBtn.addEventListener('click', resetForm);
+
+packageForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  formStatus.classList.remove('active', 'success', 'error');
+
+  const id = document.getElementById('pkgId').value;
+  const payload = {
+    name: document.getElementById('pkgName').value.trim(),
+    price: parseFloat(document.getElementById('pkgPrice').value),
+    description: document.getElementById('pkgDesc').value.trim(),
+    price_unit: document.getElementById('pkgUnit').value.trim(),
+    sort_order: parseInt(document.getElementById('pkgOrder').value) || 0,
+    is_recommended: document.getElementById('pkgRecommended').checked,
+  };
+
+  let error;
+  if (id) {
+    ({ error } = await supabaseClient.from('packages').update(payload).eq('id', id));
+  } else {
+    ({ error } = await supabaseClient.from('packages').insert(payload));
+  }
+
+  if (error) {
+    formStatus.textContent = 'صار خطأ أثناء الحفظ. حاولي مرة أخرى.';
+    formStatus.classList.add('active', 'error');
+    return;
+  }
+
+  formStatus.textContent = 'تم الحفظ بنجاح.';
+  formStatus.classList.add('active', 'success');
+  resetForm();
+  loadPackages();
+});
+
+async function deletePackage(id){
+  if (!confirm('متأكدة تريدين حذف هذه الباقة؟')) return;
+  const { error } = await supabaseClient.from('packages').delete().eq('id', id);
+  if (!error) loadPackages();
+}
+</script>
+
+</body>
+</html>

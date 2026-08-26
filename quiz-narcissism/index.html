@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>اختبار الشخصية النرجسية: قياس شدة الأعراض — بوضوح</title>
+<meta name="description" content="أداة تقييم ذاتي تقيس سمات الحاجة إلى الإعجاب، والعظمة، ونقص التعاطف، والشعور بالأحقية، من خلال تسعة أسئلة.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@500;700;900&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#241D2E; --ink-soft:#372C46; --plum:#4A3B5C;
+    --fog:#F3EEEA; --fog-dim:#E6DFDA;
+    --clarity:#C9A15F; --clarity-soft:#E4C98A; --rose:#8B6F7E; --alert:#B5555B;
+    --text-on-dark:#EDE7E3; --text-muted-dark:#B7ACC4;
+    --text-on-light:#2A2130; --text-muted-light:#6B6072;
+    --radius:14px; --max:760px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{ font-family:'IBM Plex Sans Arabic', sans-serif; background:var(--fog); color:var(--text-on-light); line-height:1.9; -webkit-font-smoothing:antialiased; }
+  h1,h2,h3,.kufi{ font-family:'Noto Kufi Arabic', sans-serif; }
+  a{ color:inherit; text-decoration:none; }
+  .wrap{ max-width:var(--max); margin:0 auto; padding:0 24px; }
+
+  nav{ position:sticky; top:0; z-index:50; background:rgba(36,29,46,.92); backdrop-filter:blur(8px); border-bottom:1px solid rgba(255,255,255,.06); }
+  nav .wrap{ display:flex; align-items:center; justify-content:space-between; padding:16px 24px; max-width:1080px; }
+  .brand{ font-family:'Noto Kufi Arabic',sans-serif; font-weight:900; font-size:22px; color:var(--fog); text-decoration:none; }
+  .brand span{ color:var(--clarity); }
+  .nav-links{ display:flex; align-items:center; gap:28px; }
+  .nav-links a{ color:var(--text-muted-dark); font-size:14px; font-weight:500; text-decoration:none; transition:color .2s; }
+  .nav-links a:hover{ color:var(--fog); }
+  a.nav-cta{ background:var(--clarity); color:var(--ink); font-weight:700; font-size:14px; padding:9px 20px; border-radius:100px; transition:.2s; }
+  a.nav-cta:hover{ background:var(--clarity-soft); }
+  @media (max-width:780px){ .nav-links{ display:none; } }
+
+  .page-head{ background:radial-gradient(120% 90% at 75% 0%, var(--ink-soft) 0%, var(--ink) 55%, #1A1522 100%); padding:64px 0 48px; text-align:center; }
+  .eyebrow{ display:inline-flex; align-items:center; gap:8px; font-size:13px; color:var(--clarity-soft); font-weight:600; margin-bottom:14px; justify-content:center; }
+  .eyebrow::before{ content:""; width:20px; height:1px; background:var(--clarity-soft); display:inline-block; }
+  .page-head h1{ color:var(--fog); font-size:clamp(28px,4.4vw,42px); font-weight:900; max-width:20ch; margin:0 auto; line-height:1.4; }
+  .page-head p{ color:var(--text-muted-dark); font-size:15.5px; max-width:48ch; margin:14px auto 0; }
+  .back-link{ display:inline-flex; align-items:center; gap:6px; font-size:13px; color:var(--clarity-soft); margin-bottom:22px; text-decoration:none; }
+
+  main{ padding:48px 0 90px; }
+  .quiz-card{ background:#fff; border:1px solid var(--fog-dim); border-radius:20px; padding:38px 34px; box-shadow:0 24px 50px -30px rgba(36,29,46,.25); }
+  @media (max-width:600px){ .quiz-card{ padding:28px 20px; } }
+
+  .progress-row{ display:flex; align-items:center; gap:14px; margin-bottom:30px; }
+  .progress-track{ flex:1; height:6px; background:var(--fog-dim); border-radius:100px; overflow:hidden; }
+  .progress-fill{ height:100%; background:var(--clarity); border-radius:100px; width:11%; transition:width .4s ease; }
+  .progress-label{ font-size:12.5px; color:var(--text-muted-light); font-weight:600; white-space:nowrap; }
+
+  .q-block{ display:none; }
+  .q-block.active{ display:block; animation:fadeIn .35s ease; }
+  @keyframes fadeIn{ from{ opacity:0; transform:translateY(6px);} to{ opacity:1; transform:translateY(0);} }
+  .q-text{ font-family:'Noto Kufi Arabic',sans-serif; font-size:19px; font-weight:700; line-height:1.7; margin-bottom:22px; max-width:40ch; }
+  .options{ display:flex; flex-direction:column; gap:10px; }
+  .opt{ display:flex; align-items:center; gap:12px; text-align:right; border:1.5px solid var(--fog-dim); border-radius:12px; padding:14px 16px; background:var(--fog); cursor:pointer; font-size:15px; color:var(--text-on-light); transition:.15s; width:100%; font-family:inherit; }
+  .opt:hover{ border-color:var(--clarity); background:#fff; }
+  .opt.selected{ border-color:var(--clarity); background:rgba(201,161,95,.1); }
+  .opt-dot{ width:18px; height:18px; border-radius:50%; border:1.5px solid var(--rose); flex-shrink:0; position:relative; }
+  .opt.selected .opt-dot{ border-color:var(--clarity); }
+  .opt.selected .opt-dot::after{ content:""; position:absolute; inset:3px; border-radius:50%; background:var(--clarity); }
+
+  .nav-row{ display:flex; justify-content:space-between; align-items:center; margin-top:30px; }
+  .btn-ghost{ background:none; border:none; color:var(--text-muted-light); font-size:14px; font-weight:600; cursor:pointer; font-family:inherit; padding:10px 6px; }
+  .btn-ghost:disabled{ opacity:0; pointer-events:none; }
+  .btn-next{ background:var(--ink); color:var(--fog); font-weight:700; font-size:14.5px; padding:13px 28px; border-radius:100px; border:none; cursor:pointer; font-family:inherit; transition:.2s; }
+  .btn-next:hover{ background:var(--ink-soft); }
+  .btn-next:disabled{ opacity:.4; cursor:not-allowed; }
+
+  .result-block{ display:none; }
+  .result-block.active{ display:block; animation:fadeIn .4s ease; }
+  .result-tag{ display:inline-block; font-size:12px; font-weight:700; padding:5px 14px; border-radius:100px; margin-bottom:16px; }
+  .result-title{ font-family:'Noto Kufi Arabic',sans-serif; font-size:24px; font-weight:900; margin-bottom:14px; line-height:1.5; }
+  .result-desc{ font-size:15.5px; color:var(--text-muted-light); margin-bottom:26px; max-width:56ch; }
+  .meter{ margin:26px 0 30px; }
+  .meter-track{ height:10px; border-radius:100px; background:var(--fog-dim); overflow:hidden; }
+  .meter-fill{ height:100%; border-radius:100px; transition:width 1s ease; }
+  .meter-labels{ display:flex; justify-content:space-between; font-size:11.5px; color:var(--text-muted-light); margin-top:8px; }
+  .result-points{ display:flex; flex-direction:column; gap:12px; margin:24px 0; }
+  .result-points li{ list-style:none; display:flex; gap:10px; font-size:14.5px; color:var(--text-on-light); align-items:flex-start; }
+  .result-points b{ flex-shrink:0; color:var(--clarity); font-family:'Noto Kufi Arabic',sans-serif; }
+  .related-articles{ margin-top:28px; padding-top:24px; border-top:1px solid var(--fog-dim); }
+  .related-articles h4{ font-size:14px; color:var(--text-muted-light); margin-bottom:14px; font-weight:600; }
+  .related-articles a{ display:block; text-decoration:none; color:var(--text-on-light); font-weight:600; font-size:14.5px; padding:12px 0; border-bottom:1px solid var(--fog-dim); }
+  .related-articles a:last-child{ border-bottom:none; }
+  .cta-box{ margin-top:30px; background:var(--ink); border-radius:18px; padding:30px 28px; text-align:center; background:radial-gradient(140% 140% at 50% 0%, var(--ink-soft), var(--ink)); }
+  .cta-box h3{ color:var(--fog); font-size:19px; margin-bottom:8px; }
+  .cta-box p{ color:var(--text-muted-dark); font-size:14px; max-width:44ch; margin:0 auto 20px; }
+  .btn-primary{ background:var(--clarity); color:var(--ink); font-weight:700; font-size:14.5px; padding:13px 26px; border-radius:100px; display:inline-block; text-decoration:none; }
+  .retake{ display:block; text-align:center; margin-top:22px; font-size:13.5px; color:var(--text-muted-light); text-decoration:none; }
+  .retake:hover{ color:var(--text-on-light); }
+  .disclaimer{ background:var(--fog); border:1px solid var(--fog-dim); border-radius:var(--radius); padding:18px 20px; font-size:13px; color:var(--text-muted-light); margin-top:30px; }
+
+  footer{ background:var(--ink); color:var(--text-muted-dark); padding:44px 0 28px; text-align:center; font-size:12.5px; }
+  footer .brand{ display:block; margin-bottom:10px; font-size:18px; }
+</style>
+</head>
+<body>
+
+<site-nav active="quizzes"></site-nav>
+
+<header class="page-head">
+  <div class="wrap">
+    <a href="/quizzes/" class="back-link">← جميع الاختبارات</a><br>
+    <div class="eyebrow">اختبار تفاعلي · قياس شدة الأعراض</div>
+    <h1>اختبار الشخصية النرجسية</h1>
+    <p>أداة تقييم ذاتي تقيس سمات الحاجة إلى الإعجاب، والعظمة، ونقص التعاطف، والشعور بالأحقية، وتساعدك على معرفة مدى قرب سلوكك وإدراكك لذاتك من هذه السمات.</p>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <div class="quiz-card">
+
+      <div id="quizSection">
+        <div class="progress-row">
+          <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+          <span class="progress-label" id="progressLabel">١ / ٩</span>
+        </div>
+        <div id="questionsHost"></div>
+        <div class="nav-row">
+          <button class="btn-ghost" id="btnBack">السابق</button>
+          <button class="btn-next" id="btnNext" disabled>التالي</button>
+        </div>
+      </div>
+
+      <div id="resultsSection" style="display:none;">
+        <span class="result-tag" id="resultTag"></span>
+        <h2 class="result-title" id="resultTitle"></h2>
+        <p class="result-desc" id="resultDesc"></p>
+        <div class="meter">
+          <div class="meter-track"><div class="meter-fill" id="meterFill"></div></div>
+          <div class="meter-labels"><span>مؤشرات منخفضة</span><span>مؤشرات مرتفعة</span></div>
+        </div>
+        <ul class="result-points" id="resultPoints"></ul>
+        <div class="related-articles">
+          <h4>مقالات قد تفيدك</h4>
+          <div id="relatedLinks"></div>
+        </div>
+        <div class="cta-box">
+          <h3 id="ctaTitle">هل ترغب في دعم حقيقي لفهم هذه السمات؟</h3>
+          <p id="ctaDesc">استشارة مع مختص نفسي مرخّص ممكن تساعدك تفهم هذه السمات بعمق أكبر، وتشتغل عليها بدعم مباشر.</p>
+          <a href="/sales-page/" class="btn-primary">احجز استشارتك الأولى</a>
+        </div>
+        <a href="#" class="retake" id="retakeBtn">إعادة الاختبار من جديد</a>
+        <div class="disclaimer">هذا الاختبار أداة توعوية للتأمل الذاتي فقط، وليس أداة تشخيصية رسمية لاضطراب الشخصية النرجسية (NPD)، ولا بديلاً عن تقييم مختص نفسي مرخّص. التشخيص السريري يتطلب تقييماً متخصصاً شاملاً.</div>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<site-footer></site-footer>
+
+<script>
+const questions = [
+  { text: "أشعر بأنني أستحق إعجاب الآخرين وتقديرهم بشكل مستمر.", options: [
+    { label: "لا ينطبق علي إطلاقاً", pts: 0 },
+    { label: "ينطبق علي نادراً", pts: 1 },
+    { label: "ينطبق علي غالباً", pts: 2 },
+    { label: "ينطبق علي دائماً", pts: 3 },
+  ]},
+  { text: "أعتقد أنني متفوق على معظم من حولي في القدرات والإنجازات.", options: [
+    { label: "لا ينطبق علي إطلاقاً", pts: 0 },
+    { label: "ينطبق علي نادراً", pts: 1 },
+    { label: "ينطبق علي غالباً", pts: 2 },
+    { label: "ينطبق علي دائماً", pts: 3 },
+  ]},
+  { text: "أجد صعوبة حقيقية في فهم مشاعر الآخرين أو التعاطف معهم.", options: [
+    { label: "لا ينطبق علي إطلاقاً", pts: 0 },
+    { label: "ينطبق علي نادراً", pts: 1 },
+    { label: "ينطبق علي غالباً", pts: 2 },
+    { label: "ينطبق علي دائماً", pts: 3 },
+  ]},
+  { text: "أشعر بأنني أستحق معاملة خاصة تختلف عمّا يحصل عليه الآخرون.", options: [
+    { label: "لا ينطبق علي إطلاقاً", pts: 0 },
+    { label: "ينطبق علي نادراً", pts: 1 },
+    { label: "ينطبق علي غالباً", pts: 2 },
+    { label: "ينطبق علي دائماً", pts: 3 },
+  ]},
+  { text: "أحتاج إلى ثناء الآخرين المستمر لأشعر بالرضا عن نفسي.", options: [
+    { label: "لا ينطبق علي إطلاقاً", pts: 0 },
+    { label: "ينطبق علي نادراً", pts: 1 },
+    { label: "ينطبق علي غالباً", pts: 2 },
+    { label: "ينطبق علي دائماً", pts: 3 },
+  ]},
+  { text: "أنشغل كثيراً بتخيل نجاحات استثنائية أو قوة أو تفوق يفوق ما يحققه الآخرون.", options: [
+    { label: "لا ينطبق علي إطلاقاً", pts: 0 },
+    { label: "ينطبق علي نادراً", pts: 1 },
+    { label: "ينطبق علي غالباً", pts: 2 },
+    { label: "ينطبق علي دائماً", pts: 3 },
+  ]},
+  { text: "لا أتأثر كثيراً عندما يتألم شخص قريب مني.", options: [
+    { label: "لا ينطبق علي إطلاقاً", pts: 0 },
+    { label: "ينطبق علي نادراً", pts: 1 },
+    { label: "ينطبق علي غالباً", pts: 2 },
+    { label: "ينطبق علي دائماً", pts: 3 },
+  ]},
+  { text: "أغضب أو أنزعج عندما لا يعاملني الآخرون بالطريقة التي أستحقها في نظري.", options: [
+    { label: "لا ينطبق علي إطلاقاً", pts: 0 },
+    { label: "ينطبق علي نادراً", pts: 1 },
+    { label: "ينطبق علي غالباً", pts: 2 },
+    { label: "ينطبق علي دائماً", pts: 3 },
+  ]},
+  { text: "أميل إلى استغلال علاقاتي مع الآخرين لتحقيق مصالحي الشخصية.", options: [
+    { label: "لا ينطبق علي إطلاقاً", pts: 0 },
+    { label: "ينطبق علي نادراً", pts: 1 },
+    { label: "ينطبق علي غالباً", pts: 2 },
+    { label: "ينطبق علي دائماً", pts: 3 },
+  ]},
+];
+
+const results = [
+  { min: 0, max: 6, tag: "مؤشرات منخفضة جداً", tagColor: "var(--clarity)",
+    title: "إجاباتك لا تشير إلى وجود سمات نرجسية ملحوظة",
+    desc: "معظم إجاباتك تدل على إدراك متوازن للذات، مع قدرة على التعاطف مع الآخرين واحترام حدودهم. هذا لا يعني غياب الثقة بالنفس، بل يعني أنها مبنية على أساس صحي.",
+    points: ["استمر في ملاحظة تصرفاتك من وقت لآخر، فالوعي الذاتي المستمر عادة صحية بحد ذاتها.", "الثقة الصحية بالنفس لا تتعارض مع التعاطف مع الآخرين، بل تكملها."],
+    meterColor: "var(--clarity)", meterPct: 12,
+    articles: ["/article-narcissist-vs-confident/"] },
+  { min: 7, max: 13, tag: "مؤشرات خفيفة تستحق الانتباه", tagColor: "var(--rose)",
+    title: "توجد لديك بعض السمات التي تستحق ملاحظة هادئة",
+    desc: "بعض إجاباتك تشير إلى ميول عابرة نحو الحاجة إلى الإعجاب أو صعوبة في التعاطف أحياناً. هذا لا يعني بالضرورة وجود اضطراب، لكنه يستحق تأملاً صادقاً مع النفس.",
+    points: ["حدد الأسئلة التي أجبت عنها بأعلى الدرجات، فهي أقرب نقطة تستحق التأمل.", "اسأل من تثق بهم كيف يرون تعاملك معهم، فالمنظور الخارجي قد يوضح أشياء يصعب رؤيتها من الداخل.", "لاحظ ردود أفعالك عند تلقي النقد أو عند عدم حصولك على الاهتمام المتوقع."],
+    meterColor: "var(--clarity-soft)", meterPct: 42,
+    articles: ["/article-narcissist-vs-confident/", "/article-healthy-boundaries/"] },
+  { min: 14, max: 20, tag: "مؤشرات متوسطة إلى مرتفعة", tagColor: "var(--alert)",
+    title: "إجاباتك تشير إلى أنماط متكررة تستحق اهتماماً جدياً",
+    desc: "عدد من إجاباتك يشير إلى وجود سمات متكررة مرتبطة بالحاجة إلى الإعجاب، والشعور بالأحقية، وصعوبة التعاطف. هذه الأنماط قد تؤثر على علاقاتك الشخصية والمهنية.",
+    points: ["توثيق المواقف التي تلاحظ فيها هذه الأنماط قد يساعدك على رؤيتها بوضوح أكبر.", "التحدث مع معالج نفسي مختص خطوة مفيدة جداً هنا، فهي ليست علامة ضعف، بل خطوة نحو فهم أعمق لذاتك.", "شارك من حولك رغبتك في التغيير، فالانفتاح على الملاحظات خطوة أولى مهمة."],
+    meterColor: "var(--alert)", meterPct: 72,
+    articles: ["/article-narcissist-vs-confident/", "/article-healthy-boundaries/"] },
+  { min: 21, max: 27, tag: "مؤشرات مرتفعة تستدعي استشارة مختص", tagColor: "var(--alert)",
+    title: "معظم إجاباتك تشير إلى سمات تستحق تقييماً مهنياً",
+    desc: "معظم إجاباتك تشير إلى وجود سمات نرجسية بشكل ملحوظ ومتكرر. الاعتراف بهذا أمر صعب، لكنه أهم خطوة يمكنك اتخاذها الآن.",
+    points: ["التحدث مع معالج نفسي مختص بهذا المجال خطوة مهمة جداً لفهم هذه السمات والعمل عليها بشكل حقيقي.", "التغيير الحقيقي يتطلب وقتاً والتزاماً، وهو ممكن دائماً عند وجود رغبة صادقة فيه.", "كن صادقاً مع نفسك ومع من حولك بشأن رغبتك في العمل على هذه الجوانب."],
+    meterColor: "var(--alert)", meterPct: 94,
+    articles: ["/article-narcissist-vs-confident/", "/article-healthy-boundaries/"] },
+];
+
+const articleTitles = {
+  "/article-narcissist-vs-confident/": "الفرق بين الشخص الواثق والشخص النرجسي",
+  "/article-healthy-boundaries/": "كيف تحدد حدوداً صحية في علاقتك دون الشعور بالذنب",
+};
+
+let current = 0;
+const answers = new Array(questions.length).fill(null);
+const host = document.getElementById('questionsHost');
+const progressFill = document.getElementById('progressFill');
+const progressLabel = document.getElementById('progressLabel');
+const btnNext = document.getElementById('btnNext');
+const btnBack = document.getElementById('btnBack');
+const arabicNums = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
+function toArabicNum(n){ return String(n).split('').map(d => arabicNums[+d]).join(''); }
+
+function renderQuestions(){
+  host.innerHTML = '';
+  questions.forEach((q, qi) => {
+    const block = document.createElement('div');
+    block.className = 'q-block' + (qi === current ? ' active' : '');
+    const qt = document.createElement('div');
+    qt.className = 'q-text';
+    qt.textContent = q.text;
+    block.appendChild(qt);
+    const opts = document.createElement('div');
+    opts.className = 'options';
+    q.options.forEach((opt, oi) => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'opt' + (answers[qi] === oi ? ' selected' : '');
+      btn.innerHTML = '<span class="opt-dot"></span><span>' + opt.label + '</span>';
+      btn.addEventListener('click', () => { answers[qi] = oi; renderQuestions(); updateNav(); });
+      opts.appendChild(btn);
+    });
+    block.appendChild(opts);
+    host.appendChild(block);
+  });
+}
+function updateNav(){
+  progressFill.style.width = ((current + 1) / questions.length * 100) + '%';
+  progressLabel.textContent = toArabicNum(current + 1) + ' / ' + toArabicNum(questions.length);
+  btnBack.disabled = current === 0;
+  btnNext.disabled = answers[current] === null;
+  btnNext.textContent = current === questions.length - 1 ? 'عرض النتيجة' : 'التالي';
+}
+btnNext.addEventListener('click', () => {
+  if (answers[current] === null) return;
+  if (current < questions.length - 1) { current++; renderQuestions(); updateNav(); }
+  else { showResults(); }
+});
+btnBack.addEventListener('click', () => { if (current > 0) { current--; renderQuestions(); updateNav(); } });
+
+function showResults(){
+  const score = answers.reduce((sum, ai, qi) => sum + questions[qi].options[ai].pts, 0);
+  const result = results.find(r => score >= r.min && score <= r.max) || results[results.length - 1];
+  document.getElementById('quizSection').style.display = 'none';
+  const rs = document.getElementById('resultsSection');
+  rs.style.display = 'block'; rs.classList.add('active');
+  const tagEl = document.getElementById('resultTag');
+  tagEl.textContent = result.tag; tagEl.style.background = result.tagColor;
+  tagEl.style.color = (result.tagColor === 'var(--alert)') ? '#fff' : 'var(--ink)';
+  document.getElementById('resultTitle').textContent = result.title;
+  document.getElementById('resultDesc').textContent = result.desc;
+  const meterFill = document.getElementById('meterFill');
+  meterFill.style.background = result.meterColor;
+  setTimeout(() => { meterFill.style.width = result.meterPct + '%'; }, 50);
+  const pointsList = document.getElementById('resultPoints');
+  pointsList.innerHTML = '';
+  result.points.forEach((p, i) => {
+    const li = document.createElement('li');
+    li.innerHTML = '<b>' + toArabicNum(i + 1) + '.</b><span>' + p + '</span>';
+    pointsList.appendChild(li);
+  });
+  const relatedHost = document.getElementById('relatedLinks');
+  relatedHost.innerHTML = '';
+  result.articles.forEach(href => {
+    const a = document.createElement('a');
+    a.href = href; a.textContent = articleTitles[href] || href;
+    relatedHost.appendChild(a);
+  });
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+document.getElementById('retakeBtn').addEventListener('click', (e) => {
+  e.preventDefault(); current = 0; answers.fill(null);
+  document.getElementById('resultsSection').style.display = 'none';
+  document.getElementById('quizSection').style.display = 'block';
+  renderQuestions(); updateNav();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+renderQuestions(); updateNav();
+</script>
+<script src="/components.js"></script>
+</body>
+</html>

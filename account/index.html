@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>حسابي — بوضوح</title>
+<meta name="description" content="صفحة حسابك في بوضوح.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@500;700;900&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#241D2E; --ink-soft:#372C46; --plum:#4A3B5C;
+    --fog:#F3EEEA; --fog-dim:#E6DFDA;
+    --clarity:#C9A15F; --clarity-soft:#E4C98A; --rose:#8B6F7E; --alert:#B5555B;
+    --text-on-dark:#EDE7E3; --text-muted-dark:#B7ACC4;
+    --text-on-light:#2A2130; --text-muted-light:#6B6072;
+    --radius:14px; --max:560px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{ font-family:'IBM Plex Sans Arabic', sans-serif; background:var(--fog); color:var(--text-on-light); line-height:1.9; -webkit-font-smoothing:antialiased; }
+  h1,h2,.kufi{ font-family:'Noto Kufi Arabic', sans-serif; }
+  a{ color:inherit; text-decoration:none; }
+  .wrap{ max-width:var(--max); margin:0 auto; padding:0 24px; }
+
+  nav{ position:sticky; top:0; z-index:50; background:rgba(36,29,46,.92); backdrop-filter:blur(8px); border-bottom:1px solid rgba(255,255,255,.06); }
+  nav .wrap{ display:flex; align-items:center; justify-content:space-between; padding:16px 24px; max-width:1080px; }
+  .brand{ font-family:'Noto Kufi Arabic',sans-serif; font-weight:900; font-size:22px; color:var(--fog); text-decoration:none; }
+  .brand span{ color:var(--clarity); }
+  .nav-links{ display:flex; align-items:center; gap:28px; }
+  .nav-links a{ color:var(--text-muted-dark); font-size:14px; font-weight:500; text-decoration:none; transition:color .2s; }
+  .nav-links a:hover{ color:var(--fog); }
+  a.nav-cta{ background:var(--clarity); color:var(--ink); font-weight:700; font-size:14px; padding:9px 20px; border-radius:100px; transition:.2s; }
+  a.nav-cta:hover{ background:var(--clarity-soft); }
+  @media (max-width:780px){ .nav-links{ display:none; } }
+
+  .page-head{ background:radial-gradient(120% 90% at 75% 0%, var(--ink-soft) 0%, var(--ink) 55%, #1A1522 100%); padding:56px 0 44px; text-align:center; }
+
+  .avatar-wrap{ position:relative; width:88px; height:88px; margin:0 auto 16px; }
+  .avatar-circle{
+    width:88px; height:88px; border-radius:50%; background:var(--clarity); display:flex; align-items:center; justify-content:center;
+    font-family:'Noto Kufi Arabic',sans-serif; font-weight:900; font-size:32px; color:var(--ink); overflow:hidden; border:3px solid rgba(255,255,255,.15);
+  }
+  .avatar-circle img{ width:100%; height:100%; object-fit:cover; }
+  .avatar-edit-btn{
+    position:absolute; bottom:-2px; left:-2px; width:30px; height:30px; border-radius:50%; background:var(--ink);
+    border:2.5px solid var(--fog); display:flex; align-items:center; justify-content:center; cursor:pointer; transition:.2s;
+  }
+  .avatar-edit-btn:hover{ background:var(--ink-soft); }
+  .avatar-edit-btn svg{ width:13px; height:13px; color:var(--clarity-soft); }
+  #photoInput{ display:none; }
+
+  .page-head h1{ color:var(--fog); font-size:clamp(22px,3.6vw,30px); font-weight:900; }
+  .page-head p{ color:var(--text-muted-dark); font-size:14px; margin-top:6px; }
+
+  main{ padding:44px 0 90px; }
+
+  .card{ background:#fff; border:1px solid var(--fog-dim); border-radius:20px; padding:32px 30px; box-shadow:0 24px 50px -30px rgba(36,29,46,.25); margin-bottom:22px; }
+  @media (max-width:600px){ .card{ padding:24px 22px; } }
+  .card-head{ display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; }
+  .card-head h3{ font-size:16px; color:var(--ink); }
+  .edit-toggle{ background:none; border:none; color:var(--clarity); font-weight:700; font-size:13.5px; cursor:pointer; font-family:inherit; }
+
+  .info-row{ display:flex; justify-content:space-between; align-items:center; padding:14px 0; border-bottom:1px solid var(--fog-dim); }
+  .info-row:last-child{ border-bottom:none; }
+  .info-row .label{ font-size:13px; color:var(--text-muted-light); font-weight:600; }
+  .info-row .value{ font-size:14.5px; color:var(--ink); font-weight:700; }
+
+  .field{ margin-bottom:16px; }
+  .field:last-child{ margin-bottom:0; }
+  .field label{ display:block; font-family:'Noto Kufi Arabic',sans-serif; font-weight:700; font-size:13.5px; color:var(--ink); margin-bottom:7px; }
+  .field input{
+    width:100%; border:1.5px solid var(--fog-dim); border-radius:12px; padding:12px 14px;
+    font-family:'IBM Plex Sans Arabic', sans-serif; font-size:14.5px; color:var(--text-on-light);
+    background:var(--fog); transition:.15s;
+  }
+  .field input:focus{ outline:none; border-color:var(--clarity); background:#fff; }
+
+  .edit-actions{ display:flex; gap:10px; margin-top:20px; }
+  .btn-save{ flex:1; background:var(--ink); color:var(--fog); font-weight:700; font-size:14px; padding:12px 20px; border-radius:100px; border:none; cursor:pointer; font-family:inherit; transition:.2s; }
+  .btn-save:hover{ background:var(--ink-soft); }
+  .btn-cancel{ flex:1; background:#fff; color:var(--text-muted-light); font-weight:700; font-size:14px; padding:12px 20px; border-radius:100px; border:1.5px solid var(--fog-dim); cursor:pointer; font-family:inherit; transition:.2s; }
+  .btn-cancel:hover{ border-color:var(--text-muted-light); }
+
+  .saved-toast{ display:none; background:rgba(201,161,95,.15); color:#8a6a2e; font-size:13px; font-weight:700; padding:10px 14px; border-radius:10px; margin-bottom:16px; text-align:center; }
+  .saved-toast.active{ display:block; }
+
+  .quick-links{ background:#fff; border:1px solid var(--fog-dim); border-radius:20px; padding:10px; margin-bottom:22px; }
+  .quick-links a{ display:flex; align-items:center; justify-content:space-between; padding:16px 18px; border-radius:14px; transition:.15s; font-size:14.5px; font-weight:600; color:var(--ink); }
+  .quick-links a:hover{ background:var(--fog); }
+  .quick-links svg{ width:16px; height:16px; color:var(--clarity); }
+
+  .btn-logout{
+    width:100%; background:#fff; border:1.5px solid var(--alert); color:var(--alert); font-weight:700; font-size:14.5px;
+    padding:13px 26px; border-radius:100px; cursor:pointer; font-family:inherit; transition:.2s;
+  }
+  .btn-logout:hover{ background:var(--alert); color:#fff; }
+
+  .disclaimer{ background:var(--fog); border:1px solid var(--fog-dim); border-radius:var(--radius); padding:14px 16px; font-size:12px; color:var(--text-muted-light); margin-top:24px; text-align:center; }
+
+  footer{ background:var(--ink); color:var(--text-muted-dark); padding:44px 0 28px; text-align:center; font-size:12.5px; }
+  footer .brand{ display:block; margin-bottom:10px; font-size:18px; }
+</style>
+</head>
+<body>
+
+<site-nav></site-nav>
+
+<header class="page-head">
+  <div class="wrap">
+    <div class="avatar-wrap">
+      <div class="avatar-circle" id="avatarCircle">؟</div>
+      <div class="avatar-edit-btn" id="avatarEditBtn" title="تغيير الصورة">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+      </div>
+      <input type="file" id="photoInput" accept="image/*">
+    </div>
+    <h1 id="greetName">حسابي</h1>
+    <p id="greetEmail"></p>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+
+    <div class="saved-toast" id="savedToast">تم حفظ التعديلات بنجاح.</div>
+
+    <div class="card">
+      <div class="card-head">
+        <h3>بياناتي</h3>
+        <button class="edit-toggle" id="editToggleBtn">تعديل البيانات</button>
+      </div>
+
+      <div id="viewMode">
+        <div class="info-row">
+          <span class="label">الاسم الكامل</span>
+          <span class="value" id="infoName">—</span>
+        </div>
+        <div class="info-row">
+          <span class="label">البريد الإلكتروني</span>
+          <span class="value" id="infoEmail">—</span>
+        </div>
+        <div class="info-row">
+          <span class="label">تاريخ إنشاء الحساب</span>
+          <span class="value" id="infoDate">—</span>
+        </div>
+      </div>
+
+      <form id="editMode" style="display:none;">
+        <div class="field">
+          <label for="editName">الاسم الكامل</label>
+          <input type="text" id="editName" required>
+        </div>
+        <div class="field">
+          <label for="editEmail">البريد الإلكتروني</label>
+          <input type="email" id="editEmail" required>
+        </div>
+        <div class="edit-actions">
+          <button type="submit" class="btn-save">حفظ التعديلات</button>
+          <button type="button" class="btn-cancel" id="cancelEditBtn">إلغاء</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="quick-links">
+      <a href="/quizzes/">
+        <span>تصفّح الاختبارات</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      </a>
+      <a href="/blog/">
+        <span>تصفّح المدونة</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      </a>
+      <a href="/sales-page/">
+        <span>احجز استشارة</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      </a>
+    </div>
+
+    <button class="btn-logout" id="logoutBtn">تسجيل الخروج</button>
+
+    <div class="disclaimer">هذه نسخة تجريبية أولية لنظام الحسابات، وتُخزَّن بياناتك وصورتك في متصفحك فقط، وليست مشفّرة أو محفوظة على خادم بعد.</div>
+  </div>
+</main>
+
+<site-footer></site-footer>
+
+<script>
+/* ============================================================
+   بوضوح — صفحة حسابي (نسخة تجريبية أولية).
+   ------------------------------------------------------------
+   تقرأ هذه الصفحة وتكتب بيانات المستخدم من/إلى localStorage
+   فقط. إذا لم يكن هناك مستخدم مسجّل، تُعيد توجيهه فوراً لصفحة
+   إنشاء الحساب.
+
+   رفع الصورة: تُحوَّل الصورة المرفوعة إلى Data URL (نص Base64)
+   بعد تصغيرها عبر canvas إلى حد أقصى ٣٠٠×٣٠٠ بكسل، وتُخزَّن
+   داخل نفس كائن المستخدم في localStorage. هذا حل مؤقت مناسب
+   للتجربة فقط — المساحة المتاحة في localStorage محدودة
+   (~٥-١٠ ميغابايت لكل موقع)، وأي صورة كبيرة جداً أو عدد كبير
+   من المستخدمين يحتاج تخزيناً حقيقياً على خادم (مثل Firebase
+   Storage أو Amazon S3) بدلاً من localStorage.
+
+   عند ربط نظام حسابات حقيقي لاحقاً:
+   - استبدل localStorage.getItem/setItem بطلبات fetch() لخادم
+     حقيقي يتحقق من رمز الجلسة (session token) قبل أي تعديل.
+   - ارفع الصورة إلى خدمة تخزين ملفات حقيقية، واحفظ رابطها فقط
+     (URL) في بيانات المستخدم بدلاً من الصورة كاملة كنص.
+   ============================================================ */
+
+function loadUser(){ return JSON.parse(localStorage.getItem('bewodoh_user') || 'null'); }
+function saveUser(u){ localStorage.setItem('bewodoh_user', JSON.stringify(u)); }
+
+let userData = loadUser();
+if (!userData) {
+  window.location.href = '/signup/';
+}
+
+function renderAvatar(){
+  const circle = document.getElementById('avatarCircle');
+  if (userData.photo) {
+    circle.innerHTML = '<img src="' + userData.photo + '" alt="صورة الحساب">';
+  } else {
+    circle.textContent = (userData.fullName || '؟').trim().charAt(0) || '؟';
+  }
+}
+
+function renderInfo(){
+  document.getElementById('greetName').textContent = 'أهلاً، ' + userData.fullName;
+  document.getElementById('greetEmail').textContent = userData.email;
+  document.getElementById('infoName').textContent = userData.fullName;
+  document.getElementById('infoEmail').textContent = userData.email;
+  const d = new Date(userData.createdAt);
+  document.getElementById('infoDate').textContent = isNaN(d) ? '—' : d.toLocaleDateString('ar-EG', { year: 'numeric', month: 'long', day: 'numeric' });
+  renderAvatar();
+}
+renderInfo();
+
+// ---- Edit profile (name / email) ----
+const viewMode = document.getElementById('viewMode');
+const editMode = document.getElementById('editMode');
+const editToggleBtn = document.getElementById('editToggleBtn');
+const cancelEditBtn = document.getElementById('cancelEditBtn');
+const savedToast = document.getElementById('savedToast');
+
+editToggleBtn.addEventListener('click', () => {
+  document.getElementById('editName').value = userData.fullName;
+  document.getElementById('editEmail').value = userData.email;
+  viewMode.style.display = 'none';
+  editMode.style.display = 'block';
+  editToggleBtn.style.display = 'none';
+});
+
+cancelEditBtn.addEventListener('click', () => {
+  editMode.style.display = 'none';
+  viewMode.style.display = 'block';
+  editToggleBtn.style.display = 'inline-block';
+});
+
+document.getElementById('editMode').addEventListener('submit', (e) => {
+  e.preventDefault();
+  userData.fullName = document.getElementById('editName').value.trim();
+  userData.email = document.getElementById('editEmail').value.trim();
+  saveUser(userData);
+  renderInfo();
+  editMode.style.display = 'none';
+  viewMode.style.display = 'block';
+  editToggleBtn.style.display = 'inline-block';
+  savedToast.classList.add('active');
+  setTimeout(() => savedToast.classList.remove('active'), 2500);
+});
+
+// ---- Photo upload ----
+document.getElementById('avatarEditBtn').addEventListener('click', () => {
+  document.getElementById('photoInput').click();
+});
+
+document.getElementById('photoInput').addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+  if (!file.type.startsWith('image/')) {
+    alert('الرجاء اختيار ملف صورة صالح.');
+    return;
+  }
+
+  const reader = new FileReader();
+  reader.onload = (evt) => {
+    const img = new Image();
+    img.onload = () => {
+      const maxSize = 300;
+      let w = img.width, h = img.height;
+      if (w > h && w > maxSize) { h = Math.round(h * (maxSize / w)); w = maxSize; }
+      else if (h > maxSize) { w = Math.round(w * (maxSize / h)); h = maxSize; }
+
+      const canvas = document.createElement('canvas');
+      canvas.width = w; canvas.height = h;
+      canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+
+      userData.photo = canvas.toDataURL('image/jpeg', 0.85);
+      saveUser(userData);
+      renderAvatar();
+      savedToast.textContent = 'تم تحديث صورة حسابك.';
+      savedToast.classList.add('active');
+      setTimeout(() => { savedToast.classList.remove('active'); savedToast.textContent = 'تم حفظ التعديلات بنجاح.'; }, 2500);
+    };
+    img.src = evt.target.result;
+  };
+  reader.readAsDataURL(file);
+});
+
+// ---- Logout ----
+document.getElementById('logoutBtn').addEventListener('click', function(){
+  localStorage.removeItem('bewodoh_user');
+  window.location.href = '/';
+});
+</script>
+
+<script src="/components.js"></script>
+</body>
+</html>

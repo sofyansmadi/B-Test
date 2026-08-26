@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>اختبار الاكتئاب — بوضوح</title>
+<meta name="description" content="أداة فحص ذاتي أولي لأعراض الاكتئاب، مبنية على مقياس PHQ-9 المعتمد عالمياً.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@500;700;900&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#241D2E; --ink-soft:#372C46; --plum:#4A3B5C;
+    --fog:#F3EEEA; --fog-dim:#E6DFDA;
+    --clarity:#C9A15F; --clarity-soft:#E4C98A; --rose:#8B6F7E; --alert:#B5555B;
+    --text-on-dark:#EDE7E3; --text-muted-dark:#B7ACC4;
+    --text-on-light:#2A2130; --text-muted-light:#6B6072;
+    --radius:14px; --max:760px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{ font-family:'IBM Plex Sans Arabic', sans-serif; background:var(--fog); color:var(--text-on-light); line-height:1.9; -webkit-font-smoothing:antialiased; }
+  h1,h2,h3,.kufi{ font-family:'Noto Kufi Arabic', sans-serif; }
+  a{ color:inherit; text-decoration:none; }
+  .wrap{ max-width:var(--max); margin:0 auto; padding:0 24px; }
+
+  nav{ position:sticky; top:0; z-index:50; background:rgba(36,29,46,.92); backdrop-filter:blur(8px); border-bottom:1px solid rgba(255,255,255,.06); }
+  nav .wrap{ display:flex; align-items:center; justify-content:space-between; padding:16px 24px; max-width:1080px; }
+  .brand{ font-family:'Noto Kufi Arabic',sans-serif; font-weight:900; font-size:22px; color:var(--fog); text-decoration:none; }
+  .brand span{ color:var(--clarity); }
+  .nav-links{ display:flex; align-items:center; gap:28px; }
+  .nav-links a{ color:var(--text-muted-dark); font-size:14px; font-weight:500; text-decoration:none; transition:color .2s; }
+  .nav-links a:hover{ color:var(--fog); }
+  a.nav-cta{ background:var(--clarity); color:var(--ink); font-weight:700; font-size:14px; padding:9px 20px; border-radius:100px; transition:.2s; }
+  a.nav-cta:hover{ background:var(--clarity-soft); }
+  @media (max-width:780px){ .nav-links{ display:none; } }
+
+  .page-head{ background:radial-gradient(120% 90% at 75% 0%, var(--ink-soft) 0%, var(--ink) 55%, #1A1522 100%); padding:64px 0 48px; text-align:center; }
+  .eyebrow{ display:inline-flex; align-items:center; gap:8px; font-size:13px; color:var(--clarity-soft); font-weight:600; margin-bottom:14px; justify-content:center; }
+  .eyebrow::before{ content:""; width:20px; height:1px; background:var(--clarity-soft); display:inline-block; }
+  .page-head h1{ color:var(--fog); font-size:clamp(28px,4.4vw,42px); font-weight:900; max-width:20ch; margin:0 auto; line-height:1.4; }
+  .page-head p{ color:var(--text-muted-dark); font-size:15.5px; max-width:48ch; margin:14px auto 0; }
+  .back-link{ display:inline-flex; align-items:center; gap:6px; font-size:13px; color:var(--clarity-soft); margin-bottom:22px; text-decoration:none; }
+
+  main{ padding:48px 0 90px; }
+  .quiz-card{ background:#fff; border:1px solid var(--fog-dim); border-radius:20px; padding:38px 34px; box-shadow:0 24px 50px -30px rgba(36,29,46,.25); }
+  @media (max-width:600px){ .quiz-card{ padding:28px 20px; } }
+
+  .intro-note{ background:var(--fog); border:1px solid var(--fog-dim); border-radius:var(--radius); padding:18px 20px; font-size:13.5px; color:var(--text-muted-light); margin-bottom:28px; }
+
+  .progress-row{ display:flex; align-items:center; gap:14px; margin-bottom:30px; }
+  .progress-track{ flex:1; height:6px; background:var(--fog-dim); border-radius:100px; overflow:hidden; }
+  .progress-fill{ height:100%; background:var(--clarity); border-radius:100px; width:11%; transition:width .4s ease; }
+  .progress-label{ font-size:12.5px; color:var(--text-muted-light); font-weight:600; white-space:nowrap; }
+
+  .q-block{ display:none; }
+  .q-block.active{ display:block; animation:fadeIn .35s ease; }
+  @keyframes fadeIn{ from{ opacity:0; transform:translateY(6px);} to{ opacity:1; transform:translateY(0);} }
+  .q-eyebrow{ font-size:12.5px; color:var(--clarity); font-weight:700; margin-bottom:8px; }
+  .q-text{ font-family:'Noto Kufi Arabic',sans-serif; font-size:19px; font-weight:700; line-height:1.7; margin-bottom:22px; max-width:42ch; }
+  .options{ display:flex; flex-direction:column; gap:10px; }
+  .opt{ display:flex; align-items:center; gap:12px; text-align:right; border:1.5px solid var(--fog-dim); border-radius:12px; padding:14px 16px; background:var(--fog); cursor:pointer; font-size:15px; color:var(--text-on-light); transition:.15s; width:100%; font-family:inherit; }
+  .opt:hover{ border-color:var(--clarity); background:#fff; }
+  .opt.selected{ border-color:var(--clarity); background:rgba(201,161,95,.1); }
+  .opt-dot{ width:18px; height:18px; border-radius:50%; border:1.5px solid var(--rose); flex-shrink:0; position:relative; }
+  .opt.selected .opt-dot{ border-color:var(--clarity); }
+  .opt.selected .opt-dot::after{ content:""; position:absolute; inset:3px; border-radius:50%; background:var(--clarity); }
+
+  .nav-row{ display:flex; justify-content:space-between; align-items:center; margin-top:30px; }
+  .btn-ghost{ background:none; border:none; color:var(--text-muted-light); font-size:14px; font-weight:600; cursor:pointer; font-family:inherit; padding:10px 6px; }
+  .btn-ghost:disabled{ opacity:0; pointer-events:none; }
+  .btn-next{ background:var(--ink); color:var(--fog); font-weight:700; font-size:14.5px; padding:13px 28px; border-radius:100px; border:none; cursor:pointer; font-family:inherit; transition:.2s; }
+  .btn-next:hover{ background:var(--ink-soft); }
+  .btn-next:disabled{ opacity:.4; cursor:not-allowed; }
+
+  .result-block{ display:none; }
+  .result-block.active{ display:block; animation:fadeIn .4s ease; }
+
+  .crisis-box{ background:var(--alert); color:#fff; border-radius:16px; padding:24px 26px; margin-bottom:26px; }
+  .crisis-box h3{ font-size:18px; margin-bottom:10px; }
+  .crisis-box p{ font-size:14.5px; margin-bottom:14px; opacity:.95; }
+  .crisis-box .crisis-contacts{ display:flex; flex-direction:column; gap:8px; }
+  .crisis-box .crisis-contacts a{ display:flex; align-items:center; gap:8px; background:rgba(255,255,255,.15); border-radius:10px; padding:12px 14px; font-size:14px; font-weight:700; text-decoration:none; color:#fff; }
+  .crisis-box .crisis-contacts a:hover{ background:rgba(255,255,255,.25); }
+
+  .always-support{ background:#fff; border:1px solid var(--fog-dim); border-radius:16px; padding:22px 24px; margin-bottom:26px; }
+  .always-support h4{ font-size:15px; color:var(--ink); margin-bottom:10px; }
+  .always-support p{ font-size:13.5px; color:var(--text-muted-light); margin-bottom:6px; }
+  .always-support a{ color:var(--clarity); font-weight:700; }
+
+  .result-tag{ display:inline-block; font-size:12px; font-weight:700; padding:5px 14px; border-radius:100px; margin-bottom:16px; }
+  .result-title{ font-family:'Noto Kufi Arabic',sans-serif; font-size:24px; font-weight:900; margin-bottom:14px; line-height:1.5; }
+  .result-desc{ font-size:15.5px; color:var(--text-muted-light); margin-bottom:26px; max-width:56ch; }
+  .meter{ margin:26px 0 30px; }
+  .meter-track{ height:10px; border-radius:100px; background:var(--fog-dim); overflow:hidden; }
+  .meter-fill{ height:100%; border-radius:100px; transition:width 1s ease; }
+  .meter-labels{ display:flex; justify-content:space-between; font-size:11.5px; color:var(--text-muted-light); margin-top:8px; }
+  .result-points{ display:flex; flex-direction:column; gap:12px; margin:24px 0; }
+  .result-points li{ list-style:none; display:flex; gap:10px; font-size:14.5px; color:var(--text-on-light); align-items:flex-start; }
+  .result-points b{ flex-shrink:0; color:var(--clarity); font-family:'Noto Kufi Arabic',sans-serif; }
+  .related-articles{ margin-top:28px; padding-top:24px; border-top:1px solid var(--fog-dim); }
+  .related-articles h4{ font-size:14px; color:var(--text-muted-light); margin-bottom:14px; font-weight:600; }
+  .related-articles a{ display:block; text-decoration:none; color:var(--text-on-light); font-weight:600; font-size:14.5px; padding:12px 0; border-bottom:1px solid var(--fog-dim); }
+  .related-articles a:last-child{ border-bottom:none; }
+  .cta-box{ margin-top:30px; background:var(--ink); border-radius:18px; padding:30px 28px; text-align:center; background:radial-gradient(140% 140% at 50% 0%, var(--ink-soft), var(--ink)); }
+  .cta-box h3{ color:var(--fog); font-size:19px; margin-bottom:8px; }
+  .cta-box p{ color:var(--text-muted-dark); font-size:14px; max-width:44ch; margin:0 auto 20px; }
+  .btn-primary{ background:var(--clarity); color:var(--ink); font-weight:700; font-size:14.5px; padding:13px 26px; border-radius:100px; display:inline-block; text-decoration:none; }
+  .retake{ display:block; text-align:center; margin-top:22px; font-size:13.5px; color:var(--text-muted-light); text-decoration:none; }
+  .retake:hover{ color:var(--text-on-light); }
+  .disclaimer{ background:var(--fog); border:1px solid var(--fog-dim); border-radius:var(--radius); padding:18px 20px; font-size:13px; color:var(--text-muted-light); margin-top:30px; }
+
+  footer{ background:var(--ink); color:var(--text-muted-dark); padding:44px 0 28px; text-align:center; font-size:12.5px; }
+  footer .brand{ display:block; margin-bottom:10px; font-size:18px; }
+</style>
+</head>
+<body>
+
+<site-nav active="quizzes"></site-nav>
+
+<header class="page-head">
+  <div class="wrap">
+    <a href="/quizzes/" class="back-link">← جميع الاختبارات</a><br>
+    <div class="eyebrow">فحص ذاتي أولي · مبني على مقياس معتمد عالمياً</div>
+    <h1>اختبار الاكتئاب</h1>
+    <p>تسعة أسئلة تسألك عن شعورك خلال الأسبوعين الماضيين، مبنية على مقياس PHQ-9 المعتمد طبياً حول العالم لفحص أعراض الاكتئاب الأولي.</p>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <div class="quiz-card">
+
+      <div id="quizSection">
+        <div class="intro-note">هذا الاختبار أداة فحص أولي، وليس أداة تشخيص. أجب عن كل سؤال بناءً على ما شعرت به فعلياً خلال الأسبوعين الماضيين.</div>
+        <div class="progress-row">
+          <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+          <span class="progress-label" id="progressLabel">١ / ٩</span>
+        </div>
+        <div id="questionsHost"></div>
+        <div class="nav-row">
+          <button class="btn-ghost" id="btnBack">السابق</button>
+          <button class="btn-next" id="btnNext" disabled>التالي</button>
+        </div>
+      </div>
+
+      <div id="resultsSection" style="display:none;">
+
+        <div class="crisis-box" id="crisisBox" style="display:none;">
+          <h3>نحن هنا من أجلك</h3>
+          <p>إحدى إجاباتك تشير إلى وجود أفكار مؤذية تجاه نفسك. هذا الشعور مهم، ولا يجب أن تواجهه وحدك. تواصل الآن مع أحد جهات الدعم التالية في الأردن:</p>
+          <div class="crisis-contacts">
+            <a href="tel:00962795440416">الخط الساخن لأخصائيي علم النفس العيادي (JCPA) — يعمل على مدار الساعة، مجاني وسرّي — 00962795440416 (اتصال أو رسالة نصية)</a>
+            <a href="tel:110">خط الأسرة والطفل — 110 (مجاني)</a>
+            <a href="tel:911">حالات الطوارئ — 911</a>
+          </div>
+        </div>
+
+        <div class="always-support">
+          <h4>تحتاج إلى التحدث مع أحد الآن؟</h4>
+          <p>إذا كنت تمر بضيق نفسي شديد في أي وقت، لا تتردد في التواصل مع <a href="tel:00962795440416">الخط الساخن لأخصائيي علم النفس العيادي (JCPA)</a> المتوفر مجاناً على مدار الساعة.</p>
+        </div>
+
+        <span class="result-tag" id="resultTag"></span>
+        <h2 class="result-title" id="resultTitle"></h2>
+        <p class="result-desc" id="resultDesc"></p>
+        <div class="meter">
+          <div class="meter-track"><div class="meter-fill" id="meterFill"></div></div>
+          <div class="meter-labels"><span>أعراض ضئيلة</span><span>أعراض شديدة</span></div>
+        </div>
+        <ul class="result-points" id="resultPoints"></ul>
+        <div class="related-articles">
+          <h4>مقالات قد تفيدك</h4>
+          <div id="relatedLinks"></div>
+        </div>
+        <div class="cta-box">
+          <h3>هل ترغب في دعم إضافي؟</h3>
+          <p>يقدّم "بوضوح AI" مساحة للحديث عن مشاعرك، ومقالات بوضوح تتناول جوانب مرتبطة بالصحة النفسية والعلاقات.</p>
+          <a href="/ai/" class="btn-primary">تحدث مع بوضوح AI</a>
+        </div>
+        <a href="#" class="retake" id="retakeBtn">إعادة الاختبار من جديد</a>
+        <div class="disclaimer">هذا الاختبار مبني على مقياس PHQ-9 المعتمد عالمياً، ويُستخدم كأداة فحص أولي فقط، وليس أداة تشخيص رسمية. التشخيص السريري للاكتئاب يتطلب تقييماً من طبيب أو معالج نفسي مختص. إذا كانت النتيجة تشير إلى أعراض متوسطة أو شديدة، يُنصح بشدة بمراجعة مختص في أقرب وقت ممكن.</div>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<site-footer></site-footer>
+
+<script>
+const FREQUENCY_OPTIONS = [
+  { label: "أبداً", pts: 0 },
+  { label: "عدة أيام", pts: 1 },
+  { label: "أكثر من نصف الأيام", pts: 2 },
+  { label: "تقريباً كل يوم", pts: 3 },
+];
+
+const questions = [
+  { text: "قلة الاهتمام بالأشياء أو عدم الشعور بالمتعة في القيام بها.", options: FREQUENCY_OPTIONS },
+  { text: "الشعور بالإحباط أو الاكتئاب أو فقدان الأمل.", options: FREQUENCY_OPTIONS },
+  { text: "صعوبة في النوم أو الاستمرار فيه، أو النوم لفترة أطول من المعتاد.", options: FREQUENCY_OPTIONS },
+  { text: "الشعور بالتعب أو نقص الطاقة.", options: FREQUENCY_OPTIONS },
+  { text: "ضعف الشهية أو الإفراط في الأكل.", options: FREQUENCY_OPTIONS },
+  { text: "الشعور بالسوء تجاه نفسك، أو أنك فاشل، أو أنك خذلت نفسك أو عائلتك.", options: FREQUENCY_OPTIONS },
+  { text: "صعوبة في التركيز على أمور مثل القراءة أو متابعة التلفاز.", options: FREQUENCY_OPTIONS },
+  { text: "التحرك أو الكلام ببطء لاحظه من حولك، أو على العكس: شعور بالتوتر وعدم الاستقرار الجسدي أكثر من المعتاد.", options: FREQUENCY_OPTIONS },
+  { text: "أفكار بأنك ستكون أفضل حالاً لو كنت ميتاً، أو أفكار بإيذاء نفسك بطريقة ما.", options: FREQUENCY_OPTIONS },
+];
+
+const results = [
+  { min: 0, max: 4, tag: "أعراض ضئيلة أو معدومة", tagColor: "var(--clarity)",
+    title: "إجاباتك لا تشير إلى أعراض اكتئاب ملحوظة حالياً",
+    desc: "معظم إجاباتك تشير إلى أنك لا تعاني من أعراض اكتئاب ملحوظة خلال الأسبوعين الماضيين. هذا مؤشر إيجابي، ومن المفيد الاستمرار في الانتباه لحالتك النفسية بشكل عام.",
+    points: ["استمر في العناية بصحتك النفسية من خلال النوم الكافي، والتواصل مع من تثق بهم.", "إذا تغيرت مشاعرك مستقبلاً، لا بأس من إعادة هذا الفحص أو التحدث مع مختص."],
+    meterColor: "var(--clarity)", meterPct: 10 },
+  { min: 5, max: 9, tag: "أعراض خفيفة", tagColor: "var(--clarity-soft)",
+    title: "إجاباتك تشير إلى أعراض اكتئاب خفيفة",
+    desc: "تشير إجاباتك إلى وجود بعض أعراض الاكتئاب الخفيفة. قد تكون هذه أعراضاً عابرة مرتبطة بظرف معين، لكنها تستحق الانتباه والمتابعة.",
+    points: ["راقب استمرار هذه الأعراض على مدى الأسابيع القادمة.", "الحفاظ على روتين يومي صحي (نوم، حركة، تواصل اجتماعي) قد يساعد بشكل ملحوظ.", "إذا استمرت الأعراض أو زادت، التحدث مع مختص خطوة مفيدة ومبكرة."],
+    meterColor: "var(--clarity-soft)", meterPct: 32 },
+  { min: 10, max: 14, tag: "أعراض متوسطة", tagColor: "var(--rose)",
+    title: "إجاباتك تشير إلى أعراض اكتئاب متوسطة",
+    desc: "تشير نتيجتك إلى وجود أعراض اكتئاب متوسطة قد تؤثر على حياتك اليومية. هذا لا يعني بالضرورة تشخيصاً نهائياً، لكنه مؤشر واضح يستحق تقييماً مهنياً.",
+    points: ["يُنصح بالتحدث مع طبيب أو معالج نفسي مختص لتقييم حالتك بشكل دقيق.", "شارك ما تشعر به مع شخص تثق به، فالعزلة قد تزيد هذه الأعراض سوءاً.", "لا تقلل من شأن ما تشعر به، فطلب الدعم في هذه المرحلة خطوة قوية وليست ضعفاً."],
+    meterColor: "var(--rose)", meterPct: 55 },
+  { min: 15, max: 19, tag: "أعراض متوسطة إلى شديدة", tagColor: "var(--alert)",
+    title: "إجاباتك تشير إلى أعراض اكتئاب متوسطة إلى شديدة",
+    desc: "تشير نتيجتك إلى مستوى ملحوظ من أعراض الاكتئاب. يُنصح بشدة بمراجعة مختص نفسي أو طبي في أقرب وقت ممكن لتقييم حالتك والحصول على الدعم المناسب.",
+    points: ["حدد موعداً مع طبيب أو معالج نفسي مختص في أقرب وقت ممكن.", "أخبر شخصاً تثق به عمّا تمر به، فلا داعي لمواجهة هذا وحدك.", "إذا شعرت في أي لحظة أن الأمور تفوق طاقتك، تواصل فوراً مع أحد خطوط الدعم المذكورة أعلاه."],
+    meterColor: "var(--alert)", meterPct: 78 },
+  { min: 20, max: 27, tag: "أعراض شديدة", tagColor: "var(--alert)",
+    title: "إجاباتك تشير إلى أعراض اكتئاب شديدة",
+    desc: "تشير نتيجتك إلى مستوى مرتفع من أعراض الاكتئاب. من المهم جداً أن تحصل على دعم مهني حقيقي في أقرب وقت ممكن — أنت لا تحتاج إلى الوصول إلى هذه المرحلة وحدك.",
+    points: ["تواصل مع طبيب أو معالج نفسي مختص في أقرب وقت ممكن — هذه خطوة عاجلة ومهمة.", "أخبر شخصاً قريباً منك بما تمر به الآن، ولا تبقَ وحدك مع هذه المشاعر.", "إذا كانت لديك أفكار مؤذية تجاه نفسك في أي لحظة، تواصل فوراً مع أحد خطوط الدعم المذكورة أعلاه أو توجه لأقرب طوارئ."],
+    meterColor: "var(--alert)", meterPct: 96 },
+];
+
+const articleTitles = {
+  "/article-self-support-while-in-it/": "كيف تعتني بنفسك وأنت لا تزال في علاقة صعبة",
+  "/article-ready-for-new-relationship/": "كيف تعرف أنك جاهز لأن تحب من جديد بعد علاقة سامة",
+};
+
+let current = 0;
+const answers = new Array(questions.length).fill(null);
+const host = document.getElementById('questionsHost');
+const progressFill = document.getElementById('progressFill');
+const progressLabel = document.getElementById('progressLabel');
+const btnNext = document.getElementById('btnNext');
+const btnBack = document.getElementById('btnBack');
+const arabicNums = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
+function toArabicNum(n){ return String(n).split('').map(d => arabicNums[+d]).join(''); }
+
+function renderQuestions(){
+  host.innerHTML = '';
+  questions.forEach((q, qi) => {
+    const block = document.createElement('div');
+    block.className = 'q-block' + (qi === current ? ' active' : '');
+    const eyebrow = document.createElement('div');
+    eyebrow.className = 'q-eyebrow';
+    eyebrow.textContent = 'خلال الأسبوعين الماضيين، كم مرة شعرت بالآتي:';
+    block.appendChild(eyebrow);
+    const qt = document.createElement('div');
+    qt.className = 'q-text';
+    qt.textContent = q.text;
+    block.appendChild(qt);
+    const opts = document.createElement('div');
+    opts.className = 'options';
+    q.options.forEach((opt, oi) => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'opt' + (answers[qi] === oi ? ' selected' : '');
+      btn.innerHTML = '<span class="opt-dot"></span><span>' + opt.label + '</span>';
+      btn.addEventListener('click', () => { answers[qi] = oi; renderQuestions(); updateNav(); });
+      opts.appendChild(btn);
+    });
+    block.appendChild(opts);
+    host.appendChild(block);
+  });
+}
+function updateNav(){
+  progressFill.style.width = ((current + 1) / questions.length * 100) + '%';
+  progressLabel.textContent = toArabicNum(current + 1) + ' / ' + toArabicNum(questions.length);
+  btnBack.disabled = current === 0;
+  btnNext.disabled = answers[current] === null;
+  btnNext.textContent = current === questions.length - 1 ? 'عرض النتيجة' : 'التالي';
+}
+btnNext.addEventListener('click', () => {
+  if (answers[current] === null) return;
+  if (current < questions.length - 1) { current++; renderQuestions(); updateNav(); }
+  else { showResults(); }
+});
+btnBack.addEventListener('click', () => { if (current > 0) { current--; renderQuestions(); updateNav(); } });
+
+function showResults(){
+  const score = answers.reduce((sum, ai, qi) => sum + questions[qi].options[ai].pts, 0);
+  const result = results.find(r => score >= r.min && score <= r.max) || results[results.length - 1];
+
+  document.getElementById('quizSection').style.display = 'none';
+  const rs = document.getElementById('resultsSection');
+  rs.style.display = 'block'; rs.classList.add('active');
+
+  // Item 9 (index 8) is the self-harm ideation item — if answered above "never", show the crisis box prominently.
+  const item9Answered = answers[8];
+  if (item9Answered !== null && item9Answered > 0) {
+    document.getElementById('crisisBox').style.display = 'block';
+  }
+
+  const tagEl = document.getElementById('resultTag');
+  tagEl.textContent = result.tag; tagEl.style.background = result.tagColor;
+  tagEl.style.color = (result.tagColor === 'var(--alert)') ? '#fff' : 'var(--ink)';
+  document.getElementById('resultTitle').textContent = result.title;
+  document.getElementById('resultDesc').textContent = result.desc;
+  const meterFill = document.getElementById('meterFill');
+  meterFill.style.background = result.meterColor;
+  setTimeout(() => { meterFill.style.width = result.meterPct + '%'; }, 50);
+  const pointsList = document.getElementById('resultPoints');
+  pointsList.innerHTML = '';
+  result.points.forEach((p, i) => {
+    const li = document.createElement('li');
+    li.innerHTML = '<b>' + toArabicNum(i + 1) + '.</b><span>' + p + '</span>';
+    pointsList.appendChild(li);
+  });
+  const relatedHost = document.getElementById('relatedLinks');
+  relatedHost.innerHTML = '';
+  Object.keys(articleTitles).forEach(href => {
+    const a = document.createElement('a');
+    a.href = href; a.textContent = articleTitles[href];
+    relatedHost.appendChild(a);
+  });
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+document.getElementById('retakeBtn').addEventListener('click', (e) => {
+  e.preventDefault(); current = 0; answers.fill(null);
+  document.getElementById('crisisBox').style.display = 'none';
+  document.getElementById('resultsSection').style.display = 'none';
+  document.getElementById('quizSection').style.display = 'block';
+  renderQuestions(); updateNav();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+renderQuestions(); updateNav();
+</script>
+<script src="/components.js"></script>
+</body>
+</html>

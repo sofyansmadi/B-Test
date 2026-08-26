@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>اختبار: ما احتياجاتك العلاقاتية الأساسية؟ — بوضوح</title>
+<meta name="description" content="كل شخص يحتاج شيئاً مختلفاً حتى يشعر بالحب والأمان في علاقته. اكتشف احتياجك الأساسي بعشرة أسئلة بسيطة.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@500;700;900&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#241D2E; --ink-soft:#372C46; --plum:#4A3B5C;
+    --fog:#F3EEEA; --fog-dim:#E6DFDA;
+    --clarity:#C9A15F; --clarity-soft:#E4C98A; --rose:#8B6F7E; --alert:#B5555B;
+    --text-on-dark:#EDE7E3; --text-muted-dark:#B7ACC4;
+    --text-on-light:#2A2130; --text-muted-light:#6B6072;
+    --radius:14px; --max:760px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{ font-family:'IBM Plex Sans Arabic', sans-serif; background:var(--fog); color:var(--text-on-light); line-height:1.9; -webkit-font-smoothing:antialiased; }
+  h1,h2,h3,.kufi{ font-family:'Noto Kufi Arabic', sans-serif; }
+  a{ color:inherit; text-decoration:none; }
+  .wrap{ max-width:var(--max); margin:0 auto; padding:0 24px; }
+
+  nav{ position:sticky; top:0; z-index:50; background:rgba(36,29,46,.92); backdrop-filter:blur(8px); border-bottom:1px solid rgba(255,255,255,.06); }
+  nav .wrap{ display:flex; align-items:center; justify-content:space-between; padding:16px 24px; max-width:1080px; }
+  .brand{ font-family:'Noto Kufi Arabic',sans-serif; font-weight:900; font-size:22px; color:var(--fog); text-decoration:none; }
+  .brand span{ color:var(--clarity); }
+  .nav-links{ display:flex; align-items:center; gap:28px; }
+  .nav-links a{ color:var(--text-muted-dark); font-size:14px; font-weight:500; text-decoration:none; transition:color .2s; }
+  .nav-links a:hover{ color:var(--fog); }
+  a.nav-cta{ background:var(--clarity); color:var(--ink); font-weight:700; font-size:14px; padding:9px 20px; border-radius:100px; transition:.2s; }
+  a.nav-cta:hover{ background:var(--clarity-soft); }
+  @media (max-width:780px){ .nav-links{ display:none; } }
+
+  .page-head{ background:radial-gradient(120% 90% at 75% 0%, var(--ink-soft) 0%, var(--ink) 55%, #1A1522 100%); padding:64px 0 48px; text-align:center; }
+  .eyebrow{ display:inline-flex; align-items:center; gap:8px; font-size:13px; color:var(--clarity-soft); font-weight:600; margin-bottom:14px; justify-content:center; }
+  .eyebrow::before{ content:""; width:20px; height:1px; background:var(--clarity-soft); display:inline-block; }
+  .page-head h1{ color:var(--fog); font-size:clamp(28px,4.4vw,42px); font-weight:900; max-width:20ch; margin:0 auto; line-height:1.4; }
+  .page-head p{ color:var(--text-muted-dark); font-size:15.5px; max-width:48ch; margin:14px auto 0; }
+  .back-link{ display:inline-flex; align-items:center; gap:6px; font-size:13px; color:var(--clarity-soft); margin-bottom:22px; text-decoration:none; }
+
+  main{ padding:48px 0 90px; }
+  .quiz-card{ background:#fff; border:1px solid var(--fog-dim); border-radius:20px; padding:38px 34px; box-shadow:0 24px 50px -30px rgba(36,29,46,.25); }
+  @media (max-width:600px){ .quiz-card{ padding:28px 20px; } }
+
+  .progress-row{ display:flex; align-items:center; gap:14px; margin-bottom:30px; }
+  .progress-track{ flex:1; height:6px; background:var(--fog-dim); border-radius:100px; overflow:hidden; }
+  .progress-fill{ height:100%; background:var(--clarity); border-radius:100px; width:10%; transition:width .4s ease; }
+  .progress-label{ font-size:12.5px; color:var(--text-muted-light); font-weight:600; white-space:nowrap; }
+
+  .q-block{ display:none; }
+  .q-block.active{ display:block; animation:fadeIn .35s ease; }
+  @keyframes fadeIn{ from{ opacity:0; transform:translateY(6px);} to{ opacity:1; transform:translateY(0);} }
+  .q-text{ font-family:'Noto Kufi Arabic',sans-serif; font-size:19px; font-weight:700; line-height:1.7; margin-bottom:22px; max-width:40ch; }
+  .options{ display:flex; flex-direction:column; gap:10px; }
+  .opt{ display:flex; align-items:center; gap:12px; text-align:right; border:1.5px solid var(--fog-dim); border-radius:12px; padding:14px 16px; background:var(--fog); cursor:pointer; font-size:14.5px; color:var(--text-on-light); transition:.15s; width:100%; font-family:inherit; }
+  .opt:hover{ border-color:var(--clarity); background:#fff; }
+  .opt.selected{ border-color:var(--clarity); background:rgba(201,161,95,.1); }
+  .opt-dot{ width:18px; height:18px; border-radius:50%; border:1.5px solid var(--rose); flex-shrink:0; position:relative; }
+  .opt.selected .opt-dot{ border-color:var(--clarity); }
+  .opt.selected .opt-dot::after{ content:""; position:absolute; inset:3px; border-radius:50%; background:var(--clarity); }
+
+  .nav-row{ display:flex; justify-content:space-between; align-items:center; margin-top:30px; }
+  .btn-ghost{ background:none; border:none; color:var(--text-muted-light); font-size:14px; font-weight:600; cursor:pointer; font-family:inherit; padding:10px 6px; }
+  .btn-ghost:disabled{ opacity:0; pointer-events:none; }
+  .btn-next{ background:var(--ink); color:var(--fog); font-weight:700; font-size:14.5px; padding:13px 28px; border-radius:100px; border:none; cursor:pointer; font-family:inherit; transition:.2s; }
+  .btn-next:hover{ background:var(--ink-soft); }
+  .btn-next:disabled{ opacity:.4; cursor:not-allowed; }
+
+  .result-block{ display:none; }
+  .result-block.active{ display:block; animation:fadeIn .4s ease; }
+  .result-icon{ width:56px; height:56px; border-radius:50%; background:var(--ink); display:flex; align-items:center; justify-content:center; margin-bottom:20px; }
+  .result-icon svg{ width:26px; height:26px; }
+  .result-title{ font-family:'Noto Kufi Arabic',sans-serif; font-size:25px; font-weight:900; margin-bottom:6px; color:var(--ink); }
+  .result-sub{ font-size:13.5px; color:var(--clarity); font-weight:700; margin-bottom:18px; }
+  .result-desc{ font-size:15.5px; color:var(--text-muted-light); margin-bottom:26px; max-width:58ch; }
+
+  .bars{ margin:26px 0 30px; display:flex; flex-direction:column; gap:14px; }
+  .bar-row{ display:flex; align-items:center; gap:12px; }
+  .bar-label{ font-size:13.5px; width:130px; flex-shrink:0; color:var(--text-on-light); font-weight:600; }
+  .bar-track{ flex:1; height:10px; background:var(--fog-dim); border-radius:100px; overflow:hidden; }
+  .bar-fill{ height:100%; border-radius:100px; background:var(--clarity-soft); transition:width 1s ease; }
+  .bar-pct{ font-size:12.5px; color:var(--text-muted-light); width:34px; text-align:left; }
+
+  .result-points{ display:flex; flex-direction:column; gap:12px; margin:24px 0; }
+  .result-points li{ list-style:none; display:flex; gap:10px; font-size:14.5px; color:var(--text-on-light); align-items:flex-start; }
+  .result-points b{ flex-shrink:0; color:var(--clarity); font-family:'Noto Kufi Arabic',sans-serif; }
+  .related-articles{ margin-top:28px; padding-top:24px; border-top:1px solid var(--fog-dim); }
+  .related-articles h4{ font-size:14px; color:var(--text-muted-light); margin-bottom:14px; font-weight:600; }
+  .related-articles a{ display:block; text-decoration:none; color:var(--text-on-light); font-weight:600; font-size:14.5px; padding:12px 0; border-bottom:1px solid var(--fog-dim); }
+  .related-articles a:last-child{ border-bottom:none; }
+  .cta-box{ margin-top:30px; background:var(--ink); border-radius:18px; padding:30px 28px; text-align:center; background:radial-gradient(140% 140% at 50% 0%, var(--ink-soft), var(--ink)); }
+  .cta-box h3{ color:var(--fog); font-size:19px; margin-bottom:8px; }
+  .cta-box p{ color:var(--text-muted-dark); font-size:14px; max-width:44ch; margin:0 auto 20px; }
+  .btn-primary{ background:var(--clarity); color:var(--ink); font-weight:700; font-size:14.5px; padding:13px 26px; border-radius:100px; display:inline-block; text-decoration:none; }
+  .retake{ display:block; text-align:center; margin-top:22px; font-size:13.5px; color:var(--text-muted-light); text-decoration:none; }
+  .retake:hover{ color:var(--text-on-light); }
+  .disclaimer{ background:var(--fog); border:1px solid var(--fog-dim); border-radius:var(--radius); padding:18px 20px; font-size:13px; color:var(--text-muted-light); margin-top:30px; }
+
+  footer{ background:var(--ink); color:var(--text-muted-dark); padding:44px 0 28px; text-align:center; font-size:12.5px; }
+  footer .brand{ display:block; margin-bottom:10px; font-size:18px; }
+</style>
+</head>
+<body>
+
+<site-nav active="quizzes"></site-nav>
+
+<header class="page-head">
+  <div class="wrap">
+    <a href="/quizzes/" class="back-link">← كل الاختبارات</a><br>
+    <div class="eyebrow">اختبار تفاعلي · ثلاث دقائق</div>
+    <h1>ما احتياجاتك العلاقاتية الأساسية؟</h1>
+    <p>كل شخص يشعر بالحب بطريقة مختلفة. عشرة أسئلة تساعدك على اكتشاف الاحتياج الأساسي الذي يجعلك تشعر بالأمان والحب في علاقتك.</p>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <div class="quiz-card">
+
+      <div id="quizSection">
+        <div class="progress-row">
+          <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+          <span class="progress-label" id="progressLabel">١ / ١٠</span>
+        </div>
+        <div id="questionsHost"></div>
+        <div class="nav-row">
+          <button class="btn-ghost" id="btnBack">السابق</button>
+          <button class="btn-next" id="btnNext" disabled>التالي</button>
+        </div>
+      </div>
+
+      <div id="resultsSection" style="display:none;">
+        <div class="result-icon" id="resultIcon"></div>
+        <h2 class="result-title" id="resultTitle"></h2>
+        <p class="result-sub" id="resultSub"></p>
+        <p class="result-desc" id="resultDesc"></p>
+
+        <div class="bars" id="barsHost"></div>
+
+        <ul class="result-points" id="resultPoints"></ul>
+        <div class="related-articles">
+          <h4>مقالات قد تفيدك</h4>
+          <div id="relatedLinks"></div>
+        </div>
+        <div class="cta-box">
+          <h3>هل تريد فهم احتياجاتك بعمق أكثر؟</h3>
+          <p>استشارة مع مختص نفسي ممكن تساعدك تفهم لماذا تُكسر بعض احتياجاتك في علاقات معينة، وكيف تحميها.</p>
+          <a href="/sales-page/" class="btn-primary">احجز استشارتك الأولى</a>
+        </div>
+        <a href="#" class="retake" id="retakeBtn">أعد الاختبار من جديد</a>
+        <div class="disclaimer">هذا الاختبار محتوى توعوي عام لغايات التأمل الذاتي، وليس أداة تشخيص أو بديلاً عن استشارة مختص.</div>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<site-footer></site-footer>
+
+<script>
+const CATEGORIES = {
+  quality_time: { label: 'وقت الجودة', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="var(--clarity-soft)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>' },
+  words: { label: 'كلمات التقدير', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="var(--clarity-soft)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>' },
+  touch: { label: 'القرب الجسدي', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="var(--clarity-soft)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8Z"/></svg>' },
+  acts: { label: 'الأفعال والمساندة', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="var(--clarity-soft)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h11"/></svg>' },
+  security: { label: 'الأمان والثبات', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="var(--clarity-soft)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6z"/></svg>' },
+};
+
+const questions = [
+  { text: "حين أشعر بأسعد لحظاتي في علاقتي، غالباً ما يكون...", options: [
+    { label: "وقتاً طويلاً نقضيه معاً دون مقاطعة", cat: "quality_time" },
+    { label: "كلاماً صريحاً يعبّر فيه عن تقديره لي", cat: "words" },
+    { label: "لحظة عناق أو قرب جسدي بسيط", cat: "touch" },
+    { label: "وقوفه بجانبي في موقف عملي أحتاج فيه مساعدة", cat: "acts" },
+    { label: "إحساساً بأنه ثابت وحاضر مهما حدث", cat: "security" },
+  ]},
+  { text: "أكثر ما يجرحني في علاقتي...", options: [
+    { label: "حين يكون مشغولاً عني حتى وهو حاضر جسدياً", cat: "quality_time" },
+    { label: "حين لا يعبّر عن مشاعره أو تقديره لي بالكلام", cat: "words" },
+    { label: "حين يبتعد عني جسدياً لفترة طويلة", cat: "touch" },
+    { label: "حين لا يساعدني في موقف واضح أنني أحتاج فيه مساعدة", cat: "acts" },
+    { label: "حين أشعر أنه غير ثابت أو قد يتغير فجأة", cat: "security" },
+  ]},
+  { text: "إذا أردت أن أعبّر لشريكي عن حبي، غالباً أفعل...", options: [
+    { label: "أخطط لوقت خاص نقضيه معاً", cat: "quality_time" },
+    { label: "أخبره بالكلام كم أحبه وأقدّره", cat: "words" },
+    { label: "أعانقه أو ألمسه بطريقة حنونة", cat: "touch" },
+    { label: "أساعده بشيء يحتاجه دون أن يطلب", cat: "acts" },
+    { label: "أطمئنه أنني موجودة ولن أذهب", cat: "security" },
+  ]},
+  { text: "في يوم صعب، أكثر ما يريحني من شريكي...", options: [
+    { label: "أن يجلس معي فقط، حتى لو بصمت", cat: "quality_time" },
+    { label: "أن يقول لي كلاماً يطمئنني ويشجعني", cat: "words" },
+    { label: "أن يعانقني", cat: "touch" },
+    { label: "أن يساعدني بمهام عملية حتى أرتاح", cat: "acts" },
+    { label: "أن يؤكد لي أنه سيبقى معي مهما حدث", cat: "security" },
+  ]},
+  { text: "أشعر بالبعد عن شريكي أكثر حين...", options: [
+    { label: "لا نقضي وقتاً حقيقياً معاً", cat: "quality_time" },
+    { label: "لا يقول لي كلاماً جميلاً أو مشجعاً", cat: "words" },
+    { label: "لا يوجد تواصل جسدي بيننا", cat: "touch" },
+    { label: "لا يساعدني بأشياء يومية", cat: "acts" },
+    { label: "أشعر بعدم استقرار في العلاقة", cat: "security" },
+  ]},
+  { text: "أكثر لفتة تُفرحني من شريكي...", options: [
+    { label: "وقت كامل مخصص لي", cat: "quality_time" },
+    { label: "رسالة أو كلمة معبّرة", cat: "words" },
+    { label: "عناق مفاجئ", cat: "touch" },
+    { label: "مساعدة بشيء كنت أحتاجه", cat: "acts" },
+    { label: "تأكيد على استمرارية علاقتنا", cat: "security" },
+  ]},
+  { text: "في الخلافات، أكثر ما يصلح مزاجي...", options: [
+    { label: "وقت نجلس فيه معاً ونحل الموضوع وجهاً لوجه", cat: "quality_time" },
+    { label: "اعتذار بالكلام واضح وصادق", cat: "words" },
+    { label: "لمسة حنونة بعد الخلاف", cat: "touch" },
+    { label: "تصرف عملي يبيّن أنه آسف", cat: "acts" },
+    { label: "تطمين بأن الخلاف لن يؤثر على استقرار علاقتنا", cat: "security" },
+  ]},
+  { text: "إذا استطعت طلب شيء واحد فقط من شريكي، سأطلب...", options: [
+    { label: "وقتاً أكثر معاً", cat: "quality_time" },
+    { label: "أن يعبّر أكثر بالكلام", cat: "words" },
+    { label: "قرباً جسدياً أكثر", cat: "touch" },
+    { label: "مساعدة أكثر بأمور الحياة اليومية", cat: "acts" },
+    { label: "ثباتاً وأماناً أكثر في العلاقة", cat: "security" },
+  ]},
+  { text: "أشعر بالفخر بعلاقتي حين...", options: [
+    { label: "نصنع أنشطة وذكريات معاً", cat: "quality_time" },
+    { label: "يفتخر بي أمام الناس بالكلام", cat: "words" },
+    { label: "نكون مرتاحين جسدياً مع بعضنا أمام الناس", cat: "touch" },
+    { label: "يدعمني في قرارات حياتي", cat: "acts" },
+    { label: "نخطط لمستقبل ثابت معاً", cat: "security" },
+  ]},
+  { text: "إذا غاب شريكي لفترة، أكثر ما أشتاق إليه...", options: [
+    { label: "الوقت الذي كنا نقضيه معاً", cat: "quality_time" },
+    { label: "سماع صوته وكلامه", cat: "words" },
+    { label: "قربه الجسدي", cat: "touch" },
+    { label: "مساعدته اليومية", cat: "acts" },
+    { label: "الإحساس بالأمان الذي يمنحني إياه", cat: "security" },
+  ]},
+];
+
+const RESULTS_INFO = {
+  quality_time: {
+    title: "احتياجك الأساسي: وقت الجودة",
+    desc: "تشعرين بالحب أكثر حين تكون هناك مساحة زمنية حقيقية مخصصة لك، بعيداً عن الشاشات والمشتتات. الحضور الكامل يعني لك أكثر من أي كلام أو هدية.",
+    points: ["خططي لوقت ثابت أسبوعياً تقضيانه معاً دون هواتف أو مقاطعات.", "إذا كان شريكك مشغولاً كثيراً، أخبريه بوضوح أن الوقت المركّز معه هو لغة حبك الأساسية.", "جودة الوقت أهم من كميته — نصف ساعة حضور كامل أفضل من ساعتين مع هاتف بيد كل طرف."],
+  },
+  words: {
+    title: "احتياجك الأساسي: كلمات التقدير",
+    desc: "للكلام وزن كبير عندك — سماع تقدير أو حب صريح يطمئنك أكثر من أي تصرف صامت. غياب التعبير اللفظي قد يجعلك تشكين بمشاعر شريكك حتى لو كانت أفعاله تقول عكس ذلك.",
+    points: ["أخبري شريكك بوضوح أن الكلام مهم لك — لا يدرك الجميع ذلك تلقائياً.", "جربي أن تطلبي بشكل محدد: \"أحب أن تخبرني كيف تشعر تجاهي من وقت لآخر\"، فهذا أوضح من توقع ضمني.", "لاحظي: صمت شريكك لا يعني دائماً غياب المشاعر، لكنه لغة مختلفة عن لغتك."],
+  },
+  touch: {
+    title: "احتياجك الأساسي: القرب الجسدي",
+    desc: "التواصل الجسدي — عناق، إمساك يد، قرب بسيط — يوصلك إحساس الأمان والحب بشكل مباشر جداً. غياب هذا التواصل قد يجعلك تشعرين بالبعد حتى لو كانت العلاقة جيدة من نواحٍ أخرى.",
+    points: ["عبّري عن هذا الاحتياج بوضوح — لا يدرك كثير من الناس أهميته حتى يسمعوه صراحة.", "القرب الجسدي لا يجب أن يكون كبيراً — لمسة بسيطة يومية تُحدث فرقاً كبيراً مع الوقت.", "إذا كان شريكك أقل ميلاً للتواصل الجسدي بطبعه، تحدثا معاً كيف تصلان إلى توازن يريح الطرفين."],
+  },
+  acts: {
+    title: "احتياجك الأساسي: الأفعال والمساندة العملية",
+    desc: "بالنسبة لك، الأفعال أبلغ من الأقوال. حين يساعدك شريكك بشيء عملي دون أن تطلبي، يوصلك ذلك رسالة حب أقوى من أي كلام.",
+    points: ["أخبري بوضوح ما المساعدة العملية التي تقدّرينها أكثر — كل شخص لديه أولويات مختلفة.", "لاحظي الأفعال الصغيرة التي يقوم بها شريكك من تلقاء نفسه — هذه غالباً طريقته للتعبير عن الحب.", "المساعدة التي تُطلب لا توصل دائماً إحساس المبادرة التلقائية نفسه — وضّحي الفرق إذا شعرت به."],
+  },
+  security: {
+    title: "احتياجك الأساسي: الأمان والثبات",
+    desc: "الإحساس بالاستقرار والثبات أهم شيء لك في العلاقة. التقلب أو عدم الوضوح بمستقبل العلاقة يؤثر عليك أكثر من أي شيء آخر، حتى لو كانت بقية التفاصيل جيدة.",
+    points: ["تحدثي بصراحة عن حاجتك للوضوح — الغموض بمستقبل العلاقة يؤثر عليك أكثر من غيرك.", "التطمين المتكرر ليس \"ضعفاً\" — هو احتياج حقيقي، ومن حقك أن تطلبيه بوضوح.", "إذا شعرتِ بعدم استقرار متكرر، هذا يستحق نقاشاً صريحاً عن اتجاه العلاقة، لا تجاهلاً."],
+  },
+};
+
+const RELATED_MAP = {
+  quality_time: ["/article-healthy-first-date/"],
+  words: ["/article-silent-treatment/"],
+  touch: ["/article-love-bombing/"],
+  acts: ["/article-codependency/"],
+  security: ["/article-jealousy-vs-control/"],
+};
+const articleTitles = {
+  "/article-healthy-first-date/": "كيف تبني علاقة صحية من أول موعد",
+  "/article-silent-treatment/": "الصمت كعقاب: لماذا يكون أكثر أذى مما يبدو",
+  "/article-love-bombing/": "الحب القصفي: لماذا البداية القوية جداً ليست دائماً مؤشراً جيداً",
+  "/article-codependency/": "الاعتمادية العاطفية: حين تتحول \"أحبك\" إلى \"لا أستطيع العيش من دونك\"",
+  "/article-jealousy-vs-control/": "الفرق بين الغيرة الطبيعية والغيرة التي تتحول إلى تحكم",
+};
+
+let current = 0;
+const answers = new Array(questions.length).fill(null);
+const host = document.getElementById('questionsHost');
+const progressFill = document.getElementById('progressFill');
+const progressLabel = document.getElementById('progressLabel');
+const btnNext = document.getElementById('btnNext');
+const btnBack = document.getElementById('btnBack');
+const arabicNums = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
+function toArabicNum(n){ return String(n).split('').map(d => arabicNums[+d]).join(''); }
+
+function renderQuestions(){
+  host.innerHTML = '';
+  questions.forEach((q, qi) => {
+    const block = document.createElement('div');
+    block.className = 'q-block' + (qi === current ? ' active' : '');
+    const qt = document.createElement('div');
+    qt.className = 'q-text';
+    qt.textContent = q.text;
+    block.appendChild(qt);
+    const opts = document.createElement('div');
+    opts.className = 'options';
+    q.options.forEach((opt, oi) => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'opt' + (answers[qi] === oi ? ' selected' : '');
+      btn.innerHTML = '<span class="opt-dot"></span><span>' + opt.label + '</span>';
+      btn.addEventListener('click', () => { answers[qi] = oi; renderQuestions(); updateNav(); });
+      opts.appendChild(btn);
+    });
+    block.appendChild(opts);
+    host.appendChild(block);
+  });
+}
+function updateNav(){
+  progressFill.style.width = ((current + 1) / questions.length * 100) + '%';
+  progressLabel.textContent = toArabicNum(current + 1) + ' / ' + toArabicNum(questions.length);
+  btnBack.disabled = current === 0;
+  btnNext.disabled = answers[current] === null;
+  btnNext.textContent = current === questions.length - 1 ? 'عرض النتيجة' : 'التالي';
+}
+btnNext.addEventListener('click', () => {
+  if (answers[current] === null) return;
+  if (current < questions.length - 1) { current++; renderQuestions(); updateNav(); }
+  else { showResults(); }
+});
+btnBack.addEventListener('click', () => { if (current > 0) { current--; renderQuestions(); updateNav(); } });
+
+function showResults(){
+  const tally = { quality_time: 0, words: 0, touch: 0, acts: 0, security: 0 };
+  answers.forEach((ai, qi) => { tally[questions[qi].options[ai].cat]++; });
+
+  const sortedCats = Object.keys(tally).sort((a, b) => tally[b] - tally[a]);
+  const topCat = sortedCats[0];
+  const info = RESULTS_INFO[topCat];
+
+  document.getElementById('quizSection').style.display = 'none';
+  const rs = document.getElementById('resultsSection');
+  rs.style.display = 'block'; rs.classList.add('active');
+
+  document.getElementById('resultIcon').innerHTML = CATEGORIES[topCat].icon;
+  document.getElementById('resultTitle').textContent = info.title;
+  document.getElementById('resultSub').textContent = 'من أصل ' + toArabicNum(questions.length) + ' أسئلة';
+  document.getElementById('resultDesc').textContent = info.desc;
+
+  const barsHost = document.getElementById('barsHost');
+  barsHost.innerHTML = '';
+  sortedCats.forEach(cat => {
+    const pct = Math.round((tally[cat] / questions.length) * 100);
+    const row = document.createElement('div');
+    row.className = 'bar-row';
+    row.innerHTML = `
+      <span class="bar-label">${CATEGORIES[cat].label}</span>
+      <div class="bar-track"><div class="bar-fill" style="width:0%"></div></div>
+      <span class="bar-pct">${toArabicNum(pct)}٪</span>
+    `;
+    barsHost.appendChild(row);
+    setTimeout(() => { row.querySelector('.bar-fill').style.width = pct + '%'; }, 80);
+  });
+
+  const pointsList = document.getElementById('resultPoints');
+  pointsList.innerHTML = '';
+  info.points.forEach((p, i) => {
+    const li = document.createElement('li');
+    li.innerHTML = '<b>' + toArabicNum(i + 1) + '.</b><span>' + p + '</span>';
+    pointsList.appendChild(li);
+  });
+
+  const relatedHost = document.getElementById('relatedLinks');
+  relatedHost.innerHTML = '';
+  RELATED_MAP[topCat].forEach(href => {
+    const a = document.createElement('a');
+    a.href = href; a.textContent = articleTitles[href] || href;
+    relatedHost.appendChild(a);
+  });
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+document.getElementById('retakeBtn').addEventListener('click', (e) => {
+  e.preventDefault(); current = 0; answers.fill(null);
+  document.getElementById('resultsSection').style.display = 'none';
+  document.getElementById('quizSection').style.display = 'block';
+  renderQuestions(); updateNav();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+renderQuestions(); updateNav();
+</script>
+<script src="/components.js"></script>
+</body>
+</html>

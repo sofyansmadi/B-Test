@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>اختبار: ما نمط التعلق لديك؟ — بوضوح</title>
+<meta name="description" content="شرح مبسّط لنظرية التعلق، واختبار تفاعلي يساعدك على اكتشاف نمط تعلقك — آمن، قلق، متجنب، أو مضطرب.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@500;700;900&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#241D2E; --ink-soft:#372C46; --plum:#4A3B5C;
+    --fog:#F3EEEA; --fog-dim:#E6DFDA;
+    --clarity:#C9A15F; --clarity-soft:#E4C98A; --rose:#8B6F7E; --alert:#B5555B;
+    --text-on-dark:#EDE7E3; --text-muted-dark:#B7ACC4;
+    --text-on-light:#2A2130; --text-muted-light:#6B6072;
+    --radius:14px; --max:780px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{ font-family:'IBM Plex Sans Arabic', sans-serif; background:var(--fog); color:var(--text-on-light); line-height:1.9; -webkit-font-smoothing:antialiased; }
+  h1,h2,h3,.kufi{ font-family:'Noto Kufi Arabic', sans-serif; }
+  a{ color:inherit; text-decoration:none; }
+  .wrap{ max-width:var(--max); margin:0 auto; padding:0 24px; }
+
+  nav{ position:sticky; top:0; z-index:50; background:rgba(36,29,46,.92); backdrop-filter:blur(8px); border-bottom:1px solid rgba(255,255,255,.06); }
+  nav .wrap{ display:flex; align-items:center; justify-content:space-between; padding:16px 24px; max-width:1080px; }
+  .brand{ font-family:'Noto Kufi Arabic',sans-serif; font-weight:900; font-size:22px; color:var(--fog); text-decoration:none; }
+  .brand span{ color:var(--clarity); }
+  .nav-links{ display:flex; align-items:center; gap:28px; }
+  .nav-links a{ color:var(--text-muted-dark); font-size:14px; font-weight:500; text-decoration:none; transition:color .2s; }
+  .nav-links a:hover{ color:var(--fog); }
+  a.nav-cta{ background:var(--clarity); color:var(--ink); font-weight:700; font-size:14px; padding:9px 20px; border-radius:100px; transition:.2s; }
+  a.nav-cta:hover{ background:var(--clarity-soft); }
+  @media (max-width:780px){ .nav-links{ display:none; } }
+
+  .page-head{ background:radial-gradient(120% 90% at 75% 0%, var(--ink-soft) 0%, var(--ink) 55%, #1A1522 100%); padding:64px 0 48px; text-align:center; }
+  .eyebrow{ display:inline-flex; align-items:center; gap:8px; font-size:13px; color:var(--clarity-soft); font-weight:600; margin-bottom:14px; justify-content:center; }
+  .eyebrow::before{ content:""; width:20px; height:1px; background:var(--clarity-soft); display:inline-block; }
+  .page-head h1{ color:var(--fog); font-size:clamp(28px,4.4vw,42px); font-weight:900; max-width:22ch; margin:0 auto; line-height:1.4; }
+  .page-head p{ color:var(--text-muted-dark); font-size:15.5px; max-width:52ch; margin:14px auto 0; }
+  .back-link{ display:inline-flex; align-items:center; gap:6px; font-size:13px; color:var(--clarity-soft); margin-bottom:22px; text-decoration:none; }
+
+  main{ padding:48px 0 90px; }
+
+  /* ---------- INTRO / THEORY ---------- */
+  .intro-card{ background:#fff; border:1px solid var(--fog-dim); border-radius:20px; padding:38px 34px; box-shadow:0 24px 50px -30px rgba(36,29,46,.25); }
+  @media (max-width:600px){ .intro-card{ padding:28px 22px; } }
+  .intro-card h2{ font-size:22px; margin-bottom:14px; color:var(--ink); }
+  .intro-card > p{ font-size:15.5px; color:var(--text-muted-light); margin-bottom:28px; }
+
+  .style-grid{ display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:30px; }
+  @media (max-width:600px){ .style-grid{ grid-template-columns:1fr; } }
+  .style-card{ border:1px solid var(--fog-dim); border-radius:14px; padding:20px; background:var(--fog); }
+  .style-card .style-icon{ width:36px; height:36px; border-radius:50%; background:var(--ink); display:flex; align-items:center; justify-content:center; margin-bottom:12px; }
+  .style-card .style-icon svg{ width:17px; height:17px; }
+  .style-card h3{ font-size:16px; margin-bottom:6px; color:var(--ink); }
+  .style-card p{ font-size:13.5px; color:var(--text-muted-light); }
+
+  .start-btn{ background:var(--ink); color:var(--fog); font-weight:700; font-size:15px; padding:15px 32px; border-radius:100px; border:none; cursor:pointer; font-family:inherit; width:100%; transition:.2s; }
+  .start-btn:hover{ background:var(--ink-soft); }
+
+  /* ---------- QUIZ (shared pattern) ---------- */
+  .quiz-card{ background:#fff; border:1px solid var(--fog-dim); border-radius:20px; padding:38px 34px; box-shadow:0 24px 50px -30px rgba(36,29,46,.25); display:none; }
+  @media (max-width:600px){ .quiz-card{ padding:28px 20px; } }
+  .progress-row{ display:flex; align-items:center; gap:14px; margin-bottom:30px; }
+  .progress-track{ flex:1; height:6px; background:var(--fog-dim); border-radius:100px; overflow:hidden; }
+  .progress-fill{ height:100%; background:var(--clarity); border-radius:100px; width:8%; transition:width .4s ease; }
+  .progress-label{ font-size:12.5px; color:var(--text-muted-light); font-weight:600; white-space:nowrap; }
+  .q-block{ display:none; }
+  .q-block.active{ display:block; animation:fadeIn .35s ease; }
+  @keyframes fadeIn{ from{ opacity:0; transform:translateY(6px);} to{ opacity:1; transform:translateY(0);} }
+  .q-text{ font-family:'Noto Kufi Arabic',sans-serif; font-size:19px; font-weight:700; line-height:1.7; margin-bottom:22px; max-width:40ch; }
+  .options{ display:flex; flex-direction:column; gap:10px; }
+  .opt{ display:flex; align-items:center; gap:12px; text-align:right; border:1.5px solid var(--fog-dim); border-radius:12px; padding:14px 16px; background:var(--fog); cursor:pointer; font-size:14.5px; color:var(--text-on-light); transition:.15s; width:100%; font-family:inherit; }
+  .opt:hover{ border-color:var(--clarity); background:#fff; }
+  .opt.selected{ border-color:var(--clarity); background:rgba(201,161,95,.1); }
+  .opt-dot{ width:18px; height:18px; border-radius:50%; border:1.5px solid var(--rose); flex-shrink:0; position:relative; }
+  .opt.selected .opt-dot{ border-color:var(--clarity); }
+  .opt.selected .opt-dot::after{ content:""; position:absolute; inset:3px; border-radius:50%; background:var(--clarity); }
+  .nav-row{ display:flex; justify-content:space-between; align-items:center; margin-top:30px; }
+  .btn-ghost{ background:none; border:none; color:var(--text-muted-light); font-size:14px; font-weight:600; cursor:pointer; font-family:inherit; padding:10px 6px; }
+  .btn-ghost:disabled{ opacity:0; pointer-events:none; }
+  .btn-next{ background:var(--ink); color:var(--fog); font-weight:700; font-size:14.5px; padding:13px 28px; border-radius:100px; border:none; cursor:pointer; font-family:inherit; transition:.2s; }
+  .btn-next:hover{ background:var(--ink-soft); }
+  .btn-next:disabled{ opacity:.4; cursor:not-allowed; }
+
+  /* ---------- RESULTS ---------- */
+  .result-block{ display:none; }
+  .result-block.active{ display:block; animation:fadeIn .4s ease; }
+  .result-icon{ width:56px; height:56px; border-radius:50%; background:var(--ink); display:flex; align-items:center; justify-content:center; margin-bottom:20px; }
+  .result-icon svg{ width:26px; height:26px; }
+  .result-title{ font-family:'Noto Kufi Arabic',sans-serif; font-size:25px; font-weight:900; margin-bottom:18px; color:var(--ink); }
+  .result-desc{ font-size:15.5px; color:var(--text-muted-light); margin-bottom:26px; max-width:58ch; }
+  .bars{ margin:26px 0 30px; display:flex; flex-direction:column; gap:14px; }
+  .bar-row{ display:flex; align-items:center; gap:12px; }
+  .bar-label{ font-size:13.5px; width:110px; flex-shrink:0; color:var(--text-on-light); font-weight:600; }
+  .bar-track{ flex:1; height:10px; background:var(--fog-dim); border-radius:100px; overflow:hidden; }
+  .bar-fill{ height:100%; border-radius:100px; background:var(--clarity-soft); transition:width 1s ease; }
+  .bar-pct{ font-size:12.5px; color:var(--text-muted-light); width:34px; text-align:left; }
+  .result-points{ display:flex; flex-direction:column; gap:12px; margin:24px 0; }
+  .result-points li{ list-style:none; display:flex; gap:10px; font-size:14.5px; color:var(--text-on-light); align-items:flex-start; }
+  .result-points b{ flex-shrink:0; color:var(--clarity); font-family:'Noto Kufi Arabic',sans-serif; }
+  .related-articles{ margin-top:28px; padding-top:24px; border-top:1px solid var(--fog-dim); }
+  .related-articles h4{ font-size:14px; color:var(--text-muted-light); margin-bottom:14px; font-weight:600; }
+  .related-articles a{ display:block; text-decoration:none; color:var(--text-on-light); font-weight:600; font-size:14.5px; padding:12px 0; border-bottom:1px solid var(--fog-dim); }
+  .related-articles a:last-child{ border-bottom:none; }
+  .cta-box{ margin-top:30px; background:var(--ink); border-radius:18px; padding:30px 28px; text-align:center; background:radial-gradient(140% 140% at 50% 0%, var(--ink-soft), var(--ink)); }
+  .cta-box h3{ color:var(--fog); font-size:19px; margin-bottom:8px; }
+  .cta-box p{ color:var(--text-muted-dark); font-size:14px; max-width:44ch; margin:0 auto 20px; }
+  .btn-primary{ background:var(--clarity); color:var(--ink); font-weight:700; font-size:14.5px; padding:13px 26px; border-radius:100px; display:inline-block; text-decoration:none; }
+  .retake{ display:block; text-align:center; margin-top:22px; font-size:13.5px; color:var(--text-muted-light); text-decoration:none; }
+  .retake:hover{ color:var(--text-on-light); }
+  .disclaimer{ background:var(--fog); border:1px solid var(--fog-dim); border-radius:var(--radius); padding:18px 20px; font-size:13px; color:var(--text-muted-light); margin-top:30px; }
+
+  footer{ background:var(--ink); color:var(--text-muted-dark); padding:44px 0 28px; text-align:center; font-size:12.5px; }
+  footer .brand{ display:block; margin-bottom:10px; font-size:18px; }
+</style>
+</head>
+<body>
+
+<site-nav active="quizzes"></site-nav>
+
+<header class="page-head">
+  <div class="wrap">
+    <a href="/quizzes/" class="back-link">← كل الاختبارات</a><br>
+    <div class="eyebrow">شرح + اختبار تفاعلي · ٤ دقائق</div>
+    <h1>ما نمط التعلق لديك؟</h1>
+    <p>قبل أن تبدأ الاختبار، دعنا نفهم معاً ما هي نظرية التعلق ولماذا تُحدث فرقاً كبيراً في فهمك لعلاقاتك.</p>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+
+    <div class="intro-card" id="introCard">
+      <h2>ما هي نظرية التعلق؟</h2>
+      <p>نظرية التعلق نظرية نفسية تشرح كيف تشكّل تجاربنا الأولى — خصوصاً في الطفولة مع أهم الأشخاص في حياتنا — طريقة تعاملنا مع القرب والثقة والخوف من الفقدان حين نكبر. نمط تعلقك ليس قدراً محتوماً، بل هو عدسة تساعدك على فهم لماذا تستجيب بطريقة معينة في مواقف معينة.</p>
+
+      <div class="style-grid">
+        <div class="style-card">
+          <div class="style-icon"><svg viewBox="0 0 24 24" fill="none" stroke="var(--clarity-soft)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8Z"/></svg></div>
+          <h3>الآمن (Secure)</h3>
+          <p>مرتاح بالقرب والاستقلالية معاً، يثق بسهولة نسبية، ويتواصل بوضوح حين يشعر بإزعاج.</p>
+        </div>
+        <div class="style-card">
+          <div class="style-icon"><svg viewBox="0 0 24 24" fill="none" stroke="var(--clarity-soft)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg></div>
+          <h3>القلق (Anxious)</h3>
+          <p>يحتاج تأكيداً مستمراً، حساس جداً لأي إشارة بعد، ويخاف من الهجر أو فقدان الاهتمام.</p>
+        </div>
+        <div class="style-card">
+          <div class="style-icon"><svg viewBox="0 0 24 24" fill="none" stroke="var(--clarity-soft)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12h8"/></svg></div>
+          <h3>المتجنب (Avoidant)</h3>
+          <p>يفضّل الاستقلالية، يصعب عليه القرب العاطفي الكبير، ويميل للانسحاب حين تكبر المشاعر أو الالتزام.</p>
+        </div>
+        <div class="style-card">
+          <div class="style-icon"><svg viewBox="0 0 24 24" fill="none" stroke="var(--clarity-soft)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.83 2.83 0 0 1 4 4L7 21l-4 1 1-4Z"/></svg></div>
+          <h3>المضطرب (Fearful-Avoidant)</h3>
+          <p>مزيج بين الرغبة الحقيقية بالقرب والخوف منه في الوقت نفسه — تناقض داخلي يصعب عليه فهمه أحياناً.</p>
+        </div>
+      </div>
+
+      <p style="margin-bottom:24px;">فهم نمطك ليس لتضعي نفسك في قالب ثابت، بل لتفهمي ردود أفعالك وأفعال شريكك بشكل أعمق وأقل حكماً. هل أنتِ جاهزة لاكتشاف نمطك؟</p>
+
+      <button class="start-btn" id="startBtn">ابدأ الاختبار</button>
+    </div>
+
+    <div class="quiz-card" id="quizCard">
+      <div id="quizSection">
+        <div class="progress-row">
+          <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+          <span class="progress-label" id="progressLabel">١ / ١٢</span>
+        </div>
+        <div id="questionsHost"></div>
+        <div class="nav-row">
+          <button class="btn-ghost" id="btnBack">السابق</button>
+          <button class="btn-next" id="btnNext" disabled>التالي</button>
+        </div>
+      </div>
+
+      <div id="resultsSection" style="display:none;">
+        <div class="result-icon" id="resultIcon"></div>
+        <h2 class="result-title" id="resultTitle"></h2>
+        <p class="result-desc" id="resultDesc"></p>
+        <div class="bars" id="barsHost"></div>
+        <ul class="result-points" id="resultPoints"></ul>
+        <div class="related-articles">
+          <h4>مقالات قد تفيدك</h4>
+          <div id="relatedLinks"></div>
+        </div>
+        <div class="cta-box">
+          <h3>هل تريد فهم نمطك بعمق أكثر؟</h3>
+          <p>استشارة مع مختص نفسي ممكن تساعدك تفهم كيف يؤثر نمط تعلقك على اختياراتك في العلاقات.</p>
+          <a href="/sales-page/" class="btn-primary">احجز استشارتك الأولى</a>
+        </div>
+        <a href="#" class="retake" id="retakeBtn">أعد الاختبار من جديد</a>
+        <div class="disclaimer">هذا الاختبار محتوى توعوي عام مبني على نظرية التعلق، وليس أداة تشخيص رسمية أو بديلاً عن استشارة مختص نفسي.</div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<site-footer></site-footer>
+
+<script>
+document.getElementById('startBtn').addEventListener('click', () => {
+  document.getElementById('introCard').style.display = 'none';
+  document.getElementById('quizCard').style.display = 'block';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+const STYLES = {
+  secure: { label: 'الآمن', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="var(--clarity-soft)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8Z"/></svg>' },
+  anxious: { label: 'القلق', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="var(--clarity-soft)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>' },
+  avoidant: { label: 'المتجنب', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="var(--clarity-soft)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12h8"/></svg>' },
+  disorganized: { label: 'المضطرب', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="var(--clarity-soft)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.83 2.83 0 0 1 4 4L7 21l-4 1 1-4Z"/></svg>' },
+};
+
+const questions = [
+  { text: "حين يحتاج شريكي مساحة لنفسه، أنا...", options: [
+    { label: "مرتاحة، أتفهّم أن ذلك طبيعي", cat: "secure" },
+    { label: "أقلق أنه فقد اهتمامه بي", cat: "anxious" },
+    { label: "أرتاح أيضاً، أستغل الوقت لنفسي", cat: "avoidant" },
+    { label: "أشعر بتناقض — أريد أن أقترب لكنني أخاف من الاقتراب زيادة", cat: "disorganized" },
+  ]},
+  { text: "حين نختلف مع شريكي في الرأي...", options: [
+    { label: "أستطيع التعبير عن مشاعري بوضوح وأسمع رأيه", cat: "secure" },
+    { label: "أخاف أن يكون هذا بداية النهاية", cat: "anxious" },
+    { label: "أميل للانسحاب وتجنب الموضوع", cat: "avoidant" },
+    { label: "أحياناً أقترب وأحياناً أنسحب فجأة دون سبب واضح", cat: "disorganized" },
+  ]},
+  { text: "في بداية أي علاقة، أنا...", options: [
+    { label: "أفتح قلبي تدريجياً وأثق مع مرور الوقت", cat: "secure" },
+    { label: "أستعجل الالتزام والقرب", cat: "anxious" },
+    { label: "أحافظ على مسافة ويصعب علي فتح قلبي", cat: "avoidant" },
+    { label: "أريد قرباً كبيراً لكن هذا بالضبط ما يرعبني", cat: "disorganized" },
+  ]},
+  { text: "حين لا يرد شريكي على رسالة بسرعة...", options: [
+    { label: "لا أتأثر كثيراً، أفترض أنه مشغول", cat: "secure" },
+    { label: "أقلق وأفكر أن هناك مشكلة", cat: "anxious" },
+    { label: "لا ألاحظ كثيراً، مرتاح بالمساحة", cat: "avoidant" },
+    { label: "أتوتر لكنني أحاول ألا أُظهر ذلك", cat: "disorganized" },
+  ]},
+  { text: "حين يقترب مني أحدهم عاطفياً...", options: [
+    { label: "أشعر بالراحة وأفتح له تدريجياً", cat: "secure" },
+    { label: "أشعر بسعادة كبيرة وأخاف أن أخسره فوراً", cat: "anxious" },
+    { label: "أشعر بضيق وأميل للابتعاد قليلاً", cat: "avoidant" },
+    { label: "أشعر برغبة وخوف في الوقت نفسه", cat: "disorganized" },
+  ]},
+  { text: "إذا كان شريكي زعلاناً مني، أول ردة فعل عندي...", options: [
+    { label: "أسأله ماذا حدث وأحاول أن أفهم", cat: "secure" },
+    { label: "أقلق كثيراً وأحاول إصلاح الوضع فوراً حتى لو لم يكن خطئي", cat: "anxious" },
+    { label: "أحتاج وقتاً لنفسي قبل أن أتحدث عن الموضوع", cat: "avoidant" },
+    { label: "أتردد بين الاقتراب منه أو الابتعاد عنه", cat: "disorganized" },
+  ]},
+  { text: "أكثر خوف لدي في العلاقات...", options: [
+    { label: "ليس لدي خوف كبير، أثق بالعملية", cat: "secure" },
+    { label: "أن يتركني أو يبتعد عني", cat: "anxious" },
+    { label: "أن أفقد استقلاليتي أو حريتي", cat: "avoidant" },
+    { label: "أن أنجرح إذا اقتربت كثيراً", cat: "disorganized" },
+  ]},
+  { text: "أصف علاقتي المثالية بأنها...", options: [
+    { label: "توازن بين القرب والاستقلالية", cat: "secure" },
+    { label: "قرب دائم وتأكيد مستمر", cat: "anxious" },
+    { label: "مساحة كبيرة واستقلالية عالية", cat: "avoidant" },
+    { label: "يصعب علي وصفها، أشعر بتناقض في مشاعري تجاهها", cat: "disorganized" },
+  ]},
+  { text: "حين أمر بيوم صعب، أميل...", options: [
+    { label: "لمشاركة شريكي وطلب دعمه بوضوح", cat: "secure" },
+    { label: "لاحتياج تطمين مستمر منه طوال الوقت", cat: "anxious" },
+    { label: "لتفضيل التعامل معه بمفردي", cat: "avoidant" },
+    { label: "لرغبتي بمساعدته لكن يصعب علي طلبها", cat: "disorganized" },
+  ]},
+  { text: "أكثر ما يجعلني أشعر بالأمان في علاقة...", options: [
+    { label: "التواصل الواضح والثقة المتبادلة", cat: "secure" },
+    { label: "التأكيد المستمر بأنه لن يتركني", cat: "anxious" },
+    { label: "احترام مساحتي واستقلاليتي", cat: "avoidant" },
+    { label: "ثبات حقيقي يطمئن الجزء الخائف مني", cat: "disorganized" },
+  ]},
+  { text: "إذا شعرت أن شريكي يبتعد قليلاً...", options: [
+    { label: "أحاول فهم السبب بهدوء", cat: "secure" },
+    { label: "أقلق كثيراً وأحاول الاقتراب أكثر فوراً", cat: "anxious" },
+    { label: "لا أتأثر كثيراً، أشعر أنه طبيعي أحياناً", cat: "avoidant" },
+    { label: "أشعر بذعر لكن أرد بالابتعاد أنا أيضاً", cat: "disorganized" },
+  ]},
+  { text: "علاقتي بذاتي المستقلة خارج أي علاقة...", options: [
+    { label: "قوية، وأحافظ عليها حتى وأنا في علاقة", cat: "secure" },
+    { label: "تذوب قليلاً في العلاقة، يصبح كل تركيزي على شريكي", cat: "anxious" },
+    { label: "قوية جداً لدرجة أنه يصعب علي الاقتراب من أحد", cat: "avoidant" },
+    { label: "متذبذبة — أحياناً قوية وأحياناً أضيع فيها", cat: "disorganized" },
+  ]},
+];
+
+const RESULTS_INFO = {
+  secure: {
+    title: "نمط تعلقك: الآمن",
+    desc: "غالباً ترتاحين بالقرب والاستقلالية في الوقت نفسه. تثقين بسهولة نسبية، وتستطيعين التعبير عن مشاعرك بوضوح دون خوف زائد من الهجر أو فقدان الذات.",
+    points: ["استمري في الحفاظ على هذا التوازن — فهو أساس قوي لعلاقات صحية.", "إذا كان شريكك لديه نمط تعلق مختلف، فهمك لنمطك يساعدك على التعامل معه بصبر أكبر.", "التعلق الآمن لا يعني غياب المخاوف تماماً، بل يعني قدرتك على التعامل معها بشكل صحي."],
+  },
+  anxious: {
+    title: "نمط تعلقك: القلق",
+    desc: "تشعرين بحاجة قوية للقرب والتأكيد المستمر، وتخافين كثيراً من الهجر أو فقدان الاهتمام. غالباً ما يعود هذا النمط لتجارب مبكرة لم يكن فيها ثبات كافٍ.",
+    points: ["تعلّمي التفريق بين قلقك الداخلي وإشارات حقيقية من شريكك — ليس كل بعد بسيط يعني تهديداً.", "التطمين المتكرر احتياج حقيقي، لكن حاولي أيضاً بناء مصادر أمان من داخلك لا من شريكك فقط.", "قد يساعدك معالج نفسي متخصص بأنماط التعلق على فهم جذور هذا القلق والعمل عليه."],
+  },
+  avoidant: {
+    title: "نمط تعلقك: المتجنب",
+    desc: "تميلين للحفاظ على استقلاليتك ومسافتك العاطفية، ويصعب عليك القرب الكبير حتى لو كنتِ تحبين الشخص. هذا لا يعني أنك لا تشعرين، لكن التعبير والقرب العاطفي يصبحان تحدياً.",
+    points: ["جربي أن تلاحظي حين تبدئين بالانسحاب عاطفياً — هل هو احتياج حقيقي لمساحة، أم خوف من القرب؟", "التعبير عن مشاعرك بالكلام، حتى لو كان صعباً في البداية، يقوّي علاقتك مع الوقت.", "شريكك ليس بالضرورة \"محتاجاً زيادة\" — قد يكون فقط نمط تعلق مختلف عن نمطك."],
+  },
+  disorganized: {
+    title: "نمط تعلقك: المضطرب (الخائف-المتجنب)",
+    desc: "تشعرين برغبة حقيقية بالقرب وخوف منه في الوقت نفسه — تناقض داخلي يصعب عليك فهمه أحياناً. غالباً ما يعود هذا النمط لتجارب مبكرة معقدة أو غير ثابتة.",
+    points: ["هذا النمط من أكثر الأنماط التي تستفيد من دعم معالج نفسي متخصص بالتعلق — التناقض الداخلي يحتاج مساحة آمنة تفهمينه فيها.", "لاحظي اللحظات التي تقتربين فيها ثم تنسحبين فجأة — التوثيق يساعدك على رؤية النمط بوضوح أكبر.", "الصبر مع نفسك مهم هنا — هذا النمط معقد، والتغيير فيه يأخذ وقتاً وممارسة حقيقية."],
+  },
+};
+
+const RELATED_MAP = {
+  secure: ["/article-healthy-first-date/"],
+  anxious: ["/article-jealousy-vs-control/"],
+  avoidant: ["/article-codependency/"],
+  disorganized: ["/article-silent-treatment/"],
+};
+const articleTitles = {
+  "/article-healthy-first-date/": "كيف تبني علاقة صحية من أول موعد",
+  "/article-jealousy-vs-control/": "الفرق بين الغيرة الطبيعية والغيرة التي تتحول إلى تحكم",
+  "/article-codependency/": "الاعتمادية العاطفية: حين تتحول \"أحبك\" إلى \"لا أستطيع العيش من دونك\"",
+  "/article-silent-treatment/": "الصمت كعقاب: لماذا يكون أكثر أذى مما يبدو",
+};
+
+let current = 0;
+const answers = new Array(questions.length).fill(null);
+const host = document.getElementById('questionsHost');
+const progressFill = document.getElementById('progressFill');
+const progressLabel = document.getElementById('progressLabel');
+const btnNext = document.getElementById('btnNext');
+const btnBack = document.getElementById('btnBack');
+const arabicNums = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
+function toArabicNum(n){ return String(n).split('').map(d => arabicNums[+d]).join(''); }
+
+function renderQuestions(){
+  host.innerHTML = '';
+  questions.forEach((q, qi) => {
+    const block = document.createElement('div');
+    block.className = 'q-block' + (qi === current ? ' active' : '');
+    const qt = document.createElement('div');
+    qt.className = 'q-text';
+    qt.textContent = q.text;
+    block.appendChild(qt);
+    const opts = document.createElement('div');
+    opts.className = 'options';
+    q.options.forEach((opt, oi) => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'opt' + (answers[qi] === oi ? ' selected' : '');
+      btn.innerHTML = '<span class="opt-dot"></span><span>' + opt.label + '</span>';
+      btn.addEventListener('click', () => { answers[qi] = oi; renderQuestions(); updateNav(); });
+      opts.appendChild(btn);
+    });
+    block.appendChild(opts);
+    host.appendChild(block);
+  });
+}
+function updateNav(){
+  progressFill.style.width = ((current + 1) / questions.length * 100) + '%';
+  progressLabel.textContent = toArabicNum(current + 1) + ' / ' + toArabicNum(questions.length);
+  btnBack.disabled = current === 0;
+  btnNext.disabled = answers[current] === null;
+  btnNext.textContent = current === questions.length - 1 ? 'عرض النتيجة' : 'التالي';
+}
+btnNext.addEventListener('click', () => {
+  if (answers[current] === null) return;
+  if (current < questions.length - 1) { current++; renderQuestions(); updateNav(); }
+  else { showResults(); }
+});
+btnBack.addEventListener('click', () => { if (current > 0) { current--; renderQuestions(); updateNav(); } });
+
+function showResults(){
+  const tally = { secure: 0, anxious: 0, avoidant: 0, disorganized: 0 };
+  answers.forEach((ai, qi) => { tally[questions[qi].options[ai].cat]++; });
+  const sortedCats = Object.keys(tally).sort((a, b) => tally[b] - tally[a]);
+  const topCat = sortedCats[0];
+  const info = RESULTS_INFO[topCat];
+
+  document.getElementById('quizSection').style.display = 'none';
+  const rs = document.getElementById('resultsSection');
+  rs.style.display = 'block'; rs.classList.add('active');
+
+  document.getElementById('resultIcon').innerHTML = STYLES[topCat].icon;
+  document.getElementById('resultTitle').textContent = info.title;
+  document.getElementById('resultDesc').textContent = info.desc;
+
+  const barsHost = document.getElementById('barsHost');
+  barsHost.innerHTML = '';
+  sortedCats.forEach(cat => {
+    const pct = Math.round((tally[cat] / questions.length) * 100);
+    const row = document.createElement('div');
+    row.className = 'bar-row';
+    row.innerHTML = `
+      <span class="bar-label">${STYLES[cat].label}</span>
+      <div class="bar-track"><div class="bar-fill" style="width:0%"></div></div>
+      <span class="bar-pct">${toArabicNum(pct)}٪</span>
+    `;
+    barsHost.appendChild(row);
+    setTimeout(() => { row.querySelector('.bar-fill').style.width = pct + '%'; }, 80);
+  });
+
+  const pointsList = document.getElementById('resultPoints');
+  pointsList.innerHTML = '';
+  info.points.forEach((p, i) => {
+    const li = document.createElement('li');
+    li.innerHTML = '<b>' + toArabicNum(i + 1) + '.</b><span>' + p + '</span>';
+    pointsList.appendChild(li);
+  });
+
+  const relatedHost = document.getElementById('relatedLinks');
+  relatedHost.innerHTML = '';
+  RELATED_MAP[topCat].forEach(href => {
+    const a = document.createElement('a');
+    a.href = href; a.textContent = articleTitles[href] || href;
+    relatedHost.appendChild(a);
+  });
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+document.getElementById('retakeBtn').addEventListener('click', (e) => {
+  e.preventDefault(); current = 0; answers.fill(null);
+  document.getElementById('resultsSection').style.display = 'none';
+  document.getElementById('quizSection').style.display = 'block';
+  renderQuestions(); updateNav();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+renderQuestions(); updateNav();
+</script>
+<script src="/components.js"></script>
+</body>
+</html>
