@@ -13,16 +13,27 @@
      تأخير تحميل أو "ومضة" قبل ظهور الهيدر/الفوتر.
    - كل صفحة تستخدم وسم HTML واحد بسيط بدل عشرات الأسطر المكررة.
    - لاحقاً، لما نربط قاعدة بيانات حقيقية (Supabase مثلاً)، هذا
-     بالضبط المكان اللي بيسهل فيه ربط بيانات حيّة: بدل ما تكون
-     الروابط والنصوص مكتوبة يدوياً بالأسفل، ممكن تُجلب من قاعدة
-     البيانات داخل دالة render() لكل عنصر — الصفحات نفسها ما
-     بتحتاج تتغيّر، لأنها أصلاً بتستخدم <site-nav> و<site-footer>
-     فقط ولا تعرف كيف يُبنى المحتوى بداخلهما.
+     بالضبط المكان اللي بيسهل فيه ربط بيانات حيّة.
 
-   لإضافة مكوّن جديد مستقبلاً (مثل <pricing-cards> أو
-   <article-grid>): انسخي نفس النمط بالأسفل — صنف يمتد HTMLElement،
-   ودالة render() تحدد innerHTML، ثم customElements.define(...).
+   ملاحظة مهمة: بما إنه <site-nav> و<site-footer> وسمان جديدان
+   (مش <nav> و<footer> الحقيقيان)، أي قاعدة CSS بكل صفحة كانت
+   مكتوبة كـ nav{...} أو footer{...} أو nav .wrap{...} ما عادت
+   تنطبق تلقائياً (لأنها تطلب وسم <nav>/<footer> فعلي). لهذا،
+   الأسطر بالأسفل (STYLE_FIX) تُدرج مرة واحدة نفس هذه القواعد
+   لكن موجّهة للوسمين الجديدين، حتى تبقى الخلفية الغامقة وتموضع
+   الروابط أفقياً كما كانت بالضبط قبل التحويل لمكوّنات.
    ============================================================ */
+
+const STYLE_FIX = `
+  site-nav{ display:block; position:sticky; top:0; z-index:50; background:rgba(36,29,46,.92); backdrop-filter:blur(8px); border-bottom:1px solid rgba(255,255,255,.06); }
+  site-nav .wrap{ display:flex; align-items:center; justify-content:space-between; padding:16px 24px; max-width:1080px; }
+  site-footer{ display:block; background:var(--ink); color:var(--text-muted-dark); padding:44px 0 28px; text-align:center; font-size:12.5px; }
+  site-footer .brand{ display:block; margin-bottom:10px; font-size:18px; }
+  site-footer[variant="rich"]{ padding:56px 0 32px; text-align:initial; }
+`;
+const styleTag = document.createElement('style');
+styleTag.textContent = STYLE_FIX;
+document.head.appendChild(styleTag);
 
 class SiteNav extends HTMLElement {
   connectedCallback() {
